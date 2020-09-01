@@ -3,19 +3,23 @@
 module z80_tb(
 
     );
-    
+
+`include "ucode_consts.vh"
+
 parameter period = 25;
     
 reg clk;
 reg reset_external;
-wire [11:0] ucode_addr;
-wire [15:0] ucode;
+wire [UCODE_ADDR_LENGTH-1:0] ucode_addr;
+wire [UCODE_LENGTH-1:0] ucode;
+wire [7:0] IR;
 
 z80 dut(
   .clk(clk),
   .reset_external(reset_external),
   .ucode_addr_out(ucode_addr),
-  .ucode_out(ucode)
+  .ucode_out(ucode),
+  .ir1_out(IR)
   );
   
 initial begin
