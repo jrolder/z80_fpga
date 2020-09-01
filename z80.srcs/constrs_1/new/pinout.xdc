@@ -1,0 +1,7 @@
+create_clock -period 50.000 -name clk -waveform {0.000 25.000} [get_ports clk]
+set_input_delay -clock [get_clocks clk] -clock_fall -min -add_delay 6.000 [get_ports reset_external]
+set_input_delay -clock [get_clocks clk] -clock_fall -max -add_delay 6.000 [get_ports reset_external]
+set_output_delay -clock [get_clocks clk] -min -add_delay -9.000 [get_ports {ucode_addr_out[*]}]
+set_output_delay -clock [get_clocks clk] -max -add_delay 11.000 [get_ports {ucode_addr_out[*]}]
+set_output_delay -clock [get_clocks clk] -min -add_delay 0.000 [get_ports {ucode_out[*]}]
+set_output_delay -clock [get_clocks clk] -max -add_delay 20.000 [get_ports {ucode_out[*]}]
