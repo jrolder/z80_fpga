@@ -5,7 +5,8 @@
 module z80(
     input wire clk,
     input wire reset_external,
-    output reg [15:0] ucode
+    output wire [11:0] ucode_addr_out,
+    output wire [15:0] ucode_out
     );
     
 wire reset;
@@ -28,5 +29,7 @@ ucode_rom ucode_rom(
   );
 
 assign ucode_addr = ucode[11:0];
+assign ucode_out = ucode;
+assign ucode_addr_out = ucode_addr;
 
 endmodule

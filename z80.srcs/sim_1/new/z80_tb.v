@@ -8,12 +8,14 @@ parameter period = 25;
     
 reg clk;
 reg reset_external;
+wire [11:0] ucode_addr;
 wire [15:0] ucode;
 
 z80 dut(
   .clk(clk),
   .reset_external(reset_external),
-  .ucode(ucode)
+  .ucode_addr_out(ucode_addr),
+  .ucode_out(ucode)
   );
   
 initial begin
