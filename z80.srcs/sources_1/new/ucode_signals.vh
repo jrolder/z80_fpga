@@ -1,0 +1,10 @@
+wire uc_ip_to_addr;
+assign uc_ip_to_addr = ucode[12];
+wire uc_rd;
+assign uc_rd = ucode[13];
+wire uc_inc_ip;
+assign uc_inc_ip = ucode[14];
+wire uc_rd_ir1;
+assign uc_rd_ir1 = ucode[15];
+wire [1:0] uc_decode;
+assign uc_decode = ucode[17:16];

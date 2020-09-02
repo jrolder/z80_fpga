@@ -20,9 +20,7 @@ begin
     ucode <= 0;
   else
     case (ucode_addr)
-      0: ucode <= MASK_IP_TO_ADDR | MASK_RD | MASK_INC_IP | MASK_RD_IR1 | MASK_DECODE1 | 5;
-      5: ucode <= 6;
-      6: ucode <= 0;
+      `include "ucode.vh"
       default: ucode <= 7;
     endcase
 end
