@@ -3,8 +3,10 @@ start:
   nop
   ip_to_addr rd inc_ip rd_ir1 decode1
 
-__opcode 00000000 nop
-  goto start
+
 
 __opcode 11000011 call nnnn
+  goto start
+  
+__opcode 00000000 nop
   goto start
