@@ -13,9 +13,12 @@ module sys_ram(
 initial 
 begin
   mem[0] = 0;
-  mem[1] = 8'hc3;
-  mem[2] = 8'hf0;
-  mem[3] = 8'he0;
+  mem[1] = 8'h06;
+  mem[2] = 8'hde;
+  mem[3] = 8'h48;
+  mem[4] = 0;
+  mem[5] = 0;
+
 end
 
 always @(posedge clk) begin

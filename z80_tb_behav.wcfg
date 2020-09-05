@@ -12,45 +12,21 @@
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0fs"></ZoomStartTime>
-      <ZoomEndTime time="820001fs"></ZoomEndTime>
+      <ZoomEndTime time="516001fs"></ZoomEndTime>
       <Cursor1Time time="1000000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="276"></NameColumnWidth>
-      <ValueColumnWidth column_width="108"></ValueColumnWidth>
+      <ValueColumnWidth column_width="100"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="42" />
+   <WVObjectSize size="7" />
    <wvobject fp_name="/z80_tb/clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
    </wvobject>
-   <wvobject fp_name="/z80_tb/ucode" type="array">
-      <obj_property name="ElementShortName">ucode[31:0]</obj_property>
-      <obj_property name="ObjectShortName">ucode[31:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/z80_tb/period" type="array">
-      <obj_property name="ElementShortName">period[31:0]</obj_property>
-      <obj_property name="ObjectShortName">period[31:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/z80_tb/dut/clk" type="logic">
-      <obj_property name="ElementShortName">clk</obj_property>
-      <obj_property name="ObjectShortName">clk</obj_property>
-   </wvobject>
-   <wvobject fp_name="/z80_tb/dut/reset_external" type="logic">
-      <obj_property name="ElementShortName">reset_external</obj_property>
-      <obj_property name="ObjectShortName">reset_external</obj_property>
-   </wvobject>
    <wvobject fp_name="/z80_tb/dut/reset" type="logic">
       <obj_property name="ElementShortName">reset</obj_property>
       <obj_property name="ObjectShortName">reset</obj_property>
-   </wvobject>
-   <wvobject fp_name="/z80_tb/dut/clk" type="logic">
-      <obj_property name="ElementShortName">clk</obj_property>
-      <obj_property name="ObjectShortName">clk</obj_property>
-   </wvobject>
-   <wvobject fp_name="/z80_tb/dut/reset_external" type="logic">
-      <obj_property name="ElementShortName">reset_external</obj_property>
-      <obj_property name="ObjectShortName">reset_external</obj_property>
    </wvobject>
    <wvobject fp_name="/z80_tb/dut/ucode_addr_out" type="array">
       <obj_property name="ElementShortName">ucode_addr_out[11:0]</obj_property>
@@ -60,132 +36,16 @@
       <obj_property name="ElementShortName">ucode_out[31:0]</obj_property>
       <obj_property name="ObjectShortName">ucode_out[31:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/z80_tb/dut/reset" type="logic">
-      <obj_property name="ElementShortName">reset</obj_property>
-      <obj_property name="ObjectShortName">reset</obj_property>
-   </wvobject>
    <wvobject fp_name="/z80_tb/dut/ram_dout" type="array">
-      <obj_property name="ElementShortName">ram_dout[7:0]</obj_property>
-      <obj_property name="ObjectShortName">ram_dout[7:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/z80_tb/dut/\IP[0]_i_2_n_0 " type="logic">
-      <obj_property name="ElementShortName">\IP[0]_i_2_n_0 </obj_property>
-      <obj_property name="ObjectShortName">\IP[0]_i_2_n_0 </obj_property>
-   </wvobject>
-   <wvobject fp_name="/z80_tb/dut/IP_reg" type="array">
-      <obj_property name="ElementShortName">IP_reg[6:0]</obj_property>
-      <obj_property name="ObjectShortName">IP_reg[6:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/z80_tb/dut/\IP_reg[0]_i_1_n_0 " type="logic">
-      <obj_property name="ElementShortName">\IP_reg[0]_i_1_n_0 </obj_property>
-      <obj_property name="ObjectShortName">\IP_reg[0]_i_1_n_0 </obj_property>
-   </wvobject>
-   <wvobject fp_name="/z80_tb/dut/\IP_reg[0]_i_1_n_1 " type="logic">
-      <obj_property name="ElementShortName">\IP_reg[0]_i_1_n_1 </obj_property>
-      <obj_property name="ObjectShortName">\IP_reg[0]_i_1_n_1 </obj_property>
-   </wvobject>
-   <wvobject fp_name="/z80_tb/dut/\IP_reg[0]_i_1_n_2 " type="logic">
-      <obj_property name="ElementShortName">\IP_reg[0]_i_1_n_2 </obj_property>
-      <obj_property name="ObjectShortName">\IP_reg[0]_i_1_n_2 </obj_property>
-   </wvobject>
-   <wvobject fp_name="/z80_tb/dut/\IP_reg[0]_i_1_n_3 " type="logic">
-      <obj_property name="ElementShortName">\IP_reg[0]_i_1_n_3 </obj_property>
-      <obj_property name="ObjectShortName">\IP_reg[0]_i_1_n_3 </obj_property>
-   </wvobject>
-   <wvobject fp_name="/z80_tb/dut/\IP_reg[0]_i_1_n_4 " type="logic">
-      <obj_property name="ElementShortName">\IP_reg[0]_i_1_n_4 </obj_property>
-      <obj_property name="ObjectShortName">\IP_reg[0]_i_1_n_4 </obj_property>
-   </wvobject>
-   <wvobject fp_name="/z80_tb/dut/\IP_reg[0]_i_1_n_5 " type="logic">
-      <obj_property name="ElementShortName">\IP_reg[0]_i_1_n_5 </obj_property>
-      <obj_property name="ObjectShortName">\IP_reg[0]_i_1_n_5 </obj_property>
-   </wvobject>
-   <wvobject fp_name="/z80_tb/dut/\IP_reg[0]_i_1_n_6 " type="logic">
-      <obj_property name="ElementShortName">\IP_reg[0]_i_1_n_6 </obj_property>
-      <obj_property name="ObjectShortName">\IP_reg[0]_i_1_n_6 </obj_property>
-   </wvobject>
-   <wvobject fp_name="/z80_tb/dut/\IP_reg[0]_i_1_n_7 " type="logic">
-      <obj_property name="ElementShortName">\IP_reg[0]_i_1_n_7 </obj_property>
-      <obj_property name="ObjectShortName">\IP_reg[0]_i_1_n_7 </obj_property>
-   </wvobject>
-   <wvobject fp_name="/z80_tb/dut/\IP_reg[4]_i_1_n_2 " type="logic">
-      <obj_property name="ElementShortName">\IP_reg[4]_i_1_n_2 </obj_property>
-      <obj_property name="ObjectShortName">\IP_reg[4]_i_1_n_2 </obj_property>
-   </wvobject>
-   <wvobject fp_name="/z80_tb/dut/\IP_reg[4]_i_1_n_3 " type="logic">
-      <obj_property name="ElementShortName">\IP_reg[4]_i_1_n_3 </obj_property>
-      <obj_property name="ObjectShortName">\IP_reg[4]_i_1_n_3 </obj_property>
-   </wvobject>
-   <wvobject fp_name="/z80_tb/dut/\IP_reg[4]_i_1_n_5 " type="logic">
-      <obj_property name="ElementShortName">\IP_reg[4]_i_1_n_5 </obj_property>
-      <obj_property name="ObjectShortName">\IP_reg[4]_i_1_n_5 </obj_property>
-   </wvobject>
-   <wvobject fp_name="/z80_tb/dut/\IP_reg[4]_i_1_n_6 " type="logic">
-      <obj_property name="ElementShortName">\IP_reg[4]_i_1_n_6 </obj_property>
-      <obj_property name="ObjectShortName">\IP_reg[4]_i_1_n_6 </obj_property>
-   </wvobject>
-   <wvobject fp_name="/z80_tb/dut/\IP_reg[4]_i_1_n_7 " type="logic">
-      <obj_property name="ElementShortName">\IP_reg[4]_i_1_n_7 </obj_property>
-      <obj_property name="ObjectShortName">\IP_reg[4]_i_1_n_7 </obj_property>
-   </wvobject>
-   <wvobject fp_name="/z80_tb/dut/addr" type="array">
-      <obj_property name="ElementShortName">addr[6:0]</obj_property>
-      <obj_property name="ObjectShortName">addr[6:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/z80_tb/dut/clk" type="logic">
-      <obj_property name="ElementShortName">clk</obj_property>
-      <obj_property name="ObjectShortName">clk</obj_property>
-   </wvobject>
-   <wvobject fp_name="/z80_tb/dut/clk_IBUF" type="logic">
-      <obj_property name="ElementShortName">clk_IBUF</obj_property>
-      <obj_property name="ObjectShortName">clk_IBUF</obj_property>
-   </wvobject>
-   <wvobject fp_name="/z80_tb/dut/clk_IBUF_BUFG" type="logic">
-      <obj_property name="ElementShortName">clk_IBUF_BUFG</obj_property>
-      <obj_property name="ObjectShortName">clk_IBUF_BUFG</obj_property>
+      <obj_property name="ElementShortName">ram_dout[7:1]</obj_property>
+      <obj_property name="ObjectShortName">ram_dout[7:1]</obj_property>
    </wvobject>
    <wvobject fp_name="/z80_tb/dut/ir1_out" type="array">
       <obj_property name="ElementShortName">ir1_out[7:0]</obj_property>
       <obj_property name="ObjectShortName">ir1_out[7:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/z80_tb/dut/ir1_out_OBUF" type="array">
-      <obj_property name="ElementShortName">ir1_out_OBUF[7:0]</obj_property>
-      <obj_property name="ObjectShortName">ir1_out_OBUF[7:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/z80_tb/dut/ram_dout" type="array">
-      <obj_property name="ElementShortName">ram_dout[7:0]</obj_property>
-      <obj_property name="ObjectShortName">ram_dout[7:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/z80_tb/dut/reset" type="logic">
-      <obj_property name="ElementShortName">reset</obj_property>
-      <obj_property name="ObjectShortName">reset</obj_property>
-   </wvobject>
-   <wvobject fp_name="/z80_tb/dut/reset_external" type="logic">
-      <obj_property name="ElementShortName">reset_external</obj_property>
-      <obj_property name="ObjectShortName">reset_external</obj_property>
-   </wvobject>
-   <wvobject fp_name="/z80_tb/dut/reset_external_IBUF" type="logic">
-      <obj_property name="ElementShortName">reset_external_IBUF</obj_property>
-      <obj_property name="ObjectShortName">reset_external_IBUF</obj_property>
-   </wvobject>
-   <wvobject fp_name="/z80_tb/dut/ucode_addr_out" type="array">
-      <obj_property name="ElementShortName">ucode_addr_out[11:0]</obj_property>
-      <obj_property name="ObjectShortName">ucode_addr_out[11:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/z80_tb/dut/ucode_out" type="array">
-      <obj_property name="ElementShortName">ucode_out[31:0]</obj_property>
-      <obj_property name="ObjectShortName">ucode_out[31:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/z80_tb/dut/ucode_out_OBUF" type="array">
-      <obj_property name="ElementShortName">ucode_out_OBUF[12:0]</obj_property>
-      <obj_property name="ObjectShortName">ucode_out_OBUF[12:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/z80_tb/dut/\NLW_IP_reg[4]_i_1_CO_UNCONNECTED " type="array">
-      <obj_property name="ElementShortName">\NLW_IP_reg[4]_i_1_CO_UNCONNECTED [3:2]</obj_property>
-      <obj_property name="ObjectShortName">\NLW_IP_reg[4]_i_1_CO_UNCONNECTED [3:2]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/z80_tb/dut/\NLW_IP_reg[4]_i_1_O_UNCONNECTED " type="array">
-      <obj_property name="ElementShortName">\NLW_IP_reg[4]_i_1_O_UNCONNECTED [3:3]</obj_property>
-      <obj_property name="ObjectShortName">\NLW_IP_reg[4]_i_1_O_UNCONNECTED [3:3]</obj_property>
+   <wvobject fp_name="/z80_tb/dut/BC" type="array">
+      <obj_property name="ElementShortName">BC[15:0]</obj_property>
+      <obj_property name="ObjectShortName">BC[15:0]</obj_property>
    </wvobject>
 </wave_config>

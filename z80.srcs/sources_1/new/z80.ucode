@@ -1,7 +1,5 @@
 start:
-  nop
-  nop
-  ip_to_addr rd inc_ip rd_ir1 decode1
+  ip_to_addr rd inc_ip rd_ir decode1
 
 
 
@@ -10,3 +8,9 @@ __opcode 11000011 call nnnn
   
 __opcode 00000000 nop
   goto start
+  
+__opcode 00rrr110 ld r,n
+  ip_to_addr rd inc_ip din8_src_ram din8_dst_ir543 goto start
+  
+__opcode 01rrrsss ld r,r
+  din8_src_dout8 din8_dst_ir543 dout8_sel_ir210 goto start

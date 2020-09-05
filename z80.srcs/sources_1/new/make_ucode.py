@@ -1,23 +1,3 @@
-"""
-parameter UCODE_LENGTH = 32;
-parameter UCODE_ADDR_LENGTH = 12;
-
-parameter BIT_IP_TO_ADDR = 12;
-parameter MASK_IP_TO_ADDR = 1 << BIT_IP_TO_ADDR;
-
-parameter BIT_RD = 13;
-parameter MASK_RD = 1 << BIT_RD;
-
-parameter BIT_DECODE1 = 14;
-parameter MASK_DECODE1 = 1 << BIT_DECODE1;
-
-parameter BIT_INC_IP = 15;
-parameter MASK_INC_IP = 1 << BIT_INC_IP;
-
-parameter BIT_RD_IR1 = 16;
-parameter MASK_RD_IR1 = 1 << BIT_RD_IR1;
-"""
-
 import math
 
 UCODE_LENGTH = 32
@@ -26,11 +6,14 @@ UCODE_ADDR_LENGTH = 12
 bits = (
     "ip_to_addr",
     "rd",
-    "inc_ip",
-    "rd_ir1")
+    "inc_ip")
 
 enums = (
     ("decode", ("decode1", "decode2")),
+    ("read_target", ("rd_ir", )),
+    ("din8_target", ("din8_dst_ir543", )),
+    ("din8_source", ("din8_src_dout8", "din8_src_ram")),
+    ("dout8_sel", ("dout8_sel_ir210", )),
     )
 
 def generate_ucode_headers():
