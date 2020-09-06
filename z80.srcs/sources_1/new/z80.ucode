@@ -18,3 +18,10 @@ __opcode 01rrrsss ld r,r
 __opcode 01110110 halt
 halt_label:
   halt goto halt_label
+  
+__opcode 11111111 rst 7
+  bdos goto start
+  
+__opcode 00qq0001 ld Q, nnnn
+  ip_to_addr rd inc_ip rd_arg1
+  ip_to_addr rd inc_ip rd_arg2 din16_src_arg12 din16_sel_ir54q goto start

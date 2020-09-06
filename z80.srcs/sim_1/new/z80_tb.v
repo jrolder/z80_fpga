@@ -38,6 +38,12 @@ begin
   begin
     $finish;
   end
+  if (clk && dut.uc_decode == VAL_BDOS)
+  begin
+    // $display("bdos! %H %H", dut.registers.DE, dut.regiters.BC[7:0]);
+    $display("bdos called DE: %H", dut.registers.DE);
+    $display("bdos called C: %H", dut.registers.BC[7:0]);
+  end
 end
 
 initial

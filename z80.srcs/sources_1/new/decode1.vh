@@ -1,10 +1,14 @@
       0: uc_addr <= 2;
+      1: uc_addr <= 7;
       6: uc_addr <= 3;
       14: uc_addr <= 3;
+      17: uc_addr <= 7;
       22: uc_addr <= 3;
       30: uc_addr <= 3;
+      33: uc_addr <= 7;
       38: uc_addr <= 3;
       46: uc_addr <= 3;
+      49: uc_addr <= 7;
       54: uc_addr <= 3;
       62: uc_addr <= 3;
       64: uc_addr <= 4;
@@ -72,3 +76,4 @@
       126: uc_addr <= 4;
       127: uc_addr <= 4;
       195: uc_addr <= 1;
+      255: uc_addr <= 6;

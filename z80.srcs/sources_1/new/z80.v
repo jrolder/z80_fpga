@@ -48,6 +48,8 @@ assign ucode_addr_out = ucode_addr;
 
 wire [UCODE_ADDR_LENGTH-1:0] decode1_out;
 reg [7:0] IR1;
+reg [7:0] ARG1;
+reg [7:0] ARG2;
 
 decode1_rom decode1_rom (
   .opcode(IR1),
@@ -91,7 +93,7 @@ reg [2:0] reg_dout16sel;
 reg [7:0] reg_flags_in;
 wire [7:0] reg_flags_out;
 reg reg_din8we;
-wire reg_din16we;
+reg reg_din16we;
 wire reg_flags_we;
 wire [7:0] reg_aout8;
 
@@ -147,7 +149,33 @@ begin
   endcase
 end
 
-assign reg_din16we = 0;
+always @(*)
+begin
+  case (uc_din16_source)
+    VAL_DIN16_SRC_ARG12: 
+      begin
+        reg_din16 = {ARG2, ARG1};
+        reg_din16we = 1;
+      end
+    VAL_DIN16_SRC_DOUT16:
+      begin
+        reg_din16 = reg_dout16;
+        reg_din16we = 1;
+      end
+    default:
+      reg_din8we = 0;
+  endcase
+end
+
+always @(*)
+begin
+  if (uc_din16_sel == VAL_DIN16_SEL_IR54Q)
+  case (IR1[5:4])
+    3: reg_din16sel = 4;
+    default: reg_din16sel = IR1[5:4];
+  endcase
+end
+
 assign reg_flags_we = 0;
 
 reg [15:0] IP;
@@ -173,8 +201,11 @@ end
 
 always @(uc_read_target, ram_dout)
 begin
-  if (uc_read_target == VAL_RD_IR)
-    IR1 = ram_dout;
+  case (uc_read_target)
+    VAL_RD_IR: IR1 = ram_dout;
+    VAL_RD_ARG1: ARG1 = ram_dout;
+    VAL_RD_ARG2: ARG2 = ram_dout;
+  endcase
 end
 
 assign ir1_out = IR1;

@@ -9,11 +9,13 @@ bits = (
     "inc_ip")
 
 enums = (
-    ("decode", ("decode1", "decode2", "halt")),
-    ("read_target", ("rd_ir", )),
+    ("decode", ("decode1", "decode2", "halt", "bdos")),
+    ("read_target", ("rd_ir", "rd_arg1", "rd_arg2")),
     ("din8_target", ("din8_dst_ir543", )),
     ("din8_source", ("din8_src_dout8", "din8_src_ram")),
     ("dout8_sel", ("dout8_sel_ir210", )),
+    ("din16_source", ("din16_src_arg12", "din16_src_dout16")),
+    ("din16_sel", ("din16_sel_ir54q", ))
     )
 
 def generate_ucode_headers():
