@@ -61,7 +61,7 @@
       115: uc_addr <= 4;
       116: uc_addr <= 4;
       117: uc_addr <= 4;
-      118: uc_addr <= 4;
+      118: uc_addr <= 5;
       119: uc_addr <= 4;
       120: uc_addr <= 4;
       121: uc_addr <= 4;

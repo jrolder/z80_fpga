@@ -9,7 +9,7 @@ bits = (
     "inc_ip")
 
 enums = (
-    ("decode", ("decode1", "decode2")),
+    ("decode", ("decode1", "decode2", "halt")),
     ("read_target", ("rd_ir", )),
     ("din8_target", ("din8_dst_ir543", )),
     ("din8_source", ("din8_src_dout8", "din8_src_ram")),

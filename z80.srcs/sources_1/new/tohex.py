@@ -1,4 +1,4 @@
-with open("rasmoutput.bin", "rb") as f:
+with open("testbench.bin", "rb") as f:
   with open("ram.mem", "w") as g:
     while True:
       bytes = f.read(16)

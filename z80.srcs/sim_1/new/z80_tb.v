@@ -17,6 +17,7 @@ wire [7:0] IR;
 z80 dut(
   .clk(clk),
   .reset_external(reset_external),
+  .halt(halt),
   .ucode_addr_out(ucode_addr),
   .ucode_out(ucode),
   .ir1_out(IR)
@@ -33,6 +34,10 @@ always
 begin
   #period;
   clk = !clk;
+  if (!reset_external && halt)
+  begin
+    $finish;
+  end
 end
 
 initial

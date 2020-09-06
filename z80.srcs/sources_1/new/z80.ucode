@@ -14,3 +14,7 @@ __opcode 00rrr110 ld r,n
   
 __opcode 01rrrsss ld r,r
   din8_src_dout8 din8_dst_ir543 dout8_sel_ir210 goto start
+  
+__opcode 01110110 halt
+halt_label:
+  halt goto halt_label

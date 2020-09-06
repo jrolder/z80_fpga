@@ -5,6 +5,7 @@
 module z80(
     clk,
     reset_external,
+    halt,
     ucode_addr_out,
     ucode_out,
     ir1_out,
@@ -15,6 +16,7 @@ module z80(
     
 input wire clk;
 input wire reset_external;
+output reg halt;
 output wire [UCODE_ADDR_LENGTH-1:0] ucode_addr_out;
 output wire [UCODE_LENGTH-1:0] ucode_out;
 output wire [7:0] ir1_out;
@@ -176,5 +178,10 @@ begin
 end
 
 assign ir1_out = IR1;
+
+always @(posedge clk, posedge reset)
+begin
+  halt <= uc_decode == VAL_HALT;
+end
 
 endmodule
