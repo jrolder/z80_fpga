@@ -12,16 +12,7 @@ module sys_ram(
 
 initial 
 begin
-  mem[0] = 0;
-  mem[1] = 8'h06; // ld b, xde
-  mem[2] = 8'hde;
-  mem[3] = 8'h48; // ld c,b
-  mem[4] = 8'h0e; // ld c, x45
-  mem[5] = 8'h45;
-  mem[6] = 8'h41; // ld b,c
-  mem[7] = 0;
-  mem[8] = 0;
-
+  $readmemh("ram.mem", mem, 0);
 end
 
 always @(posedge clk) begin
