@@ -9,4 +9,4 @@
 	halt
 	
 	
-hello: db "hello world!", 0
+hello: db "hello world!\n", 0

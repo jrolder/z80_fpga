@@ -30,6 +30,9 @@ initial begin
   reset_external = 0;
 end
     
+integer i;
+reg [7:0] char;
+    
 always
 begin
   #period;
@@ -40,9 +43,22 @@ begin
   end
   if (clk && dut.uc_decode == VAL_BDOS)
   begin
-    // $display("bdos! %H %H", dut.registers.DE, dut.regiters.BC[7:0]);
-    $display("bdos called DE: %H", dut.registers.DE);
-    $display("bdos called C: %H", dut.registers.BC[7:0]);
+    // $display("bdos called DE: %H", dut.registers.DE);
+    // $display("bdos called C: %H", dut.registers.BC[7:0]);
+    case (dut.registers.BC[7:0])
+        9:
+          begin
+            // $display("bdos! %H %H", dut.registers.DE, dut.regiters.BC[7:0]);
+    
+            i = dut.registers.DE;
+            while (dut.sys_ram.mem[i])
+            begin
+              char = dut.sys_ram.mem[i];
+              $write("%c", char);
+              i = i+1;
+            end
+          end
+    endcase
   end
 end
 

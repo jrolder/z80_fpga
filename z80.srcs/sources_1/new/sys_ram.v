@@ -8,7 +8,7 @@ module sys_ram(
     output reg [7:0] dout
     );
     
- reg [7:0] mem [127:0];
+reg [7:0] mem [127:0];
 
 initial 
 begin
