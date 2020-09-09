@@ -161,6 +161,11 @@ begin
         reg_din8 = reg_dout8;
         reg_din8we = 1;
       end
+    VAL_DIN8_SRC_ALU8:
+      begin
+        reg_din8 = alu8_out;
+        reg_din8we = 1;
+      end    
     default:
       reg_din8we = 0;
   endcase
@@ -168,8 +173,12 @@ end
 
 always @(*)
 begin
-  if (uc_din8_target == VAL_DIN8_DST_IR543)
-    reg_din8sel = IR1[5:3];
+  case (uc_din8_target)
+    VAL_DIN8_DST_IR543: 
+      reg_din8sel = IR1[5:3];
+    VAL_DIN8_DST_A:
+      reg_din8sel = 7;
+  endcase
 end
 
 always @(*)
@@ -258,7 +267,7 @@ end
 
 wire [7:0] alu8_ain;
 wire [7:0] alu8_out;
-reg [2:0] alu8_op;
+reg [4:0] alu8_op;
 reg [7:0] alu8_arg;
 wire [7:0] alu8_flags_in;
 wire [7:0] alu8_flags_out;
@@ -287,6 +296,8 @@ always @(*)
 begin
   case (uc_alu8_op)
     VAL_ALU8_OP_IP543: alu8_op = IR1[5:3];
+    VAL_ALU8_OP_SCF: alu8_op = 16;
+    VAL_ALU8_OP_CCF: alu8_op = 17;
   endcase
 end
 

@@ -10,7 +10,9 @@
       46: uc_addr <= 2;
       49: uc_addr <= 6;
       54: uc_addr <= 2;
+      55: uc_addr <= 14;
       62: uc_addr <= 2;
+      63: uc_addr <= 15;
       64: uc_addr <= 3;
       65: uc_addr <= 3;
       66: uc_addr <= 3;

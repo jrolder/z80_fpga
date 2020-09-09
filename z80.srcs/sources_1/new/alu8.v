@@ -3,7 +3,7 @@
 module alu8(
     input wire [7:0] alu8_ain,
     output reg [7:0] alu8_out,
-    input wire [2:0] alu8_op,
+    input wire [4:0] alu8_op,
     input wire [7:0] alu8_arg,
     input wire [7:0] alu8_flags_in,
     output reg [7:0] alu8_flags_out
@@ -35,20 +35,68 @@ reg [8:0] tmp9;
 always @(*)
 begin
   case (alu8_op)
-  7: // cp
+  0: // add
+    begin
+      tmp9 = alu8_ain + alu8_arg;
+      tmp8 = alu8_ain[6:0] + alu8_arg[6:0];
+      tmp5 = alu8_ain[3:0] + alu8_arg[3:0];
+      alu8_out = tmp9[7:0];
+      alu8_flags_out = {alu8_out[7], alu8_out == 0, alu8_out[5], tmp5[4], alu8_out[3], tmp9[8] ^ tmp8[7], 1'b0, tmp9[8]};
+    end
+  1: // adc
+    begin
+      tmp9 = alu8_ain + alu8_arg + flag_c;
+      tmp8 = alu8_ain[6:0] + alu8_arg[6:0] + flag_c;
+      tmp5 = alu8_ain[3:0] + alu8_arg[3:0] + flag_c;
+      alu8_out = tmp9[7:0];
+      alu8_flags_out = {alu8_out[7], alu8_out == 0, alu8_out[5], tmp5[4], alu8_out[3], tmp9[8] ^ tmp8[7], 1'b0, tmp9[8]};
+    end
+  2: // sub
     begin
       tmp9 = alu8_ain - alu8_arg;
       tmp8 = alu8_ain[6:0] - alu8_arg[6:0];
       tmp5 = alu8_ain[3:0] - alu8_arg[3:0];
       alu8_out = tmp9[7:0];
-      alu8_flags_out[FLAG_S] = alu8_out[7];
-      alu8_flags_out[FLAG_Z] = alu8_out == 0;      
-      alu8_flags_out[FLAG_F5] = alu8_arg[5];      
-      alu8_flags_out[FLAG_H] = tmp5[4];    
-      alu8_flags_out[FLAG_F3] = alu8_arg[3];    
-      alu8_flags_out[FLAG_PV] = tmp9[8] ^ tmp8[7];    
-      alu8_flags_out[FLAG_N] = 1;
-      alu8_flags_out[FLAG_C] = tmp9[8];
+      alu8_flags_out = {alu8_out[7], alu8_out == 0, alu8_out[5], tmp5[4], alu8_out[3], tmp9[8] ^ tmp8[7], 1'b1, tmp9[8]};
+    end
+   3: // sbc
+    begin
+      tmp9 = alu8_ain - alu8_arg - flag_c;
+      tmp8 = alu8_ain[6:0] - alu8_arg[6:0] - flag_c;
+      tmp5 = alu8_ain[3:0] - alu8_arg[3:0] - flag_c;
+      alu8_out = tmp9[7:0];
+      alu8_flags_out = {alu8_out[7], alu8_out == 0, alu8_out[5], tmp5[4], alu8_out[3], tmp9[8] ^ tmp8[7], 1'b1, tmp9[8]};
+    end
+   4: // and
+    begin
+      alu8_out = alu8_ain & alu8_arg;
+      alu8_flags_out = {alu8_out[7], alu8_out == 0, alu8_out[5], 1'b1, alu8_out[3], !(^alu8_out), 1'b0, 1'b0};
+    end
+   5: // xor
+    begin
+      alu8_out = alu8_ain ^ alu8_arg;
+      alu8_flags_out = {alu8_out[7], alu8_out == 0, alu8_out[5], 1'b0, alu8_out[3], !(^alu8_out), 1'b0, 1'b0};
+    end
+   6: // or
+    begin
+      alu8_out = alu8_ain | alu8_arg;
+      alu8_flags_out = {alu8_out[7], alu8_out == 0, alu8_out[5], 1'b0, alu8_out[3], !(^alu8_out), 1'b0, 1'b0};
+    end
+  7: // cp
+    begin
+      tmp9 = alu8_ain - alu8_arg;
+      tmp8 = alu8_ain[6:0] - alu8_arg[6:0];
+      tmp5 = alu8_ain[3:0] - alu8_arg[3:0];
+      alu8_out = alu8_ain;
+      alu8_flags_out = {tmp9[7], tmp9[7:0] == 0, alu8_arg[5], tmp5[4], alu8_arg[3], tmp9[8] ^ tmp8[7], 1'b1, tmp9[8]};
+    end
+  16: // scf
+    begin
+      alu8_flags_out = {flag_s, flag_z, flag_f5, 1'b0, flag_f3, flag_pv, 1'b0, 1'b1};
+    end
+  17: // ccf
+    begin
+      alu8_flags_out = {flag_s, flag_z, flag_f5, flag_c, flag_f3, flag_pv, 1'b0, !flag_c};
     end
   endcase  
 end
