@@ -15,7 +15,10 @@ enums = (
     ("din8_source", ("din8_src_dout8", "din8_src_ram")),
     ("dout8_sel", ("dout8_sel_ir210", )),
     ("din16_source", ("din16_src_arg12", "din16_src_dout16")),
-    ("din16_sel", ("din16_sel_ir54q", ))
+    ("din16_sel", ("din16_sel_ir54q", )),
+    ("flags_source", ("flags_source_alu8", )),
+    ("alu8_source", ("alu8_src_ram", "alu8_src_dout8",)),
+    ("alu8_op", ("alu8_op_ip543", ))
     )
 
 def generate_ucode_headers():

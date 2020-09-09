@@ -12,14 +12,14 @@
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0fs"></ZoomStartTime>
-      <ZoomEndTime time="844001fs"></ZoomEndTime>
-      <Cursor1Time time="600000fs"></Cursor1Time>
+      <ZoomEndTime time="848001fs"></ZoomEndTime>
+      <Cursor1Time time="800000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="276"></NameColumnWidth>
-      <ValueColumnWidth column_width="84"></ValueColumnWidth>
+      <ValueColumnWidth column_width="80"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="10" />
+   <WVObjectSize size="14" />
    <wvobject fp_name="/z80_tb/clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -52,12 +52,28 @@
       <obj_property name="ElementShortName">DE[15:0]</obj_property>
       <obj_property name="ObjectShortName">DE[15:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/z80_tb/dut/ARG1" type="array">
-      <obj_property name="ElementShortName">ARG1[7:0]</obj_property>
-      <obj_property name="ObjectShortName">ARG1[7:0]</obj_property>
+   <wvobject fp_name="/z80_tb/dut/registers/AF" type="array">
+      <obj_property name="ElementShortName">AF[15:0]</obj_property>
+      <obj_property name="ObjectShortName">AF[15:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/z80_tb/dut/ARG2" type="array">
-      <obj_property name="ElementShortName">ARG2[7:0]</obj_property>
-      <obj_property name="ObjectShortName">ARG2[7:0]</obj_property>
+   <wvobject fp_name="/z80_tb/dut/alu8/alu8_flags_out" type="array">
+      <obj_property name="ElementShortName">alu8_flags_out[7:0]</obj_property>
+      <obj_property name="ObjectShortName">alu8_flags_out[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/z80_tb/dut/alu8/alu8_flags_in" type="array">
+      <obj_property name="ElementShortName">alu8_flags_in[7:0]</obj_property>
+      <obj_property name="ObjectShortName">alu8_flags_in[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/z80_tb/dut/alu8/alu8_arg" type="array">
+      <obj_property name="ElementShortName">alu8_arg[7:0]</obj_property>
+      <obj_property name="ObjectShortName">alu8_arg[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/z80_tb/dut/alu8/alu8_op" type="array">
+      <obj_property name="ElementShortName">alu8_op[2:0]</obj_property>
+      <obj_property name="ObjectShortName">alu8_op[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/z80_tb/dut/registers/aout8" type="array">
+      <obj_property name="ElementShortName">aout8[7:0]</obj_property>
+      <obj_property name="ObjectShortName">aout8[7:0]</obj_property>
    </wvobject>
 </wave_config>

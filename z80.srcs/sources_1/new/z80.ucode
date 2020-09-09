@@ -25,3 +25,6 @@ __opcode 11111111 rst 7
 __opcode 00qq0001 ld Q, nnnn
   ip_to_addr rd inc_ip rd_arg1
   ip_to_addr rd inc_ip rd_arg2 din16_src_arg12 din16_sel_ir54q goto start
+  
+__opcode 11ooo110 aluop n
+  ip_to_addr rd inc_ip alu8_op_ip543 alu8_src_ram flags_source_alu8 goto start

@@ -7,3 +7,4 @@
       6: ucode <= UC_BDOS | 0;
       7: ucode <= UC_IP_TO_ADDR | UC_RD | UC_INC_IP | UC_RD_ARG1 | 8;
       8: ucode <= UC_IP_TO_ADDR | UC_RD | UC_INC_IP | UC_RD_ARG2 | UC_DIN16_SRC_ARG12 | UC_DIN16_SEL_IR54Q | 0;
+      9: ucode <= UC_IP_TO_ADDR | UC_RD | UC_INC_IP | UC_ALU8_OP_IP543 | UC_ALU8_SRC_RAM | UC_FLAGS_SOURCE_ALU8 | 0;

@@ -76,4 +76,12 @@
       126: uc_addr <= 4;
       127: uc_addr <= 4;
       195: uc_addr <= 1;
+      198: uc_addr <= 9;
+      206: uc_addr <= 9;
+      214: uc_addr <= 9;
+      222: uc_addr <= 9;
+      230: uc_addr <= 9;
+      238: uc_addr <= 9;
+      246: uc_addr <= 9;
+      254: uc_addr <= 9;
       255: uc_addr <= 6;

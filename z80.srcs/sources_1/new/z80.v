@@ -94,7 +94,7 @@ reg [7:0] reg_flags_in;
 wire [7:0] reg_flags_out;
 reg reg_din8we;
 reg reg_din16we;
-wire reg_flags_we;
+reg reg_flags_we;
 wire [7:0] reg_aout8;
 
 registers registers(
@@ -176,7 +176,16 @@ begin
   endcase
 end
 
-assign reg_flags_we = 0;
+always @(*)
+begin
+  if (uc_flags_source == VAL_FLAGS_SOURCE_ALU8)
+  begin
+    reg_flags_in = alu8_flags_out;
+    reg_flags_we = 1;
+  end
+  else
+    reg_flags_we = 0;
+end; 
 
 reg [15:0] IP;
 
@@ -213,6 +222,40 @@ assign ir1_out = IR1;
 always @(posedge clk, posedge reset)
 begin
   halt <= uc_decode == VAL_HALT;
+end
+
+wire [7:0] alu8_ain;
+wire [7:0] alu8_out;
+reg [2:0] alu8_op;
+reg [7:0] alu8_arg;
+wire [7:0] alu8_flags_in;
+wire [7:0] alu8_flags_out;
+
+alu8 alu8 (
+  .alu8_ain(alu8_ain),
+  .alu8_out(alu8_out),
+  .alu8_op(alu8_op),
+  .alu8_arg(alu8_arg),
+  .alu8_flags_in(alu8_flags_in),
+  .alu8_flags_out(alu8_flags_out)
+  );
+
+assign alu8_ain = reg_aout8;
+assign alu8_flags_in = reg_flags_out;
+
+always @(*)
+begin
+  case (uc_alu8_source)
+    VAL_ALU8_SRC_RAM: alu8_arg = ram_dout;
+    VAL_ALU8_SRC_DOUT8: alu8_arg = reg_dout8;
+  endcase
+end
+
+always @(*)
+begin
+  case (uc_alu8_op)
+    VAL_ALU8_OP_IP543: alu8_op = IR1[5:3];
+  endcase
 end
 
 endmodule
