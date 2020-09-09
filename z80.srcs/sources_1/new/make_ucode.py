@@ -45,7 +45,7 @@ def generate_ucode_headers():
         g.write(f"assign uc_{enum_name} = ucode[{current+bits-1}:{current}];\n")
         value = 1
         for enum in enum_set:
-          f.write(f"parameter UC_{enum.upper()} = {value << current};\n")
+          f.write(f"parameter UC_{enum.upper()} = {value} << {current};\n")
           f.write(f"parameter VAL_{enum.upper()} = {value};\n")
           value += 1
           commands[enum] = f"UC_{enum.upper()}";
