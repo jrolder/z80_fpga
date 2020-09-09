@@ -5,8 +5,7 @@ UCODE_ADDR_LENGTH = 12
 
 bits = (
     "ip_to_addr",
-    "rd",
-    "inc_ip")
+    "rd")
 
 enums = (
     ("decode", ("decode1", "decode2", "halt", "bdos")),
@@ -18,7 +17,8 @@ enums = (
     ("din16_sel", ("din16_sel_ir54q", )),
     ("flags_source", ("flags_source_alu8", )),
     ("alu8_source", ("alu8_src_ram", "alu8_src_dout8",)),
-    ("alu8_op", ("alu8_op_ip543", ))
+    ("alu8_op", ("alu8_op_ip543", )),
+    ("ip_op", ("inc_ip", "ip_from_arg21"))
     )
 
 def generate_ucode_headers():

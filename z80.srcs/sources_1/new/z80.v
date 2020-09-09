@@ -201,8 +201,10 @@ always @(posedge clk)
 begin
   if (reset)
     IP <= 0;
-  else if (uc_inc_ip)
+  else if (uc_ip_op == VAL_INC_IP)
     IP <= IP + 1;
+  else if (uc_ip_op == VAL_IP_FROM_ARG21)
+    IP <= {ARG2, ARG1};
 end
     
 

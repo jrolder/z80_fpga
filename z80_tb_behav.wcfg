@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0fs"></ZoomStartTime>
-      <ZoomEndTime time="848001fs"></ZoomEndTime>
-      <Cursor1Time time="800000fs"></Cursor1Time>
+      <ZoomStartTime time="40000fs"></ZoomStartTime>
+      <ZoomEndTime time="892001fs"></ZoomEndTime>
+      <Cursor1Time time="750000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="276"></NameColumnWidth>
-      <ValueColumnWidth column_width="80"></ValueColumnWidth>
+      <ValueColumnWidth column_width="76"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="14" />
+   <WVObjectSize size="15" />
    <wvobject fp_name="/z80_tb/clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -75,5 +75,9 @@
    <wvobject fp_name="/z80_tb/dut/registers/aout8" type="array">
       <obj_property name="ElementShortName">aout8[7:0]</obj_property>
       <obj_property name="ObjectShortName">aout8[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/z80_tb/dut/IP" type="array">
+      <obj_property name="ElementShortName">IP[15:0]</obj_property>
+      <obj_property name="ObjectShortName">IP[15:0]</obj_property>
    </wvobject>
 </wave_config>
