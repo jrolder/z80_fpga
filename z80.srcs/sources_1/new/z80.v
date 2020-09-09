@@ -33,11 +33,13 @@ sync_reset sync_reset(
     
 reg [UCODE_ADDR_LENGTH-1:0] ucode_addr;
 wire [UCODE_LENGTH-1:0] ucode;
+wire [UCODE_ADDR_LENGTH-1:0] last_ucode_addr;
     
 ucode_rom ucode_rom(
   .clk(clk),
   .reset(reset),
   .ucode_addr(ucode_addr),
+  .last_ucode_addr(last_ucode_addr),
   .ucode(ucode)
   );
 
@@ -56,13 +58,41 @@ decode1_rom decode1_rom (
   .uc_addr(decode1_out)
   );
   
+function check_condition;
+input [2:0] cond;
+input [7:0] flags;
+begin
+  case (cond)
+    0: check_condition = flags[6] == 0; // NZ
+    1: check_condition = flags[6] == 1;// Z
+    2: check_condition = flags[0] == 0;// NC
+    3: check_condition = flags[0] == 1;// C
+    4: check_condition = flags[2] == 0;// PO
+    5: check_condition = flags[2] == 1;// PE
+    6: check_condition = flags[7] == 0;// P
+    7: check_condition = flags[6] == 1;// M
+  endcase
+end
+endfunction
+
   
 always @(*)
 begin
-  if (uc_decode == VAL_DECODE1)
-    ucode_addr = decode1_out;
-  else
-    ucode_addr = ucode[UCODE_ADDR_LENGTH-1:0];
+  case (uc_ucode_goto)
+    VAL_DECODE1:
+      ucode_addr = decode1_out;
+    VAL_GOTO_NOW: 
+      ucode_addr = ucode[UCODE_ADDR_LENGTH-1:0];
+    VAL_GOTO_NCC:
+      begin
+        if (check_condition(IR1[5:3], reg_flags_out))
+          ucode_addr = last_ucode_addr + 1;
+        else
+          ucode_addr = ucode[UCODE_ADDR_LENGTH-1:0];
+      end
+    default:
+      ucode_addr = last_ucode_addr + 1;
+  endcase
 end
 
 reg [15:0] ram_addr;
@@ -223,7 +253,7 @@ assign ir1_out = IR1;
 
 always @(posedge clk, posedge reset)
 begin
-  halt <= uc_decode == VAL_HALT;
+  halt <= uc_command == VAL_HALT;
 end
 
 wire [7:0] alu8_ain;

@@ -41,7 +41,7 @@ begin
   begin
     $finish;
   end
-  if (clk && dut.uc_decode == VAL_BDOS)
+  if (clk && dut.uc_command == VAL_BDOS)
   begin
     // $display("bdos called DE: %H", dut.registers.DE);
     // $display("bdos called C: %H", dut.registers.BC[7:0]);
@@ -64,7 +64,7 @@ end
 
 initial
 begin 
-  #1000;
+  #1000000;
   $finish;
 end
 

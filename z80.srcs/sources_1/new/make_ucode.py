@@ -1,6 +1,6 @@
 import math
 
-UCODE_LENGTH = 32
+UCODE_LENGTH = 50
 UCODE_ADDR_LENGTH = 12
 
 bits = (
@@ -8,7 +8,8 @@ bits = (
     "rd")
 
 enums = (
-    ("decode", ("decode1", "decode2", "halt", "bdos")),
+    ("command", ("halt", "bdos")),
+    ("ucode_goto", ("decode1", "decode2", "goto_now", "goto_ncc", )),
     ("read_target", ("rd_ir", "rd_arg1", "rd_arg2")),
     ("din8_target", ("din8_dst_ir543", )),
     ("din8_source", ("din8_src_dout8", "din8_src_ram")),
@@ -45,7 +46,7 @@ def generate_ucode_headers():
         g.write(f"assign uc_{enum_name} = ucode[{current+bits-1}:{current}];\n")
         value = 1
         for enum in enum_set:
-          f.write(f"parameter UC_{enum.upper()} = {value} << {current};\n")
+          f.write(f"parameter [{UCODE_LENGTH-1}:0] UC_{enum.upper()} = {value} << {current};\n")
           f.write(f"parameter VAL_{enum.upper()} = {value};\n")
           value += 1
           commands[enum] = f"UC_{enum.upper()}";
@@ -90,7 +91,13 @@ def parse(uc_file, f, commands, ucodes, decode1):
         if parts[i] == "goto":
           next_uc_addr = labels[parts[i+1]]
           i += 2
+          parts.append("goto_now") # imply gotonow
           continue
+        if parts[i] == "gotoncc":
+          next_uc_addr = labels[parts[i+1]]
+          i += 2
+          parts.append("goto_ncc") # imply gotonow
+          continue        
         uc.append(commands[parts[i]])
         i += 1
       uc.append(str(next_uc_addr))

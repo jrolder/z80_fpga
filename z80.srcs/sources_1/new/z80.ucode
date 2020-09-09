@@ -1,10 +1,5 @@
 start:
   ip_to_addr rd inc_ip rd_ir decode1
-
-
-
-__opcode 11000011 call nnnn
-  goto start
   
 __opcode 00000000 nop
   goto start
@@ -32,3 +27,8 @@ __opcode 11ooo110 aluop n
 __opcode 11000011 jp nnnn
   ip_to_addr rd inc_ip rd_arg1
   ip_to_addr rd        rd_arg2 ip_from_arg21 goto start
+  
+__opcode 11ccc010 jp cc,nnnn
+  ip_to_addr rd inc_ip rd_arg1
+  ip_to_addr rd inc_ip rd_arg2 gotoncc start
+  ip_from_arg21 goto start

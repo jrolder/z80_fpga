@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="40000fs"></ZoomStartTime>
-      <ZoomEndTime time="892001fs"></ZoomEndTime>
-      <Cursor1Time time="750000fs"></Cursor1Time>
+      <ZoomStartTime time="0fs"></ZoomStartTime>
+      <ZoomEndTime time="856001fs"></ZoomEndTime>
+      <Cursor1Time time="1000000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="276"></NameColumnWidth>
-      <ValueColumnWidth column_width="76"></ValueColumnWidth>
+      <ValueColumnWidth column_width="72"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="15" />
+   <WVObjectSize size="16" />
    <wvobject fp_name="/z80_tb/clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -33,8 +33,8 @@
       <obj_property name="ObjectShortName">ucode_addr_out[11:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/z80_tb/dut/ucode_out" type="array">
-      <obj_property name="ElementShortName">ucode_out[31:0]</obj_property>
-      <obj_property name="ObjectShortName">ucode_out[31:0]</obj_property>
+      <obj_property name="ElementShortName">ucode_out[49:0]</obj_property>
+      <obj_property name="ObjectShortName">ucode_out[49:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/z80_tb/dut/ram_dout" type="array">
       <obj_property name="ElementShortName">ram_dout[7:0]</obj_property>
@@ -79,5 +79,9 @@
    <wvobject fp_name="/z80_tb/dut/IP" type="array">
       <obj_property name="ElementShortName">IP[15:0]</obj_property>
       <obj_property name="ObjectShortName">IP[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/z80_tb/dut/ucode_rom/last_ucode_addr" type="array">
+      <obj_property name="ElementShortName">last_ucode_addr[11:0]</obj_property>
+      <obj_property name="ObjectShortName">last_ucode_addr[11:0]</obj_property>
    </wvobject>
 </wave_config>
