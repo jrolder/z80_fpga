@@ -107,10 +107,22 @@ sys_ram sys_ram(
   .din(ram_din),
   .dout(ram_dout));
 
-initial
+always @(*)
 begin
-  ram_we = 0;
+  case (uc_ram_wr_sel)
+    VAL_RAM_WR_DOUT8:
+      begin
+        ram_din = reg_dout8;
+        ram_we = 1;
+      end
+    default:
+      begin
+        ram_din = 8'bX;
+        ram_we = 0;
+      end
+  endcase
 end
+
 
 reg [7:0] reg_din8;
 wire [7:0] reg_dout8;
@@ -167,7 +179,10 @@ begin
         reg_din8we = 1;
       end    
     default:
-      reg_din8we = 0;
+      begin
+        reg_din8 = 8'bX;
+        reg_din8we = 0;
+      end
   endcase
 end
 
@@ -178,6 +193,8 @@ begin
       reg_din8sel = IR1[5:3];
     VAL_DIN8_DST_A:
       reg_din8sel = 7;
+    default:
+      reg_din8sel = 4'bX;
   endcase
 end
 
@@ -185,6 +202,8 @@ always @(*)
 begin
   case (uc_dout8_sel)
     VAL_DOUT8_SEL_IR210: reg_dout8sel = IR1[2:0];
+    default:
+      reg_dout8sel = 4'bX;
   endcase
 end
 
@@ -202,7 +221,10 @@ begin
         reg_din16we = 1;
       end
     default:
-      reg_din8we = 0;
+      begin
+        reg_din16 = 16'bX;
+        reg_din8we = 0;
+      end
   endcase
 end
 
@@ -213,25 +235,32 @@ begin
     3: reg_din16sel = 4;
     default: reg_din16sel = IR1[5:4];
   endcase
+  else
+    reg_din16sel = 4'bX;
 end
 
 always @(*)
 begin
   case (uc_dout16_sel)
     VAL_DOUT16_SEL_HL: reg_dout16sel = 2;
-    default: reg_dout16sel = 3'bZ;
+    default: reg_dout16sel = 3'bX;
   endcase
 end
 
 always @(*)
 begin
-  if (uc_flags_source == VAL_FLAGS_SOURCE_ALU8)
-  begin
-    reg_flags_in = alu8_flags_out;
-    reg_flags_we = 1;
-  end
-  else
-    reg_flags_we = 0;
+  case (uc_flags_source)
+    VAL_FLAGS_SOURCE_ALU8:
+      begin
+        reg_flags_in = alu8_flags_out;
+        reg_flags_we = 1;      
+      end
+    default:
+      begin
+        reg_flags_in = 8'bX;
+        reg_flags_we = 0;
+      end
+  endcase
 end; 
 
 reg [15:0] IP;
@@ -241,7 +270,7 @@ begin
   case (uc_ram_addr_sel)
     VAL_ADDR_SEL_IP: ram_addr = IP;
     VAL_ADDR_SEL_DOUT16: ram_addr = reg_dout16;
-    default: ram_addr = 16'bZ;
+    default: ram_addr = 16'bX;
   endcase
 end
 
@@ -298,6 +327,8 @@ begin
   case (uc_alu8_source)
     VAL_ALU8_SRC_RAM: alu8_arg = ram_dout;
     VAL_ALU8_SRC_DOUT8: alu8_arg = reg_dout8;
+    default:
+      alu8_arg = 8'bX;
   endcase
 end
 
@@ -307,6 +338,8 @@ begin
     VAL_ALU8_OP_IP543: alu8_op = IR1[5:3];
     VAL_ALU8_OP_SCF: alu8_op = 16;
     VAL_ALU8_OP_CCF: alu8_op = 17;
+    default:
+      alu8_op = 5'bX;
   endcase
 end
 

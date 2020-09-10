@@ -10,6 +10,7 @@ enums = (
     ("ucode_goto", ("decode1", "decode2", "goto_now", "goto_ncc", )),
     ("ram_addr_sel", ("addr_sel_ip", "addr_sel_dout16")),
     ("read_target", ("rd_ir", "rd_arg1", "rd_arg2")),
+    ("ram_wr_sel", ("ram_wr_dout8", )),
     ("din8_target", ("din8_dst_ir543", "din8_dst_a")),
     ("din8_source", ("din8_src_dout8", "din8_src_ram", "din8_src_alu8")),
     ("dout8_sel", ("dout8_sel_ir210", )),

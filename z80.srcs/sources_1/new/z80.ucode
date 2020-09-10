@@ -20,13 +20,19 @@ __opcode 00111111 ccf
 
 __opcode 01rrrsss ld r,r
   din8_src_dout8 din8_dst_ir543 dout8_sel_ir210 goto start
-  
+
+__opcode 01rrr110 ld r,(hl)
+  dout16_sel_hl addr_sel_dout16 rd din8_src_ram din8_dst_ir543 goto start
+
+__opcode 01110sss ld (hl), r
+  dout16_sel_hl addr_sel_dout16 dout8_sel_ir210 ram_wr_dout8 goto start
+
 __opcode 01110110 halt
 halt_label:
   halt goto halt_label
   
 __opcode 10ooorrr aluop r
-  alu8_op_ip543 alu8_src_dout8 flags_source_alu8 din8_src_alu8 din8_dst_a goto start
+  alu8_op_ip543 dout8_sel_ir210 alu8_src_dout8 flags_source_alu8 din8_src_alu8 din8_dst_a goto start
 
 __opcode 10ooo110 aluop (hl)
   alu8_op_ip543 dout16_sel_hl addr_sel_dout16 rd alu8_src_ram flags_source_alu8 din8_src_alu8 din8_dst_a goto start

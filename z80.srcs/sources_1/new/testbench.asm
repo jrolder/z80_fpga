@@ -4,6 +4,19 @@
 	;ld c, 45h
 	;ld b,c
 	;jp hello2
+	
+;
+; test ld r,(hl) and ld (hl), r
+;
+	ld hl, scratch
+	ld b, 77
+	ld (hl), b
+	ld a, 77
+	cp (hl)
+	jp nz, error
+	ld a,(hl)
+	cp 77
+	jp nz, error
 
 ;
 ; test op a, r
@@ -132,3 +145,6 @@ error:
 	
 hello: 
 	db "hello world!\n", 0
+	
+scratch:
+	db 0, 0
