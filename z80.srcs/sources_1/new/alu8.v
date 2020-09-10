@@ -92,11 +92,18 @@ begin
     end
   16: // scf
     begin
+      alu8_out = 8'bX;
       alu8_flags_out = {flag_s, flag_z, flag_f5, 1'b0, flag_f3, flag_pv, 1'b0, 1'b1};
     end
   17: // ccf
     begin
+      alu8_out = 8'bX;
       alu8_flags_out = {flag_s, flag_z, flag_f5, flag_c, flag_f3, flag_pv, 1'b0, !flag_c};
+    end
+  default:
+    begin
+      alu8_out = 8'bX;
+      alu8_flags_out = 8'bX;
     end
   endcase  
 end

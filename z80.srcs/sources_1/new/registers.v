@@ -68,6 +68,7 @@ begin
     9: dout8 = IX[7:0];
     10: dout8 = IY[15:8];    
     11: dout8 = IY[7:0];   
+    default: dout8 = 8'bX;
   endcase
 end
 
@@ -98,6 +99,7 @@ begin
     4: dout16 = SP;
     5: dout16 = IX;
     6: dout16 = IY;
+    default: dout16 = 16'bX;
   endcase
 end
 
