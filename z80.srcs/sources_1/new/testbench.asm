@@ -8,6 +8,14 @@
 ;
 ; test op a, r
 ;
+	jp cphl_test
+cphl_data: 
+	db 6
+cphl_test:
+	ld a, 6
+	ld hl, cphl_data
+	cp a, (hl)
+	jp nz, error
 
 	ld a, 3
 	scf
@@ -53,8 +61,6 @@
 	or l
 	cp a, 7
 	jp nz, error
-	
-; todo: (hl) and cp
 
 ;
 ; test op a, n

@@ -217,6 +217,14 @@ end
 
 always @(*)
 begin
+  case (uc_dout16_sel)
+    VAL_DOUT16_SEL_HL: reg_dout16sel = 2;
+    default: reg_dout16sel = 3'bZ;
+  endcase
+end
+
+always @(*)
+begin
   if (uc_flags_source == VAL_FLAGS_SOURCE_ALU8)
   begin
     reg_flags_in = alu8_flags_out;
@@ -230,10 +238,11 @@ reg [15:0] IP;
 
 always @(*)
 begin
-  if (uc_ip_to_addr)
-    ram_addr = IP;
-  else
-    ram_addr = 16'haffe;
+  case (uc_ram_addr_sel)
+    VAL_ADDR_SEL_IP: ram_addr = IP;
+    VAL_ADDR_SEL_DOUT16: ram_addr = reg_dout16;
+    default: ram_addr = 16'bZ;
+  endcase
 end
 
 always @(posedge clk)

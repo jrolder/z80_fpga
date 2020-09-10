@@ -3,19 +3,19 @@ import math
 UCODE_LENGTH = 50
 UCODE_ADDR_LENGTH = 12
 
-bits = (
-    "ip_to_addr",
-    "rd")
+bits = ("rd", )
 
 enums = (
     ("command", ("halt", "bdos",)),
     ("ucode_goto", ("decode1", "decode2", "goto_now", "goto_ncc", )),
+    ("ram_addr_sel", ("addr_sel_ip", "addr_sel_dout16")),
     ("read_target", ("rd_ir", "rd_arg1", "rd_arg2")),
     ("din8_target", ("din8_dst_ir543", "din8_dst_a")),
     ("din8_source", ("din8_src_dout8", "din8_src_ram", "din8_src_alu8")),
     ("dout8_sel", ("dout8_sel_ir210", )),
     ("din16_source", ("din16_src_arg12", "din16_src_dout16")),
     ("din16_sel", ("din16_sel_ir54q", )),
+    ("dout16_sel", ("dout16_sel_hl", )),
     ("flags_source", ("flags_source_alu8", )),
     ("alu8_source", ("alu8_src_ram", "alu8_src_dout8",)),
     ("alu8_op", ("alu8_op_ip543", "alu8_op_scf", "alu8_op_ccf")),

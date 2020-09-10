@@ -1,11 +1,11 @@
 start:
-  ip_to_addr rd inc_ip rd_ir decode1
+  addr_sel_ip rd inc_ip rd_ir decode1
   
 __opcode 00000000 nop
   goto start
   
 __opcode 00rrr110 ld r,n
-  ip_to_addr rd inc_ip din8_src_ram din8_dst_ir543 goto start
+  addr_sel_ip rd inc_ip din8_src_ram din8_dst_ir543 goto start
   
 __opcode 01rrrsss ld r,r
   din8_src_dout8 din8_dst_ir543 dout8_sel_ir210 goto start
@@ -18,19 +18,19 @@ __opcode 11111111 rst 7
   bdos goto start
   
 __opcode 00qq0001 ld Q, nnnn
-  ip_to_addr rd inc_ip rd_arg1
-  ip_to_addr rd inc_ip rd_arg2 din16_src_arg12 din16_sel_ir54q goto start
+  addr_sel_ip rd inc_ip rd_arg1
+  addr_sel_ip rd inc_ip rd_arg2 din16_src_arg12 din16_sel_ir54q goto start
   
 __opcode 11ooo110 aluop n
-  ip_to_addr rd inc_ip alu8_op_ip543 alu8_src_ram flags_source_alu8 din8_src_alu8 din8_dst_a goto start
+  addr_sel_ip rd inc_ip alu8_op_ip543 alu8_src_ram flags_source_alu8 din8_src_alu8 din8_dst_a goto start
   
 __opcode 11000011 jp nnnn
-  ip_to_addr rd inc_ip rd_arg1
-  ip_to_addr rd        rd_arg2 ip_from_arg21 goto start
+  addr_sel_ip rd inc_ip rd_arg1
+  addr_sel_ip rd        rd_arg2 ip_from_arg21 goto start
   
 __opcode 11ccc010 jp cc,nnnn
-  ip_to_addr rd inc_ip rd_arg1
-  ip_to_addr rd inc_ip rd_arg2 gotoncc start
+  addr_sel_ip rd inc_ip rd_arg1
+  addr_sel_ip rd inc_ip rd_arg2 gotoncc start
   ip_from_arg21 goto start
   
 __opcode 00110111 scf
@@ -41,3 +41,6 @@ __opcode 00111111 ccf
   
 __opcode 10ooorrr aluop r
   alu8_op_ip543 alu8_src_dout8 flags_source_alu8 din8_src_alu8 din8_dst_a goto start
+
+__opcode 10ooo110 aluop (hl)
+  alu8_op_ip543 dout16_sel_hl addr_sel_dout16 rd alu8_src_ram flags_source_alu8 din8_src_alu8 din8_dst_a goto start
