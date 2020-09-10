@@ -4,7 +4,58 @@
 	;ld c, 45h
 	;ld b,c
 	;jp hello2
+
+;
+; test op a, r
+;
+
+	ld a, 3
+	scf
+	add a, a
+	cp a, 6
+	jp nz, error
 	
+	ld a, 3
+	ld b, 5
+	scf
+	adc a, b
+	cp a, 9
+	jp nz, error
+	
+	ld a, 3
+	ld c, 2
+	scf
+	sub a, c
+	cp a, 1
+	jp nz, error
+	
+	ld a, 3
+	ld d, 2
+	scf
+	sbc a, d
+	cp a, 0
+	jp nz, error	
+	
+	ld a, 3
+	ld e, 5
+	and e
+	cp a, 1
+	jp nz, error	
+	
+	ld a, 3
+	ld h, 6
+	xor 5
+	cp a, h
+	jp nz, error
+	
+	ld a, 3
+	ld l, 5
+	or l
+	cp a, 7
+	jp nz, error
+	
+; todo: (hl) and cp
+
 ;
 ; test op a, n
 ;

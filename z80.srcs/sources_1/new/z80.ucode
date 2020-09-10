@@ -38,3 +38,6 @@ __opcode 00110111 scf
   
 __opcode 00111111 ccf
   alu8_op_ccf flags_source_alu8 goto start
+  
+__opcode 10ooorrr aluop r
+  alu8_op_ip543 alu8_src_dout8 flags_source_alu8 din8_src_alu8 din8_dst_a goto start

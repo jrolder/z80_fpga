@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="3586752fs"></ZoomStartTime>
-      <ZoomEndTime time="5306753fs"></ZoomEndTime>
-      <Cursor1Time time="5200000fs"></Cursor1Time>
+      <ZoomStartTime time="7683643fs"></ZoomStartTime>
+      <ZoomEndTime time="9411644fs"></ZoomEndTime>
+      <Cursor1Time time="9350000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="276"></NameColumnWidth>
-      <ValueColumnWidth column_width="68"></ValueColumnWidth>
+      <ValueColumnWidth column_width="64"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="17" />
+   <WVObjectSize size="18" />
    <wvobject fp_name="/z80_tb/clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -51,6 +51,10 @@
    <wvobject fp_name="/z80_tb/dut/registers/DE" type="array">
       <obj_property name="ElementShortName">DE[15:0]</obj_property>
       <obj_property name="ObjectShortName">DE[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/z80_tb/dut/registers/HL" type="array">
+      <obj_property name="ElementShortName">HL[15:0]</obj_property>
+      <obj_property name="ObjectShortName">HL[15:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/z80_tb/dut/registers/AF" type="array">
       <obj_property name="ElementShortName">AF[15:0]</obj_property>
