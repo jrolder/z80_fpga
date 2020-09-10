@@ -36,7 +36,7 @@ assign flags_out = AF[7:0];
 
 always @(posedge clk)
 begin
-  if (din8we)
+  if (din8we && !reset)
   begin
     case (din8sel)
       0: BC[15:8] <= din8;
@@ -75,18 +75,31 @@ end
 // BC, DE, HL, AF, SP, IX, IY
 always @(posedge clk)
 begin
-  if (din16we)
-  begin
-    case (din16sel)
-      0: BC <= din16;
-      1: DE <= din16;
-      2: HL <= din16;
-      3: AF <= din16;
-      4: SP <= din16;
-      5: IX <= din16;
-      6: IY <= din16;
-    endcase
-  end
+  if (reset)
+      begin
+        BC <= 16'hffff;
+        DE <= 16'hffff;
+        HL <= 16'hffff;
+        AF <= 16'hffff;
+        SP <= 16'hffff;
+        IX <= 16'hffff;
+        IY <= 16'hffff;
+      end
+  else
+    begin
+      if (din16we)
+      begin
+        case (din16sel)
+          0: BC <= din16;
+          1: DE <= din16;
+          2: HL <= din16;
+          3: AF <= din16;
+          4: SP <= din16;
+          5: IX <= din16;
+          6: IY <= din16;
+        endcase
+      end
+    end
 end
 
 always @(*)
