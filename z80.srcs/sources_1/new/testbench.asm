@@ -5,7 +5,26 @@
 	;ld b,c
 	;jp hello2
 	
+;
+; test call/ret
+;
+
+	ld sp,stack
+	ld a, 45
+	call call_test
+	cp a, 57
+	jp nz, error
+	jp call_test2
+call_test:
+	ld a, 57
+	ret
+	halt
+call_test2:
 	
+;
+; test push/pop
+;
+
 	ld sp,stack
 	ld bc,affeh
 	push bc

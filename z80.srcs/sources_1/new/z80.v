@@ -125,6 +125,16 @@ begin
         ram_din = ARG2;
         ram_we = 1;
       end
+    VAL_RAM_WR_IP_HI:
+      begin
+        ram_din = IP[15:8];
+        ram_we = 1;
+      end
+    VAL_RAM_WR_IP_LO:
+      begin
+        ram_din = IP[7:0];
+        ram_we = 1;
+      end
     default:
       begin
         ram_din = 8'bX;
