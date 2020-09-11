@@ -9,7 +9,7 @@ __opcode 00rrr110 ld r,n
   
 __opcode 00qq0001 ld Q, nnnn
   addr_sel_ip rd inc_ip rd_arg1
-  addr_sel_ip rd inc_ip rd_arg2 din16_src_arg12 din16_sel_ir54q goto start
+  addr_sel_ip rd inc_ip rd_arg2 din16_src_arg12 din16_sel_ir54rp2 goto start
 
 __opcode 00110111 scf
   alu8_op_scf flags_source_alu8 goto start
@@ -41,7 +41,17 @@ __opcode 10ooo110 aluop (hl)
 __opcode 11111111 rst 7
   bdos goto start
 
-  
+__opcode 11qq0001 pop qq
+  dout16_sel_sp addr_sel_dout16 alu16_op_inc rd_arg1 din16_src_alu16 din16_sel_sp
+  dout16_sel_sp addr_sel_dout16 alu16_op_inc rd_arg2 din16_src_alu16 din16_sel_sp
+  din16_sel_ir54rp1 din16_src_arg12 goto start
+
+
+__opcode 11qq0101 push qq
+  dout16_sel_ir54rp rd_dout16
+  dout16_sel_sp addr_sel_alu16 alu16_op_dec ram_wr_arg2 din16_src_alu16 din16_sel_sp
+  dout16_sel_sp addr_sel_alu16 alu16_op_dec ram_wr_arg1 din16_src_alu16 din16_sel_sp goto start
+
 __opcode 11ooo110 aluop n
   addr_sel_ip rd inc_ip alu8_op_ip543 alu8_src_ram flags_source_alu8 din8_src_alu8 din8_dst_a goto start
   

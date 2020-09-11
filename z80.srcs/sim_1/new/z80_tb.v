@@ -43,8 +43,8 @@ begin
   end
   if (clk && dut.uc_command == VAL_BDOS)
   begin
-    // $display("bdos called DE: %H", dut.registers.DE);
-    // $display("bdos called C: %H", dut.registers.BC[7:0]);
+    $display("bdos called DE: %H", dut.registers.DE);
+    $display("bdos called C: %H", dut.registers.BC[7:0]);
     case (dut.registers.BC[7:0])
         9:
           begin

@@ -8,19 +8,20 @@ bits = ("rd", )
 enums = (
     ("command", ("halt", "bdos",)),
     ("ucode_goto", ("decode1", "decode2", "goto_now", "goto_ncc", )),
-    ("ram_addr_sel", ("addr_sel_ip", "addr_sel_dout16")),
-    ("read_target", ("rd_ir", "rd_arg1", "rd_arg2")),
-    ("ram_wr_sel", ("ram_wr_dout8", )),
+    ("ram_addr_sel", ("addr_sel_ip", "addr_sel_dout16", "addr_sel_alu16")),
+    ("read_target", ("rd_ir", "rd_arg1", "rd_arg2", "rd_dout16")),
+    ("ram_wr_sel", ("ram_wr_dout8", "ram_wr_arg1", "ram_wr_arg2")),
     ("din8_target", ("din8_dst_ir543", "din8_dst_a")),
     ("din8_source", ("din8_src_dout8", "din8_src_ram", "din8_src_alu8")),
     ("dout8_sel", ("dout8_sel_ir210", )),
-    ("din16_source", ("din16_src_arg12", "din16_src_dout16")),
-    ("din16_sel", ("din16_sel_ir54q", )),
-    ("dout16_sel", ("dout16_sel_hl", )),
-    ("flags_source", ("flags_source_alu8", )),
+    ("din16_source", ("din16_src_arg12", "din16_src_dout16", "din16_src_alu16")),
+    ("din16_sel", ("din16_sel_ir54rp1", "din16_sel_ir54rp2", "din16_sel_sp",)),
+    ("dout16_sel", ("dout16_sel_hl", "dout16_sel_sp", "dout16_sel_ir54rp","dout16_sel_ir54rp2",)),
+    ("flags_source", ("flags_source_alu8", "flags_source_alu16")),
     ("alu8_source", ("alu8_src_ram", "alu8_src_dout8",)),
     ("alu8_op", ("alu8_op_ip543", "alu8_op_scf", "alu8_op_ccf")),
-    ("ip_op", ("inc_ip", "ip_from_arg21"))
+    ("ip_op", ("inc_ip", "ip_from_arg21")),
+    ("alu16_op", ("alu16_op_inc", "alu16_op_dec", "alu_16_add",)), 
     )
 
 def generate_ucode_headers():

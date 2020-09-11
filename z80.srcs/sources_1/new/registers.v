@@ -9,8 +9,8 @@ module registers(
     input wire [3:0] dout8sel,
     input wire [15:0] din16,
     output reg [15:0] dout16,
-    input wire [2:0] din16sel,
-    input wire [2:0] dout16sel,
+    input wire [3:0] din16sel,
+    input wire [3:0] dout16sel,
     input wire [7:0] flags_in,
     output wire [7:0] flags_out,
     input wire din8we,
@@ -94,9 +94,12 @@ begin
           1: DE <= din16;
           2: HL <= din16;
           3: AF <= din16;
-          4: SP <= din16;
-          5: IX <= din16;
-          6: IY <= din16;
+          4: BC <= din16;
+          5: DE <= din16;
+          6: HL <= din16;
+          7: SP <= din16;          
+          8: IX <= din16;
+          9: IY <= din16;
         endcase
       end
     end
@@ -109,9 +112,12 @@ begin
     1: dout16 = DE;
     2: dout16 = HL;
     3: dout16 = AF;
-    4: dout16 = SP;
-    5: dout16 = IX;
-    6: dout16 = IY;
+    4: dout16 = BC;
+    5: dout16 = DE;
+    6: dout16 = HL;
+    7: dout16 = SP;
+    8: dout16 = IX;
+    9: dout16 = IY;
     default: dout16 = 16'bX;
   endcase
 end

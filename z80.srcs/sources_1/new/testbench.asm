@@ -5,6 +5,23 @@
 	;ld b,c
 	;jp hello2
 	
+	
+	ld sp,stack
+	ld bc,affeh
+	push bc
+	pop de
+	
+	ld de, bffah
+	push de
+	pop hl
+	
+	ld hl, cff1h
+	push hl
+	pop af
+
+    push af
+    pop bc
+    
 ;
 ; test ld r,(hl) and ld (hl), r
 ;
@@ -135,7 +152,7 @@ l2:
 
 
 hello2:
-	ld de, hello
+	ld de, result_good
 	ld c, 9
 	rst #38
 	halt
@@ -143,8 +160,11 @@ hello2:
 error:
 	halt
 	
-hello: 
-	db "hello world!\n", 0
+result_good: 
+	db "*** test completed, no errors\n", 0
 	
 scratch:
 	db 0, 0
+	
+	db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+stack:

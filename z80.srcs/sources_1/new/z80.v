@@ -115,6 +115,16 @@ begin
         ram_din = reg_dout8;
         ram_we = 1;
       end
+    VAL_RAM_WR_ARG1:
+      begin
+        ram_din = ARG1;
+        ram_we = 1;
+      end
+    VAL_RAM_WR_ARG2:
+      begin
+        ram_din = ARG2;
+        ram_we = 1;
+      end
     default:
       begin
         ram_din = 8'bX;
@@ -130,8 +140,8 @@ reg [3:0] reg_din8sel;
 reg [3:0] reg_dout8sel;
 reg [15:0] reg_din16;
 wire [15:0] reg_dout16;
-reg [2:0] reg_din16sel;
-reg [2:0] reg_dout16sel;
+reg [3:0] reg_din16sel;
+reg [3:0] reg_dout16sel;
 reg [7:0] reg_flags_in;
 wire [7:0] reg_flags_out;
 reg reg_din8we;
@@ -220,29 +230,40 @@ begin
         reg_din16 = reg_dout16;
         reg_din16we = 1;
       end
+    VAL_DIN16_SRC_ALU16:
+      begin
+        reg_din16 = alu16_out;
+        reg_din16we = 1;
+      end
     default:
       begin
         reg_din16 = 16'bX;
-        reg_din8we = 0;
+        reg_din16we = 0;
       end
   endcase
 end
 
 always @(*)
 begin
-  if (uc_din16_sel == VAL_DIN16_SEL_IR54Q)
-  case (IR1[5:4])
-    3: reg_din16sel = 4;
-    default: reg_din16sel = IR1[5:4];
+  case (uc_din16_sel)
+    VAL_DIN16_SEL_IR54RP1:
+      reg_din16sel = IR1[5:4];   
+    VAL_DIN16_SEL_IR54RP2:
+      reg_din16sel = 4 + IR1[5:4];   
+    VAL_DIN16_SEL_SP:
+      reg_din16sel = 7;
+    default:
+      reg_din16sel = 4'bX;
   endcase
-  else
-    reg_din16sel = 4'bX;
 end
 
 always @(*)
 begin
   case (uc_dout16_sel)
     VAL_DOUT16_SEL_HL: reg_dout16sel = 2;
+    VAL_DOUT16_SEL_SP: reg_dout16sel = 7;
+    VAL_DOUT16_SEL_IR54RP: reg_dout16sel = IR1[5:4];
+    VAL_DOUT16_SEL_IR54RP2: reg_dout16sel = 4 + IR1[5:4];
     default: reg_dout16sel = 3'bX;
   endcase
 end
@@ -255,13 +276,18 @@ begin
         reg_flags_in = alu8_flags_out;
         reg_flags_we = 1;      
       end
+    VAL_FLAGS_SOURCE_ALU16:
+      begin
+        reg_flags_in = alu16_flags_out;
+        reg_flags_we = 1;      
+      end
     default:
       begin
         reg_flags_in = 8'bX;
         reg_flags_we = 0;
       end
   endcase
-end; 
+end
 
 reg [15:0] IP;
 
@@ -270,6 +296,7 @@ begin
   case (uc_ram_addr_sel)
     VAL_ADDR_SEL_IP: ram_addr = IP;
     VAL_ADDR_SEL_DOUT16: ram_addr = reg_dout16;
+    VAL_ADDR_SEL_ALU16: ram_addr = alu16_out;
     default: ram_addr = 16'bX;
   endcase
 end
@@ -293,6 +320,11 @@ begin
     VAL_RD_IR: IR1 = ram_dout;
     VAL_RD_ARG1: ARG1 = ram_dout;
     VAL_RD_ARG2: ARG2 = ram_dout;
+    VAL_RD_DOUT16:
+      begin
+        ARG2 = reg_dout16[15:8];
+        ARG1 = reg_dout16[7:0];
+      end
   endcase
 end
 
@@ -342,5 +374,21 @@ begin
       alu8_op = 5'bX;
   endcase
 end
+    
+wire [15:0] alu16_out;
+wire [7:0] alu16_flags_out;
+wire [2:0] alu16_op;
+
+alu16 alu16 (
+  .alu16_arg1(reg_dout16),
+  .alu16_arg2({ARG1,ARG2}),
+  .alu16_out(alu16_out),
+  .alu16_op(alu16_op),
+  .alu16_flags_in(reg_flags_out),
+  .alu16_flags_out(alu16_flags_out)
+);
+
+assign alu16_op = uc_alu16_op;
+
 
 endmodule
