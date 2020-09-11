@@ -4,7 +4,34 @@
 	;ld c, 45h
 	;ld b,c
 	;jp hello2
-	
+
+;
+; test call cc
+;
+	ld sp,stack
+	scf
+	call nc, error
+	call c, call_cc1
+	halt
+call_cc1:
+
+;
+; test ret cc
+;
+
+	ld sp,stack
+	scf
+	call ret_cc1
+	jp ret_cc2
+ret_cc1:
+	ret c
+	halt
+ret_cc2:
+	call ret_cc3
+	halt
+ret_cc3:
+	ret nc	
+
 ;
 ; test call/ret
 ;
