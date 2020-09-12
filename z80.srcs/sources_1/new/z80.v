@@ -58,14 +58,6 @@ ucode_rom ucode_rom(
   .ucode(ucode)
   );
 
-// module decode_rom
-wire [UCODE_ADDR_LENGTH-1:0] decode1_out;
-reg [7:0] IR1;
-
-decode1_rom decode1_rom (
-  .opcode(IR1),
-  .uc_addr(decode1_out)
-  );
 
 // module sys_ram
 reg [15:0] ram_addr;
@@ -79,6 +71,16 @@ sys_ram sys_ram(
   .clk(clk),
   .din(ram_din),
   .dout(ram_dout));
+  
+
+// module decode_rom
+wire [UCODE_ADDR_LENGTH-1:0] decode1_out;
+reg [7:0] IR1;
+
+decode1_rom decode1_rom (
+  .opcode(ram_dout),
+  .uc_addr(decode1_out)
+  );  
   
 // module registers  
 reg [7:0] reg_din8;
@@ -372,12 +374,10 @@ begin
 end
     
 
-
-
-always @(uc_read_target, ram_dout, reg_dout16)
+always @(posedge clk)
 begin
   case (uc_read_target)
-    VAL_RD_IR: IR1 = ram_dout;
+    VAL_RD_IR: IR1 <= ram_dout;
     VAL_RD_ARG1: ARG1 = ram_dout;
     VAL_RD_ARG2: ARG2 = ram_dout;
     VAL_RD_DOUT16:
@@ -385,8 +385,17 @@ begin
         ARG2 = reg_dout16[15:8];
         ARG1 = reg_dout16[7:0];
       end
+    endcase
+end
+
+/*
+always @(uc_read_target, ram_dout, reg_dout16)
+begin
+  case (uc_read_target)
+
   endcase
 end
+*/
 
 assign ir1_out = IR1;
 
