@@ -1,4 +1,4 @@
 #!/bin/sh -xe
-~/rasm/rasm.exe -oa testbench.asm
-python tohex.py
-python make_ucode.py
+~/rasm/rasm/rasm -oa testbench.asm
+python3 tohex.py
+python3 make_ucode.py
