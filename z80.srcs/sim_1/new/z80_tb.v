@@ -41,6 +41,7 @@ begin
   begin
     $finish;
   end
+`ifdef DONT_COMPILE
   if (clk && dut.uc_command == VAL_BDOS)
   begin
     $display("bdos called DE: %H", dut.registers.DE);
@@ -60,6 +61,7 @@ begin
           end
     endcase
   end
+`endif
 end
 
 initial

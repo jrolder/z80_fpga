@@ -14,6 +14,7 @@ module z80(
 
 `include "ucode_consts.vh"
     
+// declarations for this module
 input wire clk;
 input wire reset_external;
 output reg halt;
@@ -22,6 +23,12 @@ output wire [UCODE_LENGTH-1:0] ucode_out;
 output wire [7:0] ir1_out;
 output wire [15:0] bc_out;
     
+// global declarations
+reg [7:0] ARG1;
+reg [7:0] ARG2;    
+reg [15:0] IP;
+    
+// module sync_reset  
 wire reset;
     
 sync_reset sync_reset(
@@ -30,7 +37,7 @@ sync_reset sync_reset(
   .reset(reset)
   );
     
-    
+// module ucode_rom    
 reg [UCODE_ADDR_LENGTH-1:0] ucode_addr;
 wire [UCODE_LENGTH-1:0] ucode;
 wire [UCODE_ADDR_LENGTH-1:0] last_ucode_addr;
@@ -43,20 +50,99 @@ ucode_rom ucode_rom(
   .ucode(ucode)
   );
 
-assign ucode_out = ucode;
-assign ucode_addr_out = ucode_addr;
-
-`include "ucode_signals.vh"
-
+// module decode_rom
 wire [UCODE_ADDR_LENGTH-1:0] decode1_out;
 reg [7:0] IR1;
-reg [7:0] ARG1;
-reg [7:0] ARG2;
 
 decode1_rom decode1_rom (
   .opcode(IR1),
   .uc_addr(decode1_out)
   );
+
+// module sys_ram
+reg [15:0] ram_addr;
+reg ram_we;
+reg [7:0] ram_din;
+wire [7:0] ram_dout;
+    
+sys_ram sys_ram(
+  .addr(ram_addr),
+  .we(ram_we),
+  .clk(clk),
+  .din(ram_din),
+  .dout(ram_dout));
+  
+// module registers  
+reg [7:0] reg_din8;
+wire [7:0] reg_dout8;
+reg [3:0] reg_din8sel;
+reg [3:0] reg_dout8sel;
+reg [15:0] reg_din16;
+wire [15:0] reg_dout16;
+reg [3:0] reg_din16sel;
+reg [3:0] reg_dout16sel;
+reg [7:0] reg_flags_in;
+wire [7:0] reg_flags_out;
+reg reg_din8we;
+reg reg_din16we;
+reg reg_flags_we;
+wire [7:0] reg_aout8;
+
+registers registers(
+  .clk(clk),
+  .reset(reset),
+  .din8(reg_din8),
+  .dout8(reg_dout8),
+  .din8sel(reg_din8sel),
+  .dout8sel(reg_dout8sel),
+  .din16(reg_din16),
+  .dout16(reg_dout16),
+  .din16sel(reg_din16sel),
+  .dout16sel(reg_dout16sel),
+  .flags_in(reg_flags_in),
+  .flags_out(reg_flags_out),
+  .din8we(reg_din8we),
+  .din16we(reg_din16we),
+  .flags_we(reg_flags_we),
+  .aout8(reg_aout8)
+  );  
+  
+// module alu8
+wire [7:0] alu8_ain;
+wire [7:0] alu8_out;
+reg [4:0] alu8_op;
+reg [7:0] alu8_arg;
+wire [7:0] alu8_flags_in;
+wire [7:0] alu8_flags_out;
+
+alu8 alu8 (
+  .alu8_ain(alu8_ain),
+  .alu8_out(alu8_out),
+  .alu8_op(alu8_op),
+  .alu8_arg(alu8_arg),
+  .alu8_flags_in(alu8_flags_in),
+  .alu8_flags_out(alu8_flags_out)
+  );  
+  
+// module alu16    
+wire [15:0] alu16_out;
+wire [7:0] alu16_flags_out;
+wire [2:0] alu16_op;
+
+alu16 alu16 (
+  .alu16_arg1(reg_dout16),
+  .alu16_arg2({ARG1,ARG2}),
+  .alu16_out(alu16_out),
+  .alu16_op(alu16_op),
+  .alu16_flags_in(reg_flags_out),
+  .alu16_flags_out(alu16_flags_out)
+);  
+  
+assign ucode_out = ucode;
+assign ucode_addr_out = ucode_addr;
+
+`include "ucode_signals.vh"
+
   
 function check_condition;
 input [2:0] cond;
@@ -95,17 +181,7 @@ begin
   endcase
 end
 
-reg [15:0] ram_addr;
-reg ram_we;
-reg [7:0] ram_din;
-wire [7:0] ram_dout;
-    
-sys_ram sys_ram(
-  .addr(ram_addr),
-  .we(ram_we),
-  .clk(clk),
-  .din(ram_din),
-  .dout(ram_dout));
+
 
 always @(*)
 begin
@@ -144,39 +220,7 @@ begin
 end
 
 
-reg [7:0] reg_din8;
-wire [7:0] reg_dout8;
-reg [3:0] reg_din8sel;
-reg [3:0] reg_dout8sel;
-reg [15:0] reg_din16;
-wire [15:0] reg_dout16;
-reg [3:0] reg_din16sel;
-reg [3:0] reg_dout16sel;
-reg [7:0] reg_flags_in;
-wire [7:0] reg_flags_out;
-reg reg_din8we;
-reg reg_din16we;
-reg reg_flags_we;
-wire [7:0] reg_aout8;
 
-registers registers(
-  .clk(clk),
-  .reset(reset),
-  .din8(reg_din8),
-  .dout8(reg_dout8),
-  .din8sel(reg_din8sel),
-  .dout8sel(reg_dout8sel),
-  .din16(reg_din16),
-  .dout16(reg_dout16),
-  .din16sel(reg_din16sel),
-  .dout16sel(reg_dout16sel),
-  .flags_in(reg_flags_in),
-  .flags_out(reg_flags_out),
-  .din8we(reg_din8we),
-  .din16we(reg_din16we),
-  .flags_we(reg_flags_we),
-  .aout8(reg_aout8)
-  );
   
 assign bc_out = registers.BC;
 
@@ -299,8 +343,6 @@ begin
   endcase
 end
 
-reg [15:0] IP;
-
 always @(*)
 begin
   case (uc_ram_addr_sel)
@@ -340,26 +382,11 @@ end
 
 assign ir1_out = IR1;
 
-always @(posedge clk, posedge reset)
+always @(posedge clk)
 begin
   halt <= uc_command == VAL_HALT;
 end
 
-wire [7:0] alu8_ain;
-wire [7:0] alu8_out;
-reg [4:0] alu8_op;
-reg [7:0] alu8_arg;
-wire [7:0] alu8_flags_in;
-wire [7:0] alu8_flags_out;
-
-alu8 alu8 (
-  .alu8_ain(alu8_ain),
-  .alu8_out(alu8_out),
-  .alu8_op(alu8_op),
-  .alu8_arg(alu8_arg),
-  .alu8_flags_in(alu8_flags_in),
-  .alu8_flags_out(alu8_flags_out)
-  );
 
 assign alu8_ain = reg_aout8;
 assign alu8_flags_in = reg_flags_out;
@@ -384,19 +411,7 @@ begin
       alu8_op = 5'bX;
   endcase
 end
-    
-wire [15:0] alu16_out;
-wire [7:0] alu16_flags_out;
-wire [2:0] alu16_op;
 
-alu16 alu16 (
-  .alu16_arg1(reg_dout16),
-  .alu16_arg2({ARG1,ARG2}),
-  .alu16_out(alu16_out),
-  .alu16_op(alu16_op),
-  .alu16_flags_in(reg_flags_out),
-  .alu16_flags_out(alu16_flags_out)
-);
 
 assign alu16_op = uc_alu16_op;
 
