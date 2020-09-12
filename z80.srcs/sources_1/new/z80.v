@@ -9,7 +9,9 @@ module z80(
     ucode_addr_out,
     ucode_out,
     ir1_out,
-    bc_out
+    bc_out,
+    arg_lo_out,
+    arg_hi_out
     );
 
 `include "ucode_consts.vh"
@@ -22,11 +24,17 @@ output wire [UCODE_ADDR_LENGTH-1:0] ucode_addr_out;
 output wire [UCODE_LENGTH-1:0] ucode_out;
 output wire [7:0] ir1_out;
 output wire [15:0] bc_out;
-    
+output wire [7:0] arg_lo_out;
+output wire [7:0] arg_hi_out;
+
 // global declarations
 reg [7:0] ARG1;
 reg [7:0] ARG2;    
 reg [15:0] IP;
+
+assign arg_lo_out = ARG1;
+assign arg_hi_out = ARG2;
+  
     
 // module sync_reset  
 wire reset;
@@ -366,7 +374,7 @@ end
 
 
 
-always @(uc_read_target, ram_dout)
+always @(uc_read_target, ram_dout, reg_dout16)
 begin
   case (uc_read_target)
     VAL_RD_IR: IR1 = ram_dout;

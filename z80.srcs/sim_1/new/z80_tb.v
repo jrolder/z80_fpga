@@ -13,6 +13,8 @@ reg reset_external;
 wire [UCODE_ADDR_LENGTH-1:0] ucode_addr;
 wire [UCODE_LENGTH-1:0] ucode;
 wire [7:0] IR;
+wire [7:0] arg_lo_out;
+wire [7:0] arg_hi_out;
 
 z80 dut(
   .clk(clk),
@@ -20,7 +22,9 @@ z80 dut(
   .halt(halt),
   .ucode_addr_out(ucode_addr),
   .ucode_out(ucode),
-  .ir1_out(IR)
+  .ir1_out(IR),
+  .arg_lo_out(arg_lo_out),
+  .arg_hi_out(arg_hi_out)
   );
   
 initial begin
