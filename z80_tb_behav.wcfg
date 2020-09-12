@@ -3,7 +3,7 @@
    <wave_state>
    </wave_state>
    <db_ref_list>
-      <db_ref path="z80_tb_behav.wdb" id="1">
+      <db_ref path="z80_tb_time_synth.wdb" id="1">
          <top_modules>
             <top_module name="glbl" />
             <top_module name="z80_tb" />
@@ -12,14 +12,14 @@
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0fs"></ZoomStartTime>
-      <ZoomEndTime time="950239fs"></ZoomEndTime>
-      <Cursor1Time time="17000000fs"></Cursor1Time>
+      <ZoomEndTime time="158001fs"></ZoomEndTime>
+      <Cursor1Time time="17050000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="250"></NameColumnWidth>
+      <NameColumnWidth column_width="246"></NameColumnWidth>
       <ValueColumnWidth column_width="66"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="19" />
+   <WVObjectSize size="12" />
    <wvobject type="logic" fp_name="/z80_tb/clk">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -37,36 +37,28 @@
       <obj_property name="ObjectShortName">ucode_out[49:0]</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/z80_tb/dut/sys_ram/addr">
-      <obj_property name="ElementShortName">addr[15:0]</obj_property>
-      <obj_property name="ObjectShortName">addr[15:0]</obj_property>
+      <obj_property name="ElementShortName">addr[11:0]</obj_property>
+      <obj_property name="ObjectShortName">addr[11:0]</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/z80_tb/dut/sys_ram/din">
       <obj_property name="ElementShortName">din[7:0]</obj_property>
       <obj_property name="ObjectShortName">din[7:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/z80_tb/dut/ram_dout">
-      <obj_property name="ElementShortName">ram_dout[7:0]</obj_property>
-      <obj_property name="ObjectShortName">ram_dout[7:0]</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/z80_tb/dut/ir1_out">
       <obj_property name="ElementShortName">ir1_out[7:0]</obj_property>
       <obj_property name="ObjectShortName">ir1_out[7:0]</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/z80_tb/dut/alu8/alu8_op">
-      <obj_property name="ElementShortName">alu8_op[4:0]</obj_property>
-      <obj_property name="ObjectShortName">alu8_op[4:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/z80_tb/dut/IP">
-      <obj_property name="ElementShortName">IP[15:0]</obj_property>
-      <obj_property name="ObjectShortName">IP[15:0]</obj_property>
+      <obj_property name="ElementShortName">alu8_op[1:0]</obj_property>
+      <obj_property name="ObjectShortName">alu8_op[1:0]</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/z80_tb/dut/ucode_rom/last_ucode_addr">
       <obj_property name="ElementShortName">last_ucode_addr[11:0]</obj_property>
       <obj_property name="ObjectShortName">last_ucode_addr[11:0]</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/z80_tb/dut/alu16/alu16_out">
-      <obj_property name="ElementShortName">alu16_out[15:0]</obj_property>
-      <obj_property name="ObjectShortName">alu16_out[15:0]</obj_property>
+      <obj_property name="ElementShortName">alu16_out[10:0]</obj_property>
+      <obj_property name="ObjectShortName">alu16_out[10:0]</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/z80_tb/arg_lo_out">
       <obj_property name="ElementShortName">arg_lo_out[7:0]</obj_property>
@@ -75,25 +67,5 @@
    <wvobject type="array" fp_name="/z80_tb/arg_hi_out">
       <obj_property name="ElementShortName">arg_hi_out[7:0]</obj_property>
       <obj_property name="ObjectShortName">arg_hi_out[7:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/z80_tb/dut/registers/BC">
-      <obj_property name="ElementShortName">BC[15:0]</obj_property>
-      <obj_property name="ObjectShortName">BC[15:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/z80_tb/dut/registers/DE">
-      <obj_property name="ElementShortName">DE[15:0]</obj_property>
-      <obj_property name="ObjectShortName">DE[15:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/z80_tb/dut/registers/HL">
-      <obj_property name="ElementShortName">HL[15:0]</obj_property>
-      <obj_property name="ObjectShortName">HL[15:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/z80_tb/dut/registers/AF">
-      <obj_property name="ElementShortName">AF[15:0]</obj_property>
-      <obj_property name="ObjectShortName">AF[15:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/z80_tb/dut/registers/SP">
-      <obj_property name="ElementShortName">SP[15:0]</obj_property>
-      <obj_property name="ObjectShortName">SP[15:0]</obj_property>
    </wvobject>
 </wave_config>
