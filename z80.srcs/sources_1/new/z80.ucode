@@ -94,6 +94,11 @@ __opcode 11100011 ex (sp),hl
   dout16_sel_sp addr_sel_dout16             ram_wr_dout8 dout8_sel_reg_l
   dout16_sel_sp alu16_op_inc addr_sel_alu16 ram_wr_dout8 dout8_sel_reg_h
   din16_src_tmp din16_sel_hl goto start
+
+__opcode 11101011 ex de,hl
+  dout16_sel_hl rd_dout16
+  dout16_sel_de din16_src_dout16 din16_sel_hl
+  din16_src_tmp din16_sel_de goto start
   
 __opcode 11ccc100 call cc,nnnn
   addr_sel_ip rd inc_ip rd_tmp_lo

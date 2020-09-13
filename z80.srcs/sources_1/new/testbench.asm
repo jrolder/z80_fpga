@@ -6,6 +6,25 @@
 	;jp hello2
 
 ;
+; test ex de,hl
+;
+	ld hl, 3344h
+	ld de, 7788h
+	ex de,hl
+	ld a,d
+	cp a,33h
+	jp nz,error
+	ld a,e
+	cp a,44h
+	jp nz,error
+	ld a,h
+	cp a,77h
+	jp nz,error
+	ld a,l
+	cp a,88h
+	jp nz,error
+	
+;
 ; test ex (sp),hl
 ;
 
@@ -32,6 +51,7 @@
 	ld a,(hl)
 	cp a,55h
 	jp nz,error
+
 
 ;
 ; test io

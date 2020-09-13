@@ -339,6 +339,8 @@ begin
       reg_din16sel = 7;
     VAL_DIN16_SEL_HL:
       reg_din16sel = 2;
+    VAL_DIN16_SEL_DE:
+      reg_din16sel = 1;
     default:
       reg_din16sel = 4'bX;
   endcase
@@ -347,6 +349,7 @@ end
 always @(*)
 begin
   case (uc_dout16_sel)
+    VAL_DOUT16_SEL_DE: reg_dout16sel = 1;
     VAL_DOUT16_SEL_HL: reg_dout16sel = 2;
     VAL_DOUT16_SEL_SP: reg_dout16sel = 7;
     VAL_DOUT16_SEL_IR54RP: reg_dout16sel = IR1[5:4];
