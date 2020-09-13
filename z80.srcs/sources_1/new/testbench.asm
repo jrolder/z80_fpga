@@ -6,6 +6,13 @@
 	;jp hello2
 
 ;
+;test di and ei
+;
+
+	di
+	ei
+
+;
 ; test ex de,hl
 ;
 	ld hl, 3344h

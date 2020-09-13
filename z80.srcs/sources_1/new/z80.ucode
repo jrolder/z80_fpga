@@ -100,6 +100,12 @@ __opcode 11101011 ex de,hl
   dout16_sel_de din16_src_dout16 din16_sel_hl
   din16_src_tmp din16_sel_de goto start
   
+__opcode 11110011 di
+  goto start
+
+__opcode 11111011 ei
+  goto start
+  
 __opcode 11ccc100 call cc,nnnn
   addr_sel_ip rd inc_ip rd_tmp_lo
   addr_sel_ip rd inc_ip rd_tmp_hi gotoncc start
