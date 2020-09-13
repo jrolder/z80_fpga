@@ -1,2 +1,6 @@
 ram.mem
 testbench.bin
+ucode_consts.vh
+ucode_signals.vh
+ucode.vh
+decode1.vh
