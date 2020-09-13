@@ -146,6 +146,20 @@ alu16 alu16 (
   .alu16_flags_in(reg_flags_out),
   .alu16_flags_out(alu16_flags_out)
 );  
+
+// module sys_io
+reg [7:0] io_addr;
+wire [7:0] io_dout;
+reg [7:0] io_din;
+reg io_we;
+
+sys_io sys_io(
+  .clk(clk),
+  .io_addr(io_addr),
+  .io_dout(io_dout),
+  .io_din(io_din),
+  .io_we(io_we)
+);
   
 assign ucode_out = ucode;
 assign ucode_addr_out = ucode_addr;
@@ -251,6 +265,11 @@ begin
         reg_din8 = alu8_out;
         reg_din8we = 1;
       end    
+    VAL_DIN8_SRC_IO:
+      begin
+        reg_din8 = io_dout;
+        reg_din8we = 1;
+      end    
     default:
       begin
         reg_din8 = 8'bX;
@@ -275,6 +294,7 @@ always @(*)
 begin
   case (uc_dout8_sel)
     VAL_DOUT8_SEL_IR210: reg_dout8sel = IR1[2:0];
+    VAL_DOUT8_SEL_REGA: reg_dout8sel = 7;
     default:
       reg_dout8sel = 4'bX;
   endcase
@@ -427,5 +447,37 @@ end
 
 assign alu16_op = uc_alu16_op;
 
+always @(*)
+begin
+  case (uc_ram_wr_sel)
+    VAL_IO_WR_DOUT8:
+      begin
+        io_din = reg_dout8;
+        io_we = 1;
+      end
+    VAL_IO_WR_TMP_LO:
+      begin
+        io_din = TMP[7:0];
+        io_we = 1;
+      end
+    default:
+      begin
+        io_din = 8'bX;
+        io_we = 0;
+      end
+  endcase
+end
+
+always @(*)
+begin
+  case (uc_ram_addr_sel)
+    VAL_IO_ADDR_SEL_DOUT8:
+      io_addr = reg_dout8;
+    VAL_IO_ADDR_SEL_TMP_LO:
+      io_addr = TMP[7:0];
+    default:
+      io_addr = 8'bX;
+  endcase
+end
 
 endmodule

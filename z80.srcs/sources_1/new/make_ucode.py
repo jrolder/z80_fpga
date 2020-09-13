@@ -1,6 +1,6 @@
 import math
 
-UCODE_LENGTH = 50
+UCODE_LENGTH = 80
 UCODE_ADDR_LENGTH = 12
 
 bits = ("rd", )
@@ -8,12 +8,12 @@ bits = ("rd", )
 enums = (
     ("command", ("halt", "bdos",)),
     ("ucode_goto", ("decode1", "decode2", "goto_now", "goto_ncc", )),
-    ("ram_addr_sel", ("addr_sel_ip", "addr_sel_dout16", "addr_sel_alu16")),
+    ("ram_addr_sel", ("addr_sel_ip", "addr_sel_dout16", "addr_sel_alu16", "io_addr_sel_dout8", "io_addr_sel_tmp_lo")),
     ("read_target", ("rd_ir", "rd_tmp_lo", "rd_tmp_hi", "rd_dout16")),
-    ("ram_wr_sel", ("ram_wr_dout8", "ram_wr_tmp_lo", "ram_wr_tmp_hi", "ram_wr_ip_hi", "ram_wr_ip_lo")),
+    ("ram_wr_sel", ("ram_wr_dout8", "ram_wr_tmp_lo", "ram_wr_tmp_hi", "ram_wr_ip_hi", "ram_wr_ip_lo", "io_wr_dout8", "io_wr_tmp_lo")),
     ("din8_target", ("din8_dst_ir543", "din8_dst_a")),
-    ("din8_source", ("din8_src_dout8", "din8_src_ram", "din8_src_alu8")),
-    ("dout8_sel", ("dout8_sel_ir210", )),
+    ("din8_source", ("din8_src_dout8", "din8_src_ram", "din8_src_alu8", "din8_src_io")),
+    ("dout8_sel", ("dout8_sel_ir210", "dout8_sel_rega")),
     ("din16_source", ("din16_src_tmp", "din16_src_dout16", "din16_src_alu16")),
     ("din16_sel", ("din16_sel_ir54rp1", "din16_sel_ir54rp2", "din16_sel_sp",)),
     ("dout16_sel", ("dout16_sel_hl", "dout16_sel_sp", "dout16_sel_ir54rp","dout16_sel_ir54rp2",)),
@@ -53,6 +53,8 @@ def generate_ucode_headers():
           value += 1
           commands[enum] = f"UC_{enum.upper()}";
         current += bits;
+  if current > UCODE_LENGTH:
+      raise Exception(f"microcode too wide, increase UCODE_LENGTH to {current}")
   return commands
 
 def make_codes(decode_map, opcode, chosen, uc_addr):

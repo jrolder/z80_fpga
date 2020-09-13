@@ -6,6 +6,17 @@
 	;jp hello2
 
 ;
+; test io
+;
+
+	ld a,17
+	out (5), a
+	ld a, 25
+	in a, (5)
+	cp a, 17
+	jp nz, error
+
+;
 ; test call cc
 ;
 	ld sp,stack
