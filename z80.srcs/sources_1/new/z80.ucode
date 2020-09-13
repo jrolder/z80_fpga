@@ -8,9 +8,9 @@ __opcode 00rrr110 ld r,n
   addr_sel_ip rd inc_ip din8_src_ram din8_dst_ir543 goto start
   
 __opcode 00qq0001 ld Q, nnnn
-  addr_sel_ip rd inc_ip rd_arg1
-  addr_sel_ip rd inc_ip rd_arg2 
-  din16_src_arg12 din16_sel_ir54rp2 goto start
+  addr_sel_ip rd inc_ip rd_tmp_lo
+  addr_sel_ip rd inc_ip rd_tmp_hi 
+  din16_src_tmp din16_sel_ir54rp2 goto start
 
 __opcode 00110111 scf
   alu8_op_scf flags_source_alu8 goto start
@@ -40,46 +40,46 @@ __opcode 10ooo110 aluop (hl)
 
 __opcode 11ccc000 ret cc
   gotoncc start
-  dout16_sel_sp addr_sel_dout16 alu16_op_inc rd_arg1 din16_src_alu16 din16_sel_sp
-  dout16_sel_sp addr_sel_dout16 alu16_op_inc rd_arg2 din16_src_alu16 din16_sel_sp 
-  ip_from_arg21 goto start
+  dout16_sel_sp addr_sel_dout16 alu16_op_inc rd_tmp_lo din16_src_alu16 din16_sel_sp
+  dout16_sel_sp addr_sel_dout16 alu16_op_inc rd_tmp_hi din16_src_alu16 din16_sel_sp 
+  ip_from_tmp goto start
 
 __opcode 11qq0001 pop qq
-  dout16_sel_sp addr_sel_dout16 alu16_op_inc rd_arg1 din16_src_alu16 din16_sel_sp
-  dout16_sel_sp addr_sel_dout16 alu16_op_inc rd_arg2 din16_src_alu16 din16_sel_sp
-  din16_sel_ir54rp1 din16_src_arg12 goto start
+  dout16_sel_sp addr_sel_dout16 alu16_op_inc rd_tmp_lo din16_src_alu16 din16_sel_sp
+  dout16_sel_sp addr_sel_dout16 alu16_op_inc rd_tmp_hi din16_src_alu16 din16_sel_sp
+  din16_sel_ir54rp1 din16_src_tmp goto start
   
 __opcode 11001001 ret
-  dout16_sel_sp addr_sel_dout16 alu16_op_inc rd_arg1 din16_src_alu16 din16_sel_sp
-  dout16_sel_sp addr_sel_dout16 alu16_op_inc rd_arg2 din16_src_alu16 din16_sel_sp 
-  ip_from_arg21 goto start
+  dout16_sel_sp addr_sel_dout16 alu16_op_inc rd_tmp_lo din16_src_alu16 din16_sel_sp
+  dout16_sel_sp addr_sel_dout16 alu16_op_inc rd_tmp_hi din16_src_alu16 din16_sel_sp 
+  ip_from_tmp goto start
    
 __opcode 11ccc010 jp cc,nnnn
-  addr_sel_ip rd inc_ip rd_arg1
-  addr_sel_ip rd inc_ip rd_arg2 gotoncc start
-  ip_from_arg21 goto start
+  addr_sel_ip rd inc_ip rd_tmp_lo
+  addr_sel_ip rd inc_ip rd_tmp_hi gotoncc start
+  ip_from_tmp goto start
   
 __opcode 11000011 jp nnnn
-  addr_sel_ip rd inc_ip rd_arg1
-  addr_sel_ip rd        rd_arg2 
-  ip_from_arg21 goto start
+  addr_sel_ip rd inc_ip rd_tmp_lo
+  addr_sel_ip rd        rd_tmp_hi 
+  ip_from_tmp goto start
   
 __opcode 11ccc100 call cc,nnnn
-  addr_sel_ip rd inc_ip rd_arg1
-  addr_sel_ip rd inc_ip rd_arg2 gotoncc start
+  addr_sel_ip rd inc_ip rd_tmp_lo
+  addr_sel_ip rd inc_ip rd_tmp_hi gotoncc start
   dout16_sel_sp addr_sel_alu16 alu16_op_dec ram_wr_ip_hi din16_src_alu16 din16_sel_sp
-  dout16_sel_sp addr_sel_alu16 alu16_op_dec ram_wr_ip_lo din16_src_alu16 din16_sel_sp ip_from_arg21 goto start
+  dout16_sel_sp addr_sel_alu16 alu16_op_dec ram_wr_ip_lo din16_src_alu16 din16_sel_sp ip_from_tmp goto start
   
 __opcode 11qq0101 push qq
   dout16_sel_ir54rp rd_dout16
-  dout16_sel_sp addr_sel_alu16 alu16_op_dec ram_wr_arg2 din16_src_alu16 din16_sel_sp
-  dout16_sel_sp addr_sel_alu16 alu16_op_dec ram_wr_arg1 din16_src_alu16 din16_sel_sp goto start
+  dout16_sel_sp addr_sel_alu16 alu16_op_dec ram_wr_tmp_hi din16_src_alu16 din16_sel_sp
+  dout16_sel_sp addr_sel_alu16 alu16_op_dec ram_wr_tmp_lo din16_src_alu16 din16_sel_sp goto start
     
 __opcode 11001101 call nnnn
-  addr_sel_ip rd inc_ip rd_arg1
-  addr_sel_ip rd inc_ip rd_arg2
+  addr_sel_ip rd inc_ip rd_tmp_lo
+  addr_sel_ip rd inc_ip rd_tmp_hi
   dout16_sel_sp addr_sel_alu16 alu16_op_dec ram_wr_ip_hi din16_src_alu16 din16_sel_sp
-  dout16_sel_sp addr_sel_alu16 alu16_op_dec ram_wr_ip_lo din16_src_alu16 din16_sel_sp ip_from_arg21 goto start 
+  dout16_sel_sp addr_sel_alu16 alu16_op_dec ram_wr_ip_lo din16_src_alu16 din16_sel_sp ip_from_tmp goto start 
 
 __opcode 11ooo110 aluop n
   addr_sel_ip rd inc_ip alu8_op_ip543 alu8_src_ram flags_source_alu8 din8_src_alu8 din8_dst_a goto start

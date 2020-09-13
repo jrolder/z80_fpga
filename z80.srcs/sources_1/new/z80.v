@@ -28,12 +28,11 @@ output wire [7:0] arg_lo_out;
 output wire [7:0] arg_hi_out;
 
 // global declarations
-reg [7:0] ARG1;
-reg [7:0] ARG2;    
+reg [15:0] TMP;
 reg [15:0] IP;
 
-assign arg_lo_out = ARG1;
-assign arg_hi_out = ARG2;
+assign arg_lo_out = TMP[7:0];
+assign arg_hi_out = TMP[15:8];
   
     
 // module sync_reset  
@@ -141,7 +140,7 @@ wire [2:0] alu16_op;
 
 alu16 alu16 (
   .alu16_arg1(reg_dout16),
-  .alu16_arg2({ARG1,ARG2}),
+  .alu16_arg2(TMP),
   .alu16_out(alu16_out),
   .alu16_op(alu16_op),
   .alu16_flags_in(reg_flags_out),
@@ -201,14 +200,14 @@ begin
         ram_din = reg_dout8;
         ram_we = 1;
       end
-    VAL_RAM_WR_ARG1:
+    VAL_RAM_WR_TMP_LO:
       begin
-        ram_din = ARG1;
+        ram_din = TMP[7:0];
         ram_we = 1;
       end
-    VAL_RAM_WR_ARG2:
+    VAL_RAM_WR_TMP_HI:
       begin
-        ram_din = ARG2;
+        ram_din = TMP[15:8];
         ram_we = 1;
       end
     VAL_RAM_WR_IP_HI:
@@ -284,9 +283,9 @@ end
 always @(*)
 begin
   case (uc_din16_source)
-    VAL_DIN16_SRC_ARG12: 
+    VAL_DIN16_SRC_TMP: 
       begin
-        reg_din16 = {ARG2, ARG1};
+        reg_din16 = TMP;
         reg_din16we = 1;
       end
     VAL_DIN16_SRC_DOUT16:
@@ -369,8 +368,8 @@ begin
     IP <= 0;
   else if (uc_ip_op == VAL_INC_IP)
     IP <= IP + 1;
-  else if (uc_ip_op == VAL_IP_FROM_ARG21)
-    IP <= {ARG2, ARG1};
+  else if (uc_ip_op == VAL_IP_FROM_TMP)
+    IP <= TMP;
 end
     
 
@@ -378,13 +377,9 @@ always @(posedge clk)
 begin
   case (uc_read_target)
     VAL_RD_IR: IR1 <= ram_dout;
-    VAL_RD_ARG1: ARG1 = ram_dout;
-    VAL_RD_ARG2: ARG2 = ram_dout;
-    VAL_RD_DOUT16:
-      begin
-        ARG2 = reg_dout16[15:8];
-        ARG1 = reg_dout16[7:0];
-      end
+    VAL_RD_TMP_LO: TMP[7:0] = ram_dout;
+    VAL_RD_TMP_HI: TMP[15:8] = ram_dout;
+    VAL_RD_DOUT16: TMP = reg_dout16;
     endcase
 end
 
