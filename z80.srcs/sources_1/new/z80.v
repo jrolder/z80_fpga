@@ -295,6 +295,8 @@ begin
   case (uc_dout8_sel)
     VAL_DOUT8_SEL_IR210: reg_dout8sel = IR1[2:0];
     VAL_DOUT8_SEL_REGA: reg_dout8sel = 7;
+    VAL_DOUT8_SEL_REG_H: reg_dout8sel = 4;
+    VAL_DOUT8_SEL_REG_L: reg_dout8sel = 5;
     default:
       reg_dout8sel = 4'bX;
   endcase
@@ -335,6 +337,8 @@ begin
       reg_din16sel = 4 + IR1[5:4];   
     VAL_DIN16_SEL_SP:
       reg_din16sel = 7;
+    VAL_DIN16_SEL_HL:
+      reg_din16sel = 2;
     default:
       reg_din16sel = 4'bX;
   endcase

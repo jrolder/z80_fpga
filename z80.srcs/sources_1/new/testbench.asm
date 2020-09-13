@@ -6,6 +6,34 @@
 	;jp hello2
 
 ;
+; test ex (sp),hl
+;
+
+	ld sp,scratch
+	ld hl,scratch
+	ld a,9
+	ld (hl), a
+	ld hl,scratch+1 ; inc hl not available at the time
+	ld a,7
+	ld (hl), a
+	ld hl,5566h
+	ex (sp),hl
+	ld a,h
+	cp a,7
+	jp nz,error
+	ld a,l
+	cp a,9
+	jp nz,error
+	ld hl,scratch
+	ld a,(hl)
+	cp a,66h
+	jp nz,error
+	ld hl,scratch+1
+	ld a,(hl)
+	cp a,55h
+	jp nz,error
+
+;
 ; test io
 ;
 

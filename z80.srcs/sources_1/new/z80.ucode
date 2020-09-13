@@ -1,6 +1,11 @@
 start:
   addr_sel_ip rd inc_ip rd_ir decode1
   
+  
+;
+; Quadrant 0
+;
+  
 __opcode 00000000 nop
   goto start
   
@@ -18,6 +23,9 @@ __opcode 00110111 scf
 __opcode 00111111 ccf
   alu8_op_ccf flags_source_alu8 goto start
   
+;
+; Quadrant 1
+;
 
 __opcode 01rrrsss ld r,r
   din8_src_dout8 din8_dst_ir543 dout8_sel_ir210 goto start
@@ -31,12 +39,20 @@ __opcode 01110sss ld (hl), r
 __opcode 01110110 halt
 halt_label:
   halt goto halt_label
-  
+
+;
+; Quadrant 2
+;
+
 __opcode 10ooorrr aluop r
   alu8_op_ip543 dout8_sel_ir210 alu8_src_dout8 flags_source_alu8 din8_src_alu8 din8_dst_a goto start
 
 __opcode 10ooo110 aluop (hl)
   alu8_op_ip543 dout16_sel_hl addr_sel_dout16 rd alu8_src_ram flags_source_alu8 din8_src_alu8 din8_dst_a goto start
+
+;
+; Quadrant 3
+;
 
 __opcode 11ccc000 ret cc
   gotoncc start
@@ -71,6 +87,13 @@ __opcode 11010011 out (c), a
 __opcode 11011011 in a, (c)
   addr_sel_ip rd inc_ip rd_tmp_lo
   io_addr_sel_tmp_lo din8_src_io din8_dst_a goto start
+
+__opcode 11100011 ex (sp),hl
+  dout16_sel_sp addr_sel_dout16             rd_tmp_lo
+  dout16_sel_sp alu16_op_inc addr_sel_alu16 rd_tmp_hi
+  dout16_sel_sp addr_sel_dout16             ram_wr_dout8 dout8_sel_reg_l
+  dout16_sel_sp alu16_op_inc addr_sel_alu16 ram_wr_dout8 dout8_sel_reg_h
+  din16_src_tmp din16_sel_hl goto start
   
 __opcode 11ccc100 call cc,nnnn
   addr_sel_ip rd inc_ip rd_tmp_lo
