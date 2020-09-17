@@ -5,7 +5,22 @@
 	;ld b,c
 	;jp hello2
 
+;
+;test inc (hl) and dec (hl)
+;
 
+	ld hl,scratch
+	ld a,50
+	ld (hl),a
+	inc (hl)
+	ld a,(hl)
+	cp a,51
+	jp nz,error
+	dec (hl)
+	ld a,(hl)
+	cp a,50
+	jp nz,error
+	
 ;
 ;test inc r and dec r
 ;

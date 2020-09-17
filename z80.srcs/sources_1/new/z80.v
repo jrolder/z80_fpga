@@ -234,6 +234,11 @@ begin
         ram_din = IP[7:0];
         ram_we = 1;
       end
+    VAL_RAM_WR_ALU8:
+      begin
+        ram_din = alu8_out;
+        ram_we = 1;
+      end
     default:
       begin
         ram_din = 8'bX;
@@ -436,6 +441,7 @@ begin
   case (uc_alu8_source)
     VAL_ALU8_SRC_RAM: alu8_arg = ram_dout;
     VAL_ALU8_SRC_DOUT8: alu8_arg = reg_dout8;
+    VAL_ALU8_SRC_TMP_LO: alu8_arg = TMP[7:0];
     default:
       alu8_arg = 8'bX;
   endcase
