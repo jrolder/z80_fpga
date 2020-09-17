@@ -8,7 +8,13 @@ start:
   
 __opcode 00000000 nop
   goto start
-  
+
+__opcode 00rrr100 inc r
+  dout8_sel_ir543 alu8_src_dout8 alu8_op_inc flags_source_alu8 din8_src_alu8 din8_dst_ir543 goto start
+
+__opcode 00rrr101 dec r
+  dout8_sel_ir543 alu8_src_dout8 alu8_op_dec flags_source_alu8 din8_src_alu8 din8_dst_ir543 goto start
+
 __opcode 00rrr110 ld r,n
   addr_sel_ip rd inc_ip din8_src_ram din8_dst_ir543 goto start
   

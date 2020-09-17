@@ -100,6 +100,22 @@ begin
       alu8_out = 8'bX;
       alu8_flags_out = {flag_s, flag_z, flag_f5, flag_c, flag_f3, flag_pv, 1'b0, !flag_c};
     end
+  18: // inc
+    begin
+      tmp9 = alu8_arg + 1;
+      tmp8 = alu8_arg[6:0] + 1;
+      tmp5 = alu8_arg[3:0] + 1;
+      alu8_out = tmp9[7:0];
+      alu8_flags_out = {alu8_out[7], alu8_out == 0, alu8_out[5], tmp5[4], alu8_out[3], alu8_arg == 8'h7f, 1'b0, flag_c};
+    end
+  19: // dec
+    begin
+      tmp9 = alu8_arg - 1;
+      tmp8 = alu8_arg[6:0] - 1;
+      tmp5 = alu8_arg[3:0] - 1;
+      alu8_out = tmp9[7:0];
+      alu8_flags_out = {alu8_out[7], alu8_out == 0, alu8_out[5], tmp5[4], alu8_out[3], alu8_arg == 8'h80, 1'b1, flag_c};
+    end
   default:
     begin
       alu8_out = 8'bX;

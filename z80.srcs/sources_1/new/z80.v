@@ -293,6 +293,7 @@ end
 always @(*)
 begin
   case (uc_dout8_sel)
+    VAL_DOUT8_SEL_IR543: reg_dout8sel = IR1[5:3];
     VAL_DOUT8_SEL_IR210: reg_dout8sel = IR1[2:0];
     VAL_DOUT8_SEL_REGA: reg_dout8sel = 7;
     VAL_DOUT8_SEL_REG_H: reg_dout8sel = 4;
@@ -446,6 +447,8 @@ begin
     VAL_ALU8_OP_IP543: alu8_op = IR1[5:3];
     VAL_ALU8_OP_SCF: alu8_op = 16;
     VAL_ALU8_OP_CCF: alu8_op = 17;
+    VAL_ALU8_OP_INC: alu8_op = 18;
+    VAL_ALU8_OP_DEC: alu8_op = 19;
     default:
       alu8_op = 5'bX;
   endcase

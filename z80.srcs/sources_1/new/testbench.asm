@@ -5,6 +5,35 @@
 	;ld b,c
 	;jp hello2
 
+
+;
+;test inc r and dec r
+;
+
+	ld d,50
+	inc d
+	ld a,d
+	cp a,51
+	jp nz,error
+	
+	ld d,ffh
+	inc d
+	jp nz,error
+	inc d
+	jp z,error
+	
+	ld d,50
+	dec d
+	ld a,d
+	cp a,49
+	jp nz,error
+	
+	ld d,01h
+	dec d
+	jp nz,error	
+	dec d
+	jp z,error
+
 ;
 ;test di and ei
 ;
