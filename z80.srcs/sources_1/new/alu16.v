@@ -48,7 +48,7 @@ begin
         alu16_out = alu16_arg1 - 1;
         alu16_flags_out = alu16_flags_in;
       end    
-    VAL_ALU_16_ADD: // add
+    VAL_ALU16_OP_ADD: // add
       begin 
         tmp17 = alu16_arg1 + alu16_arg2;
         tmp13 = alu16_arg1[11:0] + alu16_arg2[11:0];

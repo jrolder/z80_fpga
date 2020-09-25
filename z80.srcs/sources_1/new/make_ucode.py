@@ -21,7 +21,7 @@ enums = (
     ("alu8_source", ("alu8_src_ram", "alu8_src_dout8","alu8_src_tmp_lo")),
     ("alu8_op", ("alu8_op_ip543", "alu8_op_scf", "alu8_op_ccf", "alu8_op_inc", "alu8_op_dec")),
     ("ip_op", ("inc_ip", "ip_from_tmp")),
-    ("alu16_op", ("alu16_op_inc", "alu16_op_dec", "alu_16_add",)), 
+    ("alu16_op", ("alu16_op_inc", "alu16_op_dec", "alu16_op_add",)),
     )
 
 def generate_ucode_headers():

@@ -6,6 +6,70 @@
 	;jp hello2
 
 ;
+;test add hl,bc/de/hl/sp
+;
+	ld hl,105h
+	add hl,hl
+	ld bc,106h
+	add hl,bc
+	ld de,107h
+	add hl,de
+	ld sp,108h
+	add hl,sp
+	ld a,h
+	cp a,5
+	jp nz,error
+	ld a,l
+	cp a,31
+	jp nz,error
+
+;
+;test inc bc,de,hl,sp
+;
+
+	ld hl,101h
+	inc hl
+	add hl,hl
+	ld bc,102h
+	inc bc
+	add hl,bc
+	ld de,103h
+	inc de
+	add hl,de
+	ld sp,104h
+	inc sp
+	add hl,sp
+	ld a,h
+	cp a,5
+	jp nz,error
+	ld a,l
+	cp a,16
+	jp nz,error
+
+;test dec bc,de,hl,sp
+;
+
+	ld hl,101h
+	dec hl
+	add hl,hl
+	ld bc,102h
+	dec bc
+	add hl,bc
+	ld de,103h
+	dec de
+	add hl,de
+	ld sp,104h
+	dec sp
+	add hl,sp
+	ld a,h
+	cp a,5
+	jp nz,error
+	ld a,l
+	cp a,6
+	jp nz,error	
+	
+	
+;
 ;test inc (hl) and dec (hl)
 ;
 

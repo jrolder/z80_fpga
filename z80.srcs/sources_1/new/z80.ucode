@@ -9,12 +9,22 @@ start:
 __opcode 00000000 nop
   goto start
 
+__opcode 00qq1001 add hl,bc/de/hl/sp
+  rd_dout16 dout16_sel_ir54rp2
+  dout16_sel_hl alu16_op_add din16_src_alu16 din16_sel_hl flags_source_alu16 goto start
+
 __opcode 00rrr100 inc r
   dout8_sel_ir543 alu8_src_dout8 alu8_op_inc flags_source_alu8 din8_src_alu8 din8_dst_ir543 goto start
 
 __opcode 00110100 inc (hl)
   dout16_sel_hl addr_sel_dout16 rd rd_tmp_lo
   alu8_op_inc dout16_sel_hl addr_sel_dout16 ram_wr_alu8 alu8_src_tmp_lo flags_source_alu8 goto start
+
+__opcode 00qq0011 inc bc/de/hl/sp
+  dout16_sel_ir54rp2 alu16_op_inc din16_src_alu16 din16_sel_ir54rp2 goto start
+
+__opcode 00qq1011 dec bc/de/hl/sp
+  dout16_sel_ir54rp2 alu16_op_dec din16_src_alu16 din16_sel_ir54rp2 goto start
 
 __opcode 00rrr101 dec r
   dout8_sel_ir543 alu8_src_dout8 alu8_op_dec flags_source_alu8 din8_src_alu8 din8_dst_ir543 goto start
