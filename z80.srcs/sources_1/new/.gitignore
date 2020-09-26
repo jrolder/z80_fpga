@@ -1,5 +1,6 @@
 ram.mem
-testbench.bin
+testbench.rom
+testbench.lst
 ucode_consts.vh
 ucode_signals.vh
 ucode.vh

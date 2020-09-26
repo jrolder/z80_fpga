@@ -9,6 +9,10 @@ start:
 __opcode 00000000 nop
   goto start
 
+__opcode 001cc000 jr cc,nn
+  addr_sel_ip rd inc_ip rd_tmp_lo gotonccr start
+  ip_from_rel_tmp goto start
+
 __opcode 00qq1001 add hl,bc/de/hl/sp
   rd_dout16 dout16_sel_ir54rp2
   dout16_sel_hl alu16_op_add din16_src_alu16 din16_sel_hl flags_source_alu16 goto start
@@ -22,6 +26,10 @@ __opcode 00110100 inc (hl)
 
 __opcode 00qq0011 inc bc/de/hl/sp
   dout16_sel_ir54rp2 alu16_op_inc din16_src_alu16 din16_sel_ir54rp2 goto start
+
+__opcode 00011000 jr
+  addr_sel_ip rd inc_ip rd_tmp_lo
+  ip_from_rel_tmp goto start
 
 __opcode 00qq1011 dec bc/de/hl/sp
   dout16_sel_ir54rp2 alu16_op_dec din16_src_alu16 din16_sel_ir54rp2 goto start

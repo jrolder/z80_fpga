@@ -1,3 +1,4 @@
+	org	0
 
 	;ld b, deh
 	;ld c,b
@@ -6,15 +7,36 @@
 	;jp hello2
 
 ;
+;test jr 
+;
+	xor a
+	jr nz,jrerror
+	jr z,jrgood1
+	jp error
+jrgood1:
+	xor a
+	inc a
+	jr c,jrerror
+	jr nc,jrgood2
+	jp error
+jrgood2:
+	jr jrgood3
+	
+jrerror:
+	jp error
+	
+jrgood3:
+
+;
 ;test add hl,bc/de/hl/sp
 ;
-	ld hl,105h
+	ld hl,0x105
 	add hl,hl
-	ld bc,106h
+	ld bc,0x106
 	add hl,bc
-	ld de,107h
+	ld de,0x107
 	add hl,de
-	ld sp,108h
+	ld sp,0x108
 	add hl,sp
 	ld a,h
 	cp a,5
@@ -27,16 +49,16 @@
 ;test inc bc,de,hl,sp
 ;
 
-	ld hl,101h
+	ld hl,0x101
 	inc hl
 	add hl,hl
-	ld bc,102h
+	ld bc,0x102
 	inc bc
 	add hl,bc
-	ld de,103h
+	ld de,0x103
 	inc de
 	add hl,de
-	ld sp,104h
+	ld sp,0x104
 	inc sp
 	add hl,sp
 	ld a,h
@@ -49,16 +71,16 @@
 ;test dec bc,de,hl,sp
 ;
 
-	ld hl,101h
+	ld hl,0x101
 	dec hl
 	add hl,hl
-	ld bc,102h
+	ld bc,0x102
 	dec bc
 	add hl,bc
-	ld de,103h
+	ld de,0x103
 	dec de
 	add hl,de
-	ld sp,104h
+	ld sp,0x104
 	dec sp
 	add hl,sp
 	ld a,h
@@ -95,7 +117,7 @@
 	cp a,51
 	jp nz,error
 	
-	ld d,ffh
+	ld d,0xff
 	inc d
 	jp nz,error
 	inc d
@@ -107,7 +129,7 @@
 	cp a,49
 	jp nz,error
 	
-	ld d,01h
+	ld d,0x01
 	dec d
 	jp nz,error	
 	dec d
@@ -123,20 +145,20 @@
 ;
 ; test ex de,hl
 ;
-	ld hl, 3344h
-	ld de, 7788h
+	ld hl, 0x3344
+	ld de, 0x7788
 	ex de,hl
 	ld a,d
-	cp a,33h
+	cp a,0x33
 	jp nz,error
 	ld a,e
-	cp a,44h
+	cp a,0x44
 	jp nz,error
 	ld a,h
-	cp a,77h
+	cp a,0x77
 	jp nz,error
 	ld a,l
-	cp a,88h
+	cp a,0x88
 	jp nz,error
 	
 ;
@@ -150,7 +172,7 @@
 	ld hl,scratch+1 ; inc hl not available at the time
 	ld a,7
 	ld (hl), a
-	ld hl,5566h
+	ld hl,0x5566
 	ex (sp),hl
 	ld a,h
 	cp a,7
@@ -160,11 +182,11 @@
 	jp nz,error
 	ld hl,scratch
 	ld a,(hl)
-	cp a,66h
+	cp a,0x66
 	jp nz,error
 	ld hl,scratch+1
 	ld a,(hl)
-	cp a,55h
+	cp a,0x55
 	jp nz,error
 
 
@@ -227,15 +249,15 @@ call_test2:
 ;
 
 	ld sp,stack
-	ld bc,affeh
+	ld bc,0xaffe
 	push bc
 	pop de
 	
-	ld de, bffah
+	ld de, 0xbffa
 	push de
 	pop hl
 	
-	ld hl, cff1h
+	ld hl, 0xcff1
 	push hl
 	pop af
 
@@ -374,7 +396,7 @@ l2:
 hello2:
 	ld de, result_good
 	ld c, 9
-	rst #38
+	rst 0x38
 	halt
 
 error:

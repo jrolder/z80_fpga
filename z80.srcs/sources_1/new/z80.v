@@ -199,6 +199,13 @@ begin
         else
           ucode_addr = ucode[UCODE_ADDR_LENGTH-1:0];
       end
+    VAL_GOTO_NCCR:
+      begin
+        if (check_condition(IR1[4:3], reg_flags_out))
+          ucode_addr = last_ucode_addr + 1;
+        else
+          ucode_addr = ucode[UCODE_ADDR_LENGTH-1:0];
+      end
     default:
       ucode_addr = last_ucode_addr + 1;
   endcase
@@ -403,6 +410,8 @@ begin
     IP <= IP + 1;
   else if (uc_ip_op == VAL_IP_FROM_TMP)
     IP <= TMP;
+  else if (uc_ip_op == VAL_IP_FROM_REL_TMP)
+    IP <= IP + $signed(TMP[7:0]);
 end
     
 

@@ -7,7 +7,7 @@ bits = ("rd", )
 
 enums = (
     ("command", ("halt", "bdos",)),
-    ("ucode_goto", ("decode1", "decode2", "goto_now", "goto_ncc", )),
+    ("ucode_goto", ("decode1", "decode2", "goto_now", "goto_ncc", "goto_nccr", )),
     ("ram_addr_sel", ("addr_sel_ip", "addr_sel_dout16", "addr_sel_alu16", "io_addr_sel_dout8", "io_addr_sel_tmp_lo")),
     ("read_target", ("rd_ir", "rd_tmp_lo", "rd_tmp_hi", "rd_dout16")),
     ("ram_wr_sel", ("ram_wr_dout8", "ram_wr_tmp_lo", "ram_wr_tmp_hi", "ram_wr_ip_hi", "ram_wr_ip_lo", "io_wr_dout8", "io_wr_tmp_lo", "ram_wr_alu8")),
@@ -20,7 +20,7 @@ enums = (
     ("flags_source", ("flags_source_alu8", "flags_source_alu16")),
     ("alu8_source", ("alu8_src_ram", "alu8_src_dout8","alu8_src_tmp_lo")),
     ("alu8_op", ("alu8_op_ip543", "alu8_op_scf", "alu8_op_ccf", "alu8_op_inc", "alu8_op_dec")),
-    ("ip_op", ("inc_ip", "ip_from_tmp")),
+    ("ip_op", ("inc_ip", "ip_from_tmp", "ip_from_rel_tmp")),
     ("alu16_op", ("alu16_op_inc", "alu16_op_dec", "alu16_op_add",)),
     )
 
@@ -104,6 +104,11 @@ def parse(uc_file, f, commands, ucodes, decode1):
           next_uc_addr = labels[parts[i+1]]
           i += 2
           parts.append("goto_ncc") # imply gotonow
+          continue        
+        if parts[i] == "gotonccr":
+          next_uc_addr = labels[parts[i+1]]
+          i += 2
+          parts.append("goto_nccr") # imply gotonow
           continue        
         uc.append(commands[parts[i]])
         i += 1
