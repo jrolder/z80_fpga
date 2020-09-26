@@ -412,6 +412,8 @@ begin
     IP <= TMP;
   else if (uc_ip_op == VAL_IP_FROM_REL_TMP)
     IP <= IP + $signed(TMP[7:0]);
+  else if (uc_ip_op == VAL_IP_FROM_RST)
+    IP <= IR1[5:3] * 8;
 end
     
 

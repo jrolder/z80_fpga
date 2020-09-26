@@ -158,6 +158,11 @@ __opcode 11001101 call nnnn
 __opcode 11ooo110 aluop n
   addr_sel_ip rd inc_ip alu8_op_ip543 alu8_src_ram flags_source_alu8 din8_src_alu8 din8_dst_a goto start
   
+__opcode 11yyy111 rst nn
+  dout16_sel_sp addr_sel_alu16 alu16_op_dec ram_wr_ip_hi din16_src_alu16 din16_sel_sp
+  dout16_sel_sp addr_sel_alu16 alu16_op_dec ram_wr_ip_lo din16_src_alu16 din16_sel_sp ip_from_rst goto start 
+
+  
 __opcode 11111111 rst 7
   bdos goto start
   
