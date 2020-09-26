@@ -7,6 +7,28 @@
 	;jp hello2
 
 ;
+;test jp (hl)
+;
+	ld hl,jphl
+	jp (hl)
+	jp error
+jphl:
+
+;
+;test ld sp,hl
+;
+	ld hl,0xaffe
+	ld sp,hl
+	ld hl,0
+	add hl,sp
+	ld a,h
+	cp a,0xaf
+	jp nz,error
+	ld a,l
+	cp a,0xfe
+	jp nz,error
+
+;
 ;test jr 
 ;
 	xor a
