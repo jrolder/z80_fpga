@@ -7,6 +7,46 @@
 	;jp hello2
 
 ;
+;test ld a,(bc/de)
+;
+	ld bc,scratch
+	ld hl,scratch
+	ld a,0x23
+	ld (hl),a
+	xor a
+	ld a,(bc)
+	cp a,0x23
+	jp nz,error
+	
+	ld de,scratch
+	ld a,0x24
+	ld (hl),a
+	xor a
+	ld a,(de)
+	cp a,0x24
+	jp nz,error
+
+;
+;test ld (bc/de),a
+;
+	ld bc,scratch
+	ld hl,scratch
+	ld a,0x21
+	ld (bc),a
+	xor a
+	ld a,(hl)
+	cp a,0x21
+	jp nz,error
+	
+	ld de,scratch
+	ld a,0x22
+	ld (de),a
+	xor a
+	ld a,(hl)
+	cp a,0x22
+	jp nz,error
+
+;
 ;test djnz
 ;
 	ld b,3
