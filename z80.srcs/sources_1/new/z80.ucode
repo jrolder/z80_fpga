@@ -26,6 +26,17 @@ __opcode 00qq0001 ld Q, nnnn
 __opcode 000q0010 ld (bc/de),a
   dout16_sel_ir54rp addr_sel_dout16 dout8_sel_rega ram_wr_dout8 goto start
 
+__opcode 00100010 ld (nnnn),hl
+  addr_sel_ip rd inc_ip rd_tmp_lo
+  addr_sel_ip rd inc_ip rd_tmp_hi 
+  addr_sel_tmp    ram_wr_dout8 dout8_sel_reg_l
+  addr_sel_tmp_p1 ram_wr_dout8 dout8_sel_reg_h goto start
+
+__opcode 00110010 ld (nnnn),a
+  addr_sel_ip rd inc_ip rd_tmp_lo
+  addr_sel_ip rd inc_ip rd_tmp_hi 
+  addr_sel_tmp    ram_wr_dout8 dout8_sel_rega goto start
+
 __opcode 00qq1001 add hl,bc/de/hl/sp
   rd_dout16 dout16_sel_ir54rp2
   dout16_sel_hl alu16_op_add din16_src_alu16 din16_sel_hl flags_source_alu16 goto start
@@ -47,6 +58,17 @@ __opcode 00011000 jr
 __opcode 000q1010 ld a,(bc/de)
   dout16_sel_ir54rp addr_sel_dout16 din8_src_ram din8_dst_a goto start
 
+__opcode 00101010 ld hl,(nnnn)
+  addr_sel_ip rd inc_ip rd_tmp_lo
+  addr_sel_ip rd inc_ip rd_tmp_hi 
+  addr_sel_tmp    din8_src_ram din8_dst_l
+  addr_sel_tmp_p1 din8_src_ram din8_dst_h goto start
+
+__opcode 00111010 ld a,(nnnn)
+  addr_sel_ip rd inc_ip rd_tmp_lo
+  addr_sel_ip rd inc_ip rd_tmp_hi 
+  addr_sel_tmp din8_src_ram din8_dst_a goto start
+  
 __opcode 00qq1011 dec bc/de/hl/sp
   dout16_sel_ir54rp2 alu16_op_dec din16_src_alu16 din16_sel_ir54rp2 goto start
 

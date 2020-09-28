@@ -7,6 +7,30 @@
 	;jp hello2
 
 ;
+;test ld (nnnn),a/hl and ld a/hl,(nnnn)
+;
+	ld hl,0x1234
+	ld (scratch),hl
+	ld a,(scratch)
+	cp a,0x34
+	jp nz,error
+	ld a,(scratch+1)
+	cp a,0x12
+	jp nz,error
+	
+	ld a,0x56
+	ld (scratch),a
+	ld a,0x78
+	ld (scratch+1),a
+	ld hl,(scratch)
+	ld a,l
+	cp a,0x56
+	jp nz,error
+	ld a,h
+	cp a,0x78
+	jp nz,error
+
+;
 ;test ld a,(bc/de)
 ;
 	ld bc,scratch

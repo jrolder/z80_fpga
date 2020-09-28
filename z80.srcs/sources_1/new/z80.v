@@ -306,6 +306,10 @@ begin
       reg_din8sel = 7;
     VAL_DIN8_DST_B:
       reg_din8sel = 0;
+    VAL_DIN8_DST_H:
+      reg_din8sel = 4;
+    VAL_DIN8_DST_L:
+      reg_din8sel = 5;
     default:
       reg_din8sel = 4'bX;
   endcase
@@ -408,6 +412,8 @@ begin
     VAL_ADDR_SEL_IP: ram_addr = IP;
     VAL_ADDR_SEL_DOUT16: ram_addr = reg_dout16;
     VAL_ADDR_SEL_ALU16: ram_addr = alu16_out;
+    VAL_ADDR_SEL_TMP: ram_addr = TMP;
+    VAL_ADDR_SEL_TMP_P1: ram_addr = TMP + 1;
     default: ram_addr = 16'bX;
   endcase
 end
