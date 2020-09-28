@@ -7,13 +7,13 @@ bits = ("rd", )
 
 enums = (
     ("command", ("halt", "bdos",)),
-    ("ucode_goto", ("decode1", "decode2", "goto_now", "goto_ncc", "goto_nccr", )),
+    ("ucode_goto", ("decode1", "decode2", "goto_now", "goto_ncc", "goto_nccr", "goto_z")),
     ("ram_addr_sel", ("addr_sel_ip", "addr_sel_dout16", "addr_sel_alu16", "io_addr_sel_dout8", "io_addr_sel_tmp_lo")),
     ("read_target", ("rd_ir", "rd_tmp_lo", "rd_tmp_hi", "rd_dout16")),
     ("ram_wr_sel", ("ram_wr_dout8", "ram_wr_tmp_lo", "ram_wr_tmp_hi", "ram_wr_ip_hi", "ram_wr_ip_lo", "io_wr_dout8", "io_wr_tmp_lo", "ram_wr_alu8")),
-    ("din8_target", ("din8_dst_ir543", "din8_dst_a")),
+    ("din8_target", ("din8_dst_ir543", "din8_dst_a", "din8_dst_b")),
     ("din8_source", ("din8_src_dout8", "din8_src_ram", "din8_src_alu8", "din8_src_io")),
-    ("dout8_sel", ("dout8_sel_ir543", "dout8_sel_ir210", "dout8_sel_rega", "dout8_sel_reg_h", "dout8_sel_reg_l")),
+    ("dout8_sel", ("dout8_sel_ir543", "dout8_sel_ir210", "dout8_sel_rega", "dout8_sel_regb", "dout8_sel_reg_h", "dout8_sel_reg_l")),
     ("din16_source", ("din16_src_tmp", "din16_src_dout16", "din16_src_alu16")),
     ("din16_sel", ("din16_sel_ir54rp1", "din16_sel_ir54rp2", "din16_sel_sp","din16_sel_hl","din16_sel_de")),
     ("dout16_sel", ("dout16_sel_hl", "dout16_sel_sp", "dout16_sel_de", "dout16_sel_ir54rp","dout16_sel_ir54rp2",)),
@@ -103,12 +103,17 @@ def parse(uc_file, f, commands, ucodes, decode1):
         if parts[i] == "gotoncc":
           next_uc_addr = labels[parts[i+1]]
           i += 2
-          parts.append("goto_ncc") # imply gotonow
+          parts.append("goto_ncc")
           continue        
         if parts[i] == "gotonccr":
           next_uc_addr = labels[parts[i+1]]
           i += 2
-          parts.append("goto_nccr") # imply gotonow
+          parts.append("goto_nccr") 
+          continue        
+        if parts[i] == "gotoz":
+          next_uc_addr = labels[parts[i+1]]
+          i += 2
+          parts.append("goto_z") 
           continue        
         uc.append(commands[parts[i]])
         i += 1

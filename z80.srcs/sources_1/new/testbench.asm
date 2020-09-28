@@ -7,6 +7,18 @@
 	;jp hello2
 
 ;
+;test djnz
+;
+	ld b,3
+	ld c,0
+djnz1:
+	inc c
+	djnz djnz1
+	ld a,c
+	cp a,3
+	jp nz,error
+
+;
 ;test jp (hl)
 ;
 	ld hl,jphl

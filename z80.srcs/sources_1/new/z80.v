@@ -206,6 +206,13 @@ begin
         else
           ucode_addr = ucode[UCODE_ADDR_LENGTH-1:0];
       end
+    VAL_GOTO_Z:
+      begin
+        if (alu8_flags_out[6])
+          ucode_addr = ucode[UCODE_ADDR_LENGTH-1:0];
+        else
+          ucode_addr = last_ucode_addr + 1;
+      end
     default:
       ucode_addr = last_ucode_addr + 1;
   endcase
@@ -297,6 +304,8 @@ begin
       reg_din8sel = IR1[5:3];
     VAL_DIN8_DST_A:
       reg_din8sel = 7;
+    VAL_DIN8_DST_B:
+      reg_din8sel = 0;
     default:
       reg_din8sel = 4'bX;
   endcase
@@ -308,6 +317,7 @@ begin
     VAL_DOUT8_SEL_IR543: reg_dout8sel = IR1[5:3];
     VAL_DOUT8_SEL_IR210: reg_dout8sel = IR1[2:0];
     VAL_DOUT8_SEL_REGA: reg_dout8sel = 7;
+    VAL_DOUT8_SEL_REGB: reg_dout8sel = 0;
     VAL_DOUT8_SEL_REG_H: reg_dout8sel = 4;
     VAL_DOUT8_SEL_REG_L: reg_dout8sel = 5;
     default:
@@ -411,7 +421,7 @@ begin
   else if (uc_ip_op == VAL_IP_FROM_TMP)
     IP <= TMP;
   else if (uc_ip_op == VAL_IP_FROM_REL_TMP)
-    IP <= IP + $signed(TMP[7:0]);
+    IP <= $signed(IP) + $signed(TMP[7:0]);
   else if (uc_ip_op == VAL_IP_FROM_RST)
     IP <= IR1[5:3] * 8;
 end
