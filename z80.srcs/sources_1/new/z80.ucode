@@ -82,11 +82,8 @@ __opcode 00110101 dec (hl)
 __opcode 00rrr110 ld r,n
   addr_sel_ip rd inc_ip din8_src_ram din8_dst_ir543 goto start
   
-__opcode 00110111 scf
-  alu8_op_scf flags_source_alu8 goto start
-  
-__opcode 00111111 ccf
-  alu8_op_ccf flags_source_alu8 goto start
+__opcode 00qqq111 rlca rrca rla rra daa cpl scf ccf
+  alu8_op_ip543b flags_source_alu8 din8_src_alu8 din8_dst_a goto start
   
 ;
 ; Quadrant 1

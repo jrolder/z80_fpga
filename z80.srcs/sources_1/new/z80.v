@@ -478,8 +478,7 @@ always @(*)
 begin
   case (uc_alu8_op)
     VAL_ALU8_OP_IP543: alu8_op = IR1[5:3];
-    VAL_ALU8_OP_SCF: alu8_op = 16;
-    VAL_ALU8_OP_CCF: alu8_op = 17;
+    VAL_ALU8_OP_IP543B: alu8_op = 8 + IR1[5:3];
     VAL_ALU8_OP_INC: alu8_op = 18;
     VAL_ALU8_OP_DEC: alu8_op = 19;
     default:

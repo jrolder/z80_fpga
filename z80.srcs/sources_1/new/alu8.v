@@ -90,12 +90,30 @@ begin
       alu8_out = alu8_ain;
       alu8_flags_out = {tmp9[7], tmp9[7:0] == 0, alu8_arg[5], tmp5[4], alu8_arg[3], tmp9[8] ^ tmp8[7], 1'b1, tmp9[8]};
     end
-  16: // scf
+  8: // rlca
+    begin
+    end
+  9: // rrca
+    begin
+    end
+  10: // rla
+    begin
+    end
+  11: // rra
+    begin
+    end
+  12: // daa
+    begin
+    end
+  13: // cpl
+    begin
+    end
+  14: // scf
     begin
       alu8_out = 8'bX;
       alu8_flags_out = {flag_s, flag_z, flag_f5, 1'b0, flag_f3, flag_pv, 1'b0, 1'b1};
     end
-  17: // ccf
+  15: // ccf
     begin
       alu8_out = 8'bX;
       alu8_flags_out = {flag_s, flag_z, flag_f5, flag_c, flag_f3, flag_pv, 1'b0, !flag_c};
