@@ -31,6 +31,93 @@ assign flag_c = alu8_flags_in[FLAG_C];
 reg [4:0] tmp5;
 reg [7:0] tmp8;
 reg [8:0] tmp9;
+reg cf_out, hf_out;
+    
+task daa_diff;
+  input [7:0]a;
+  input cf, hf, nf;
+  output [7:0] daa_diff;
+  output cf_out, hf_out;
+  reg [3:0] hi;
+  reg [3:0] lo;
+  begin
+    hi = a[7:4];
+    lo = a[3:0];
+    if (lo < 10) 
+      // lo is 0-9
+      begin
+        if (cf)
+          begin
+            if (hf)
+              begin
+                cf_out = 1;
+                daa_diff = 8'h66;
+              end
+            else
+              begin
+                cf_out = 1;
+                daa_diff = 8'h60;
+              end
+          end
+        else
+          // cf = 0
+          begin
+            if (hf)
+              begin
+                if (hi < 10)
+                  begin
+                    cf_out = 0;
+                    daa_diff = 8'h06;
+                  end
+                else 
+                  begin
+                    cf_out = 1;
+                    daa_diff = 8'h66;
+                  end
+              end
+            else
+              begin
+                if (hi < 10)
+                  begin
+                    cf_out = 0;
+                    daa_diff = 8'h00;
+                  end
+                else 
+                  begin
+                    cf_out = 1;
+                    daa_diff = 8'h60;
+                  end
+              end
+          end
+      end
+    else
+      // lo is a-f
+      begin
+        if (cf)
+          begin
+            cf_out = 1;
+            daa_diff = 8'h66;
+          end
+        else
+          begin
+            if (hi < 9)
+              begin
+                cf_out = 0;
+                daa_diff = 8'h06;
+              end  
+            else
+              begin
+                cf_out = 1;
+                daa_diff = 8'h66;
+              end
+          end
+      end
+    if (nf) 
+        hf_out = hf && (lo < 6); 
+    else
+        hf_out = lo >= 10;
+  end
+endtask
     
 always @(*)
 begin
@@ -92,31 +179,47 @@ begin
     end
   8: // rlca
     begin
+      alu8_out = {alu8_ain[6:0], alu8_ain[7]};
+      alu8_flags_out = {flag_s, flag_z, alu8_out[5], 1'b0, alu8_out[3], flag_pv, 1'b0, alu8_ain[7]};
     end
   9: // rrca
     begin
+      alu8_out = {alu8_ain[0], alu8_ain[7:1]};
+      alu8_flags_out = {flag_s, flag_z, alu8_out[5], 1'b0, alu8_out[3], flag_pv, 1'b0, alu8_ain[0]};
     end
   10: // rla
     begin
+      alu8_out = {alu8_ain[6:0], flag_c};
+      alu8_flags_out = {flag_s, flag_z, alu8_out[5], 1'b0, alu8_out[3], flag_pv, 1'b0, alu8_ain[7]};
     end
   11: // rra
     begin
+      alu8_out = {flag_c, alu8_ain[7:1]};
+      alu8_flags_out = {flag_s, flag_z, alu8_out[5], 1'b0, alu8_out[3], flag_pv, 1'b0, alu8_ain[0]};
     end
   12: // daa
     begin
+      daa_diff(alu8_ain, flag_c, flag_h, flag_n, tmp8, cf_out, hf_out);
+      if (flag_n)
+        alu8_out = alu8_ain - tmp8;
+      else
+        alu8_out = alu8_ain + tmp8;
+      alu8_flags_out = {alu8_out[7], alu8_out == 0, alu8_out[5], hf_out, alu8_out[3], !(^alu8_out), flag_n, cf_out};
     end
   13: // cpl
     begin
+      alu8_out = ~alu8_ain;
+      alu8_flags_out = {flag_s, flag_z, alu8_out[5], 1'b1, alu8_out[3], flag_pv, 1'b1, flag_c};
     end
   14: // scf
     begin
-      alu8_out = 8'bX;
-      alu8_flags_out = {flag_s, flag_z, flag_f5, 1'b0, flag_f3, flag_pv, 1'b0, 1'b1};
+      alu8_out = alu8_ain;
+      alu8_flags_out = {flag_s, flag_z, alu8_ain[5], 1'b0, alu8_ain[3], flag_pv, 1'b0, 1'b1};
     end
   15: // ccf
     begin
-      alu8_out = 8'bX;
-      alu8_flags_out = {flag_s, flag_z, flag_f5, flag_c, flag_f3, flag_pv, 1'b0, !flag_c};
+      alu8_out = alu8_ain;
+      alu8_flags_out = {flag_s, flag_z, alu8_ain[5], flag_c, alu8_ain[3], flag_pv, 1'b0, !flag_c};
     end
   18: // inc
     begin

@@ -7,6 +7,98 @@
 	;jp hello2
 
 ;
+;test cpl
+;
+	ld a,0x13
+	cpl
+	cp a,0xec
+	jp nz,error
+	
+
+;
+;test daa
+;
+	ld a,0x12
+	add 0x23
+	daa
+	cp a,0x35
+	jp nz,error
+	
+	ld a,0x19
+	add 0x11
+	daa
+	cp a,0x30
+	jp nz,error
+	
+	ld a,0x91
+	add 0x11
+	daa
+	cp a,0x02
+	jp nz,error
+
+	ld a,0x99
+	add 0x22
+	daa
+	cp a,0x21
+	jp nz,error
+
+
+	ld a,0x99
+	sub 0x23
+	daa
+	cp a,0x76
+	jp nz,error
+	
+	ld a,0x09
+	sub 0x11
+	daa
+	cp a,0x98
+	jp nz,error
+	
+	ld a,0x90
+	sub 0x11
+	daa
+	cp a,0x79
+	jp nz,error
+
+	ld a,0x00
+	sub 0x22
+	daa
+	cp a,0x78
+	jp nz,error
+	
+;
+;test rlca, rrca, rla, rra
+;
+	ld a,0x81
+	rlca
+	jp nc,error
+	cp a,0x03
+	jp nz,error
+
+	ld a,0x81
+	rrca
+	jp nc,error
+	cp a,0xc0
+	jp nz,error
+
+	ld a,0x81
+	scf
+	ccf
+	rla
+	jp nc,error
+	cp a,0x02
+	jp nz,error
+
+	ld a,0x81
+	scf
+	ccf
+	rra
+	jp nc,error
+	cp a,0x40
+	jp nz,error
+
+;
 ;test ld (nnnn),a/hl and ld a/hl,(nnnn)
 ;
 	ld hl,0x1234
