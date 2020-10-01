@@ -217,6 +217,10 @@ __opcode 11111111 rst 7
 __opcode_cb 00ooorrr shift and rot r
   alu8_op_ip543_cbrot dout8_sel_ir210 alu8_src_dout8 flags_source_alu8 din8_src_alu8 din8_dst_ir210 goto start
   
+__opcode_cb 00ooo110 shift and rot (hl)
+  dout16_sel_hl addr_sel_dout16 rd rd_tmp_lo
+  alu8_op_ip543_cbrot dout16_sel_hl addr_sel_dout16 ram_wr_alu8 alu8_src_tmp_lo flags_source_alu8 goto start
+  
 ;
 ; CB Quadrant 1
 ;

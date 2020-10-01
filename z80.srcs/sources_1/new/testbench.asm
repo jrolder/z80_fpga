@@ -7,6 +7,19 @@
 	;jp hello2
 
 ;
+;test rlc (hl)
+;
+	ld hl,scratch
+ 	ld (hl),0x81
+ 	rlc (hl)
+ 	jp nc,error
+ 	ld a,(hl)
+ 	cp a,0x03
+ 	jp nz,error
+
+	halt
+
+;
 ;test rlc, rrc, rl, rr, sla, sra, sll, srl
 ;
  	ld h,0x81
