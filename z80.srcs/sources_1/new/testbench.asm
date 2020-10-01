@@ -7,6 +7,26 @@
 	;jp hello2
 
 ;
+;test ld (hl),nn
+;
+	ld hl,scratch
+	ld (hl),0x98
+	ld a,(hl)
+	cp a,0x98
+	jp nz,error
+
+;
+;test bit n,(hl)
+;
+	ld hl,scratch
+	ld (hl),8
+	bit 3,(hl)
+	jp z,error
+	ld (hl),0
+	bit 3,(hl)
+	jp nz,error
+	
+;
 ;test bit n,r
 ;
 	ld a,8

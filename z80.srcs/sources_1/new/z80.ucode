@@ -81,6 +81,10 @@ __opcode 00110101 dec (hl)
 
 __opcode 00rrr110 ld r,n
   addr_sel_ip rd inc_ip din8_src_ram din8_dst_ir543 goto start
+
+__opcode 00110110 ld (hl),n
+  addr_sel_ip rd inc_ip rd_tmp_lo
+  dout16_sel_hl addr_sel_dout16 ram_wr_tmp_lo goto start
   
 __opcode 00qqq111 rlca rrca rla rra daa cpl scf ccf
   alu8_op_ip543b flags_source_alu8 din8_src_alu8 din8_dst_a goto start
@@ -207,6 +211,13 @@ __opcode 11111111 rst 7
   bdos goto start
   
   
+;
+; CB Quadrant 1
+;
+  
 __opcode_cb 01bbbrrr bit b,r
   alu8_src_dout8 dout8_sel_ir210 alu8_op_bit flags_source_alu8 din8_src_alu8 goto start
+  
+__opcode_cb 01bbb110 bit b,(hl)
+  dout16_sel_hl addr_sel_dout16 rd alu8_src_ram alu8_op_bit flags_source_alu8 din8_src_alu8 goto start
   
