@@ -84,11 +84,13 @@
 ;
 ;test res/set n,r
 ;
-	ld a,0xff
-	res 3,a
+	ld h,0xff
+	res 3,h
+	ld a,h
 	cp a,0xf7
 	jp nz,error
-	set 3,a
+	set 3,h
+	ld a,h
 	cp a,0xff
 	jp nz,error
 	
@@ -115,11 +117,11 @@
 ;
 ;test bit n,r
 ;
-	ld a,8
-	bit 3,a
+	ld h,8
+	bit 3,h
 	jp z,error
-	xor a
-	bit 3,a
+	ld h,0
+	bit 3,h
 	jp nz,error
 	
 ;
