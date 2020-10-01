@@ -17,8 +17,6 @@
  	cp a,0x03
  	jp nz,error
 
-	halt
-
 ;
 ;test rlc, rrc, rl, rr, sla, sra, sll, srl
 ;
