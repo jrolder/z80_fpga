@@ -223,7 +223,47 @@ begin
       alu8_out = alu8_ain;
       alu8_flags_out = {flag_s, flag_z, alu8_ain[5], flag_c, alu8_ain[3], flag_pv, 1'b0, !flag_c};
     end
-  18: // inc
+  16: // rlc
+    begin
+      alu8_out = {alu8_arg[6:0], alu8_arg[7]};
+      alu8_flags_out = {alu8_out[7], alu8_out == 0, alu8_out[5], 1'b0, alu8_out[3], !(^alu8_out), 1'b0, alu8_arg[7]};
+    end
+  17: // rrc
+    begin
+      alu8_out = {alu8_arg[0], alu8_arg[7:1]};
+      alu8_flags_out = {alu8_out[7], alu8_out == 0, alu8_out[5], 1'b0, alu8_out[3], !(^alu8_out), 1'b0, alu8_arg[0]};
+    end
+  18: // rl
+    begin
+      alu8_out = {alu8_arg[6:0], flag_c};
+      alu8_flags_out = {alu8_out[7], alu8_out == 0, alu8_out[5], 1'b0, alu8_out[3], !(^alu8_out), 1'b0, alu8_arg[7]};
+    end
+  19: // rr
+    begin
+      alu8_out = {flag_c, alu8_arg[7:1]};
+      alu8_flags_out = {alu8_out[7], alu8_out == 0, alu8_out[5], 1'b0, alu8_out[3], !(^alu8_out), 1'b0, alu8_arg[0]};
+    end    
+  20: // sla
+    begin
+      alu8_out = {alu8_arg[6:0], 1'b0};
+      alu8_flags_out = {alu8_out[7], alu8_out == 0, alu8_out[5], 1'b0, alu8_out[3], !(^alu8_out), 1'b0, alu8_arg[7]};
+    end
+  21: // sra
+    begin
+      alu8_out = {alu8_arg[7], alu8_arg[7:1]};
+      alu8_flags_out = {alu8_out[7], alu8_out == 0, alu8_out[5], 1'b0, alu8_out[3], !(^alu8_out), 1'b0, alu8_arg[0]};
+    end
+  22: // sll
+    begin
+      alu8_out = {alu8_arg[6:0], 1'b1};
+      alu8_flags_out = {alu8_out[7], alu8_out == 0, alu8_out[5], 1'b0, alu8_out[3], !(^alu8_out), 1'b0, alu8_arg[7]};
+    end
+  23: // srl
+    begin
+      alu8_out = {1'b0, alu8_arg[7:1]};
+      alu8_flags_out = {alu8_out[7], alu8_out == 0, alu8_out[5], 1'b0, alu8_out[3], !(^alu8_out), 1'b0, alu8_arg[0]};
+    end
+  24: // inc
     begin
       tmp9 = alu8_arg + 1;
       tmp8 = alu8_arg[6:0] + 1;
@@ -231,7 +271,7 @@ begin
       alu8_out = tmp9[7:0];
       alu8_flags_out = {alu8_out[7], alu8_out == 0, alu8_out[5], tmp5[4], alu8_out[3], alu8_arg == 8'h7f, 1'b0, flag_c};
     end
-  19: // dec
+  25: // dec
     begin
       tmp9 = alu8_arg - 1;
       tmp8 = alu8_arg[6:0] - 1;
@@ -239,7 +279,7 @@ begin
       alu8_out = tmp9[7:0];
       alu8_flags_out = {alu8_out[7], alu8_out == 0, alu8_out[5], tmp5[4], alu8_out[3], alu8_arg == 8'h80, 1'b1, flag_c};
     end
-  20: // (test) bit
+  26: // (test) bit
     begin
       bit_set = (alu8_arg & (1 << alu8_bit_sel)) != 0;
       alu8_out = alu8_arg;
@@ -254,12 +294,12 @@ begin
         flag_c                              // CF flag Unchanged
         };                            
     end
-  21: // res(et) bit
+  27: // res(et) bit
     begin
       alu8_out = alu8_arg & ~(1 << alu8_bit_sel);
       alu8_flags_out = alu8_flags_in; 
     end
-  22: // set bit
+  28: // set bit
     begin
       alu8_out = alu8_arg | (1 << alu8_bit_sel);
       alu8_flags_out = alu8_flags_in; 

@@ -7,6 +7,67 @@
 	;jp hello2
 
 ;
+;test rlc, rrc, rl, rr, sla, sra, sll, srl
+;
+ 	ld h,0x81
+ 	rlc h
+ 	jp nc,error
+ 	ld a,h
+ 	cp a,0x03
+ 	jp nz,error
+
+ 	ld h,0x81
+ 	rrc h
+ 	jp nc,error
+ 	ld a,h
+ 	cp a,0xc0
+ 	jp nz,error
+ 	
+ 	ld h,0x01
+ 	scf
+ 	rl h
+ 	jp c,error
+ 	ld a,h
+ 	cp a,0x03
+ 	jp nz,error
+
+ 	ld h,0x80
+ 	scf
+ 	rr h
+ 	jp c,error
+ 	ld a,h
+ 	cp a,0xc0
+ 	jp nz,error
+
+ 	ld h,0x81
+ 	sla h
+ 	jp nc,error
+ 	ld a,h
+ 	cp a,0x02
+ 	jp nz,error
+
+ 	ld h,0x81
+ 	sra h
+ 	jp nc,error
+ 	ld a,h
+ 	cp a,0xc0
+ 	jp nz,error
+ 	
+ 	ld h,0x81
+ 	sll h
+ 	jp nc,error
+ 	ld a,h
+ 	cp a,0x03
+ 	jp nz,error
+
+ 	ld h,0x81
+ 	srl h
+ 	jp nc,error
+ 	ld a,h
+ 	cp a,0x40
+ 	jp nz,error
+ 	 	
+;
 ;test res/set n,(hl)
 ;
 	ld hl,scratch

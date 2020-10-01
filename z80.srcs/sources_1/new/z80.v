@@ -495,11 +495,12 @@ begin
   case (uc_alu8_op)
     VAL_ALU8_OP_IP543: alu8_op = IR1[5:3];
     VAL_ALU8_OP_IP543B: alu8_op = 8 + IR1[5:3]; 
-    VAL_ALU8_OP_INC: alu8_op = 18;
-    VAL_ALU8_OP_DEC: alu8_op = 19;
-    VAL_ALU8_OP_BIT: alu8_op = 20;
-    VAL_ALU8_OP_RES: alu8_op = 21;
-    VAL_ALU8_OP_SET: alu8_op = 22;
+    VAL_ALU8_OP_IP543_CBROT: alu8_op = 16 + IR1[5:3]; 
+    VAL_ALU8_OP_INC: alu8_op = 24;
+    VAL_ALU8_OP_DEC: alu8_op = 25;
+    VAL_ALU8_OP_BIT: alu8_op = 26;
+    VAL_ALU8_OP_RES: alu8_op = 27;
+    VAL_ALU8_OP_SET: alu8_op = 28;
     default:
       alu8_op = 5'bX;
   endcase

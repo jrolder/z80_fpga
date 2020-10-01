@@ -209,7 +209,13 @@ __opcode 11yyy111 rst nn
   
 __opcode 11111111 rst 7
   bdos goto start
-  
+
+;
+; CB Quadrant 0
+;
+
+__opcode_cb 00ooorrr shift and rot r
+  alu8_op_ip543_cbrot dout8_sel_ir210 alu8_src_dout8 flags_source_alu8 din8_src_alu8 din8_dst_ir210 goto start
   
 ;
 ; CB Quadrant 1
