@@ -7,6 +7,31 @@
 	;jp hello2
 
 ;
+;test res/set n,(hl)
+;
+	ld hl,scratch
+	ld (hl),0xff
+	res 3,(hl)
+	ld a,(hl)
+	cp a,0xf7
+	jp nz,error
+	set 3,(hl)
+	ld a,(hl)
+	cp a,0xff
+	jp nz,error
+	
+;
+;test res/set n,r
+;
+	ld a,0xff
+	res 3,a
+	cp a,0xf7
+	jp nz,error
+	set 3,a
+	cp a,0xff
+	jp nz,error
+	
+;
 ;test ld (hl),nn
 ;
 	ld hl,scratch

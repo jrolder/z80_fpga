@@ -498,6 +498,8 @@ begin
     VAL_ALU8_OP_INC: alu8_op = 18;
     VAL_ALU8_OP_DEC: alu8_op = 19;
     VAL_ALU8_OP_BIT: alu8_op = 20;
+    VAL_ALU8_OP_RES: alu8_op = 21;
+    VAL_ALU8_OP_SET: alu8_op = 22;
     default:
       alu8_op = 5'bX;
   endcase

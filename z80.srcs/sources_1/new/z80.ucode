@@ -221,3 +221,25 @@ __opcode_cb 01bbbrrr bit b,r
 __opcode_cb 01bbb110 bit b,(hl)
   dout16_sel_hl addr_sel_dout16 rd alu8_src_ram alu8_op_bit flags_source_alu8 din8_src_alu8 goto start
   
+;
+; CB Quadrant 2
+;
+
+__opcode_cb 10bbbrrr res b,r
+  alu8_src_dout8 dout8_sel_ir210 alu8_op_res flags_source_alu8 din8_src_alu8 din8_dst_ir210 goto start
+  
+__opcode_cb 10bbb110 res b,(hl)
+  dout16_sel_hl addr_sel_dout16 rd rd_tmp_lo
+  alu8_op_res dout16_sel_hl addr_sel_dout16 ram_wr_alu8 alu8_src_tmp_lo flags_source_alu8 goto start
+  
+;
+; CB Quadrant 2
+;
+
+__opcode_cb 11bbbrrr set b,r
+  alu8_src_dout8 dout8_sel_ir210 alu8_op_set flags_source_alu8 din8_src_alu8 din8_dst_ir210 goto start
+  
+__opcode_cb 11bbb110 set b,(hl)
+  dout16_sel_hl addr_sel_dout16 rd rd_tmp_lo
+  alu8_op_set dout16_sel_hl addr_sel_dout16 ram_wr_alu8 alu8_src_tmp_lo flags_source_alu8 goto start
+  

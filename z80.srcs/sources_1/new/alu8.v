@@ -239,18 +239,8 @@ begin
       alu8_out = tmp9[7:0];
       alu8_flags_out = {alu8_out[7], alu8_out == 0, alu8_out[5], tmp5[4], alu8_out[3], alu8_arg == 8'h80, 1'b1, flag_c};
     end
-  20: // bit
+  20: // (test) bit
     begin
-    /*
-SF flag Set if n = 7 and tested bit is set.
-ZF flag Set if the tested bit is reset.
-YF flag Set if n = 5 and tested bit is set.
-HF flag Always set.
-XF flag Set if n = 3 and tested bit is set.
-PF flag Set just like ZF flag.
-NF flag Always reset.
-CF flag Unchanged
-*/
       bit_set = (alu8_arg & (1 << alu8_bit_sel)) != 0;
       alu8_out = alu8_arg;
       alu8_flags_out = {
@@ -263,6 +253,16 @@ CF flag Unchanged
         1'b0,                               // NF flag Always reset.
         flag_c                              // CF flag Unchanged
         };                            
+    end
+  21: // res(et) bit
+    begin
+      alu8_out = alu8_arg & ~(1 << alu8_bit_sel);
+      alu8_flags_out = alu8_flags_in; 
+    end
+  22: // set bit
+    begin
+      alu8_out = alu8_arg | (1 << alu8_bit_sel);
+      alu8_flags_out = alu8_flags_in; 
     end
   default:
     begin
