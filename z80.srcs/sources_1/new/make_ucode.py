@@ -7,11 +7,11 @@ bits = ("rd", )
 
 enums = (
     ("command", ("halt", "bdos",)),
-    ("ucode_goto", ("decode1", "decode2", "goto_now", "goto_ncc", "goto_nccr", "goto_z")),
+    ("ucode_goto", ("decode1", "decode_cb", "goto_now", "goto_ncc", "goto_nccr", "goto_z")),
     ("ram_addr_sel", ("addr_sel_ip", "addr_sel_dout16", "addr_sel_alu16", "addr_sel_tmp", "addr_sel_tmp_p1", "io_addr_sel_dout8", "io_addr_sel_tmp_lo")),
     ("read_target", ("rd_ir", "rd_tmp_lo", "rd_tmp_hi", "rd_dout16")),
     ("ram_wr_sel", ("ram_wr_dout8", "ram_wr_tmp_lo", "ram_wr_tmp_hi", "ram_wr_ip_hi", "ram_wr_ip_lo", "io_wr_dout8", "io_wr_tmp_lo", "ram_wr_alu8")),
-    ("din8_target", ("din8_dst_ir543", "din8_dst_a", "din8_dst_b", "din8_dst_h", "din8_dst_l", )),
+    ("din8_target", ("din8_dst_ir210", "din8_dst_ir543", "din8_dst_a", "din8_dst_b", "din8_dst_h", "din8_dst_l", )),
     ("din8_source", ("din8_src_dout8", "din8_src_ram", "din8_src_alu8", "din8_src_io")),
     ("dout8_sel", ("dout8_sel_ir543", "dout8_sel_ir210", "dout8_sel_rega", "dout8_sel_regb", "dout8_sel_reg_h", "dout8_sel_reg_l")),
     ("din16_source", ("din16_src_tmp", "din16_src_dout16", "din16_src_alu16")),
@@ -19,7 +19,7 @@ enums = (
     ("dout16_sel", ("dout16_sel_hl", "dout16_sel_sp", "dout16_sel_de", "dout16_sel_ir54rp","dout16_sel_ir54rp2",)),
     ("flags_source", ("flags_source_alu8", "flags_source_alu16")),
     ("alu8_source", ("alu8_src_ram", "alu8_src_dout8","alu8_src_tmp_lo")),
-    ("alu8_op", ("alu8_op_ip543", "alu8_op_ip543b", "alu8_op_inc", "alu8_op_dec")),
+    ("alu8_op", ("alu8_op_ip543", "alu8_op_ip543b", "alu8_op_inc", "alu8_op_dec", "alu8_op_bit")),
     ("ip_op", ("inc_ip", "ip_from_tmp", "ip_from_rel_tmp", "ip_from_rst")),
     ("alu16_op", ("alu16_op_inc", "alu16_op_dec", "alu16_op_add",)),
     )
@@ -71,7 +71,7 @@ def make_codes(decode_map, opcode, chosen, uc_addr):
     
     
 
-def parse(uc_file, f, commands, ucodes, decode1):
+def parse(uc_file, f, commands, ucodes, decode1, decode_cb):
   labels = {}
   current = 0;
   for line in f:
@@ -86,6 +86,11 @@ def parse(uc_file, f, commands, ucodes, decode1):
       opcode = parts[1]
       comment = parts[2]
       make_codes(decode1, opcode, "", current)
+    elif line.startswith("__opcode_cb "):
+      parts = line.split(" ", 2)
+      opcode = parts[1]
+      comment = parts[2]
+      make_codes(decode_cb, opcode, "", current)
     elif line[0].isspace():
       # microcode line
       next_uc_addr = current + 1
@@ -141,14 +146,17 @@ HEADER_FILE = "ucode_consts.vh"
 UCODE_SIGNALS_FILE = "ucode_signals.vh"
 UCODE_FILE = "ucode.vh"
 DECODE1_FILE = "decode1.vh"
+DECODE_CB_FILE = "decode_cb.vh"
 
 ucodes = [] # list of tuples with ucode and comment
 decode1 = {} # map of byte to ucode addr
+decode_cb = {} # map of byte to ucode addr
 
 commands = generate_ucode_headers()
 
 with open(UCODE_SRC_FILE) as f:
   with open(UCODE_FILE, "w") as uc:
-    parse(uc, f, commands, ucodes, decode1)
+    parse(uc, f, commands, ucodes, decode1, decode_cb)
 
 write_decode_rom(DECODE1_FILE, decode1)
+write_decode_rom(DECODE_CB_FILE, decode_cb)

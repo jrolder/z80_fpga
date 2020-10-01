@@ -81,6 +81,14 @@ decode1_rom decode1_rom (
   .uc_addr(decode1_out)
   );  
   
+// module decode_cb
+wire [UCODE_ADDR_LENGTH-1:0] decode_cb_out;
+
+decode_cb_rom decode_cb_rom (
+  .opcode(ram_dout),
+  .uc_addr(decode_cb_out)
+  );  
+
 // module registers  
 reg [7:0] reg_din8;
 wire [7:0] reg_dout8;
@@ -123,6 +131,7 @@ reg [4:0] alu8_op;
 reg [7:0] alu8_arg;
 wire [7:0] alu8_flags_in;
 wire [7:0] alu8_flags_out;
+wire [2:0] alu8_bit_sel;
 
 alu8 alu8 (
   .alu8_ain(alu8_ain),
@@ -130,7 +139,8 @@ alu8 alu8 (
   .alu8_op(alu8_op),
   .alu8_arg(alu8_arg),
   .alu8_flags_in(alu8_flags_in),
-  .alu8_flags_out(alu8_flags_out)
+  .alu8_flags_out(alu8_flags_out),
+  .alu8_bit_sel(alu8_bit_sel)
   );  
   
 // module alu16    
@@ -164,6 +174,8 @@ sys_io sys_io(
 assign ucode_out = ucode;
 assign ucode_addr_out = ucode_addr;
 
+assign alu8_bit_sel = IR1[5:3];
+
 `include "ucode_signals.vh"
 
   
@@ -190,6 +202,8 @@ begin
   case (uc_ucode_goto)
     VAL_DECODE1:
       ucode_addr = decode1_out;
+    VAL_DECODE_CB: 
+      ucode_addr = decode_cb_out;
     VAL_GOTO_NOW: 
       ucode_addr = ucode[UCODE_ADDR_LENGTH-1:0];
     VAL_GOTO_NCC:
@@ -300,6 +314,8 @@ end
 always @(*)
 begin
   case (uc_din8_target)
+    VAL_DIN8_DST_IR210: 
+      reg_din8sel = IR1[2:0];
     VAL_DIN8_DST_IR543: 
       reg_din8sel = IR1[5:3];
     VAL_DIN8_DST_A:
@@ -478,9 +494,10 @@ always @(*)
 begin
   case (uc_alu8_op)
     VAL_ALU8_OP_IP543: alu8_op = IR1[5:3];
-    VAL_ALU8_OP_IP543B: alu8_op = 8 + IR1[5:3];
+    VAL_ALU8_OP_IP543B: alu8_op = 8 + IR1[5:3]; 
     VAL_ALU8_OP_INC: alu8_op = 18;
     VAL_ALU8_OP_DEC: alu8_op = 19;
+    VAL_ALU8_OP_BIT: alu8_op = 20;
     default:
       alu8_op = 5'bX;
   endcase

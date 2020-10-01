@@ -7,6 +7,16 @@
 	;jp hello2
 
 ;
+;test bit n,r
+;
+	ld a,8
+	bit 3,a
+	jp z,error
+	xor a
+	bit 3,a
+	jp nz,error
+	
+;
 ;test cpl
 ;
 	ld a,0x13

@@ -6,7 +6,8 @@ module alu8(
     input wire [4:0] alu8_op,
     input wire [7:0] alu8_arg,
     input wire [7:0] alu8_flags_in,
-    output reg [7:0] alu8_flags_out
+    output reg [7:0] alu8_flags_out,
+    input wire [2:0] alu8_bit_sel
     );
     
 parameter FLAG_S = 7; // sign flag
@@ -32,6 +33,7 @@ reg [4:0] tmp5;
 reg [7:0] tmp8;
 reg [8:0] tmp9;
 reg cf_out, hf_out;
+reg bit_set;
     
 task daa_diff;
   input [7:0]a;
@@ -236,6 +238,31 @@ begin
       tmp5 = alu8_arg[3:0] - 1;
       alu8_out = tmp9[7:0];
       alu8_flags_out = {alu8_out[7], alu8_out == 0, alu8_out[5], tmp5[4], alu8_out[3], alu8_arg == 8'h80, 1'b1, flag_c};
+    end
+  20: // bit
+    begin
+    /*
+SF flag Set if n = 7 and tested bit is set.
+ZF flag Set if the tested bit is reset.
+YF flag Set if n = 5 and tested bit is set.
+HF flag Always set.
+XF flag Set if n = 3 and tested bit is set.
+PF flag Set just like ZF flag.
+NF flag Always reset.
+CF flag Unchanged
+*/
+      bit_set = (alu8_arg & (1 << alu8_bit_sel)) != 0;
+      alu8_out = alu8_arg;
+      alu8_flags_out = {
+        (alu8_bit_sel == 7) && bit_set,     // SF flag Set if n = 7 and tested bit is set.
+        !bit_set,                           // ZF flag Set if the tested bit is reset.
+        (alu8_bit_sel == 5) && bit_set,     // YF flag Set if n = 5 and tested bit is set.
+        1'b1,                               // HF flag Always set.
+        (alu8_bit_sel == 3) && bit_set,     // XF flag Set if n = 3 and tested bit is set.
+        !bit_set,                           // PF flag Set just like ZF flag.
+        1'b0,                               // NF flag Always reset.
+        flag_c                              // CF flag Unchanged
+        };                            
     end
   default:
     begin
