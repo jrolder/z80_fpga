@@ -6,3 +6,4 @@ ucode_signals.vh
 ucode.vh
 decode1.vh
 decode_cb.vh
+decode_xy.vh

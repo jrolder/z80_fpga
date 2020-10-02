@@ -7,7 +7,7 @@ bits = ("rd", )
 
 enums = (
     ("command", ("halt", "bdos",)),
-    ("ucode_goto", ("decode1", "decode_cb", "goto_now", "goto_ncc", "goto_nccr", "goto_z")),
+    ("ucode_goto", ("decode1", "decode_cb", "decode_xy", "goto_now", "goto_ncc", "goto_nccr", "goto_z")),
     ("ram_addr_sel", ("addr_sel_ip", "addr_sel_dout16", "addr_sel_alu16", "addr_sel_tmp", "addr_sel_tmp_p1", "io_addr_sel_dout8", "io_addr_sel_tmp_lo")),
     ("read_target", ("rd_ir", "rd_tmp_lo", "rd_tmp_hi", "rd_dout16")),
     ("ram_wr_sel", ("ram_wr_dout8", "ram_wr_tmp_lo", "ram_wr_tmp_hi", "ram_wr_ip_hi", "ram_wr_ip_lo", "io_wr_dout8", "io_wr_tmp_lo", "ram_wr_alu8")),
@@ -22,6 +22,7 @@ enums = (
     ("alu8_op", ("alu8_op_ip543", "alu8_op_ip543b", "alu8_op_ip543_cbrot", "alu8_op_inc", "alu8_op_dec", "alu8_op_bit", "alu8_op_res", "alu8_op_set")),
     ("ip_op", ("inc_ip", "ip_from_tmp", "ip_from_rel_tmp", "ip_from_rst")),
     ("alu16_op", ("alu16_op_inc", "alu16_op_dec", "alu16_op_add",)),
+    ("xy_sel", ("xy_sel_clear", "xy_sel_ix", "xy_sel_iy")),
     )
 
 def generate_ucode_headers():
@@ -71,7 +72,7 @@ def make_codes(decode_map, opcode, chosen, uc_addr):
     
     
 
-def parse(uc_file, f, commands, ucodes, decode1, decode_cb):
+def parse(uc_file, f, commands, ucodes, decode1, decode_cb, decode_xy):
   labels = {}
   current = 0;
   for line in f:
@@ -82,15 +83,20 @@ def parse(uc_file, f, commands, ucodes, decode1, decode_cb):
     if len(line) == 0:
       continue
     if line.startswith("__opcode "):
-      parts = line.split(" ", 2)
+      parts = line.split(maxsplit=2)
       opcode = parts[1]
       comment = parts[2]
       make_codes(decode1, opcode, "", current)
     elif line.startswith("__opcode_cb "):
-      parts = line.split(" ", 2)
+      parts = line.split(maxsplit=2)
       opcode = parts[1]
       comment = parts[2]
       make_codes(decode_cb, opcode, "", current)
+    elif line.startswith("__opcode_xy "):
+      parts = line.split(maxsplit=2)
+      opcode = parts[1]
+      comment = parts[2]
+      make_codes(decode_xy, opcode, "", current)
     elif line[0].isspace():
       # microcode line
       next_uc_addr = current + 1
@@ -147,16 +153,19 @@ UCODE_SIGNALS_FILE = "ucode_signals.vh"
 UCODE_FILE = "ucode.vh"
 DECODE1_FILE = "decode1.vh"
 DECODE_CB_FILE = "decode_cb.vh"
+DECODE_XY_FILE = "decode_xy.vh"
 
 ucodes = [] # list of tuples with ucode and comment
 decode1 = {} # map of byte to ucode addr
 decode_cb = {} # map of byte to ucode addr
+decode_xy = {} # map of byte to ucode addr
 
 commands = generate_ucode_headers()
 
 with open(UCODE_SRC_FILE) as f:
   with open(UCODE_FILE, "w") as uc:
-    parse(uc, f, commands, ucodes, decode1, decode_cb)
+    parse(uc, f, commands, ucodes, decode1, decode_cb, decode_xy)
 
 write_decode_rom(DECODE1_FILE, decode1)
 write_decode_rom(DECODE_CB_FILE, decode_cb)
+write_decode_rom(DECODE_XY_FILE, decode_xy)

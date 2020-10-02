@@ -7,6 +7,90 @@
 	;jp hello2
 
 ;
+;test add ixy,qq
+;
+	ld ix,0x0201
+	ld bc,0x0303
+	ld de,0x0404
+	ld sp,0x0505
+	add ix,ix
+	add ix,bc
+	add ix,de
+	add ix,sp
+	push ix
+	pop bc
+	ld a,b
+	cp a,0x10
+	jp nz,error
+	ld a,c
+	cp a,0x0e
+	jp nz,error
+
+;
+;test push/pop ixy
+;
+	ld sp,stack
+	ld ix,0x0102
+	ld iy,0x0304
+	push ix
+	push iy
+	pop ix
+	pop iy
+	
+	push ix
+	pop bc
+	ld a,b
+	cp a,0x03
+	jp nz,error
+	ld a,c
+	cp a,0x04
+	jp nz,error
+
+	push iy
+	pop bc
+	ld a,b
+	cp a,0x01
+	jp nz,error
+	ld a,c
+	cp a,0x02
+	jp nz,error
+
+;
+;test ld ixy,nnnn and push ixy
+;
+	ld sp,stack
+	ld hl,0x0102
+	ld ix,0x0304
+	ld iy,0x0506
+
+	push hl
+	pop bc
+	ld a,b
+	cp a,0x01
+	jp nz,error
+	ld a,c
+	cp a,0x02
+	jp nz,error
+
+	push ix
+	pop bc
+	ld a,b
+	cp a,0x03
+	jp nz,error
+	ld a,c
+	cp a,0x04
+	jp nz,error
+
+	push iy
+	pop bc
+	ld a,b
+	cp a,0x05
+	jp nz,error
+	ld a,c
+	cp a,0x06
+	jp nz,error
+	
+;
 ;test rlc (hl)
 ;
 	ld hl,scratch

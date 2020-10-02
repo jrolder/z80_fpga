@@ -1,5 +1,5 @@
 start:
-  addr_sel_ip rd inc_ip rd_ir decode1
+  addr_sel_ip rd inc_ip rd_ir xy_sel_clear decode1
   
   
 ;
@@ -18,7 +18,8 @@ __opcode 001cc000 jr cc,nn
   addr_sel_ip rd inc_ip rd_tmp_lo gotonccr start
   ip_from_rel_tmp goto start
 
-__opcode 00qq0001 ld Q, nnnn
+__opcode    00qq0001 ld Q, nnnn
+__opcode_xy 00100001 ld ixy, nnnn
   addr_sel_ip rd inc_ip rd_tmp_lo
   addr_sel_ip rd inc_ip rd_tmp_hi 
   din16_src_tmp din16_sel_ir54rp2 goto start
@@ -38,6 +39,7 @@ __opcode 00110010 ld (nnnn),a
   addr_sel_tmp    ram_wr_dout8 dout8_sel_rega goto start
 
 __opcode 00qq1001 add hl,bc/de/hl/sp
+__opcode_xy 00qq1001 add ixy,bc/de/hl/sp
   rd_dout16 dout16_sel_ir54rp2
   dout16_sel_hl alu16_op_add din16_src_alu16 din16_sel_hl flags_source_alu16 goto start
 
@@ -127,6 +129,7 @@ __opcode 11ccc000 ret cc
   ip_from_tmp goto start
 
 __opcode 11qq0001 pop qq
+__opcode_xy 11100001 pop ixy
   dout16_sel_sp addr_sel_dout16 alu16_op_inc rd_tmp_lo din16_src_alu16 din16_sel_sp
   dout16_sel_sp addr_sel_dout16 alu16_op_inc rd_tmp_hi din16_src_alu16 din16_sel_sp
   din16_sel_ir54rp1 din16_src_tmp goto start
@@ -188,7 +191,8 @@ __opcode 11ccc100 call cc,nnnn
   dout16_sel_sp addr_sel_alu16 alu16_op_dec ram_wr_ip_hi din16_src_alu16 din16_sel_sp
   dout16_sel_sp addr_sel_alu16 alu16_op_dec ram_wr_ip_lo din16_src_alu16 din16_sel_sp ip_from_tmp goto start
   
-__opcode 11qq0101 push qq
+__opcode    11qq0101 push qq
+__opcode_xy 11100101 push ixy
   dout16_sel_ir54rp rd_dout16
   dout16_sel_sp addr_sel_alu16 alu16_op_dec ram_wr_tmp_hi din16_src_alu16 din16_sel_sp
   dout16_sel_sp addr_sel_alu16 alu16_op_dec ram_wr_tmp_lo din16_src_alu16 din16_sel_sp goto start
@@ -198,6 +202,15 @@ __opcode 11001101 call nnnn
   addr_sel_ip rd inc_ip rd_tmp_hi
   dout16_sel_sp addr_sel_alu16 alu16_op_dec ram_wr_ip_hi din16_src_alu16 din16_sel_sp
   dout16_sel_sp addr_sel_alu16 alu16_op_dec ram_wr_ip_lo din16_src_alu16 din16_sel_sp ip_from_tmp goto start 
+
+__opcode 11011101 DD prefix
+  xy_sel_ix addr_sel_ip rd inc_ip rd_ir decode_xy
+
+__opcode 11101101 ED prefix
+  goto start
+
+__opcode 11111101 FD prefix
+  xy_sel_iy addr_sel_ip rd inc_ip rd_ir decode_xy
 
 __opcode 11ooo110 aluop n
   addr_sel_ip rd inc_ip alu8_op_ip543 alu8_src_ram flags_source_alu8 din8_src_alu8 din8_dst_a goto start

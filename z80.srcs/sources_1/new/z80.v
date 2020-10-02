@@ -15,6 +15,7 @@ module z80(
     );
 
 `include "ucode_consts.vh"
+`include "z80_consts.vh"
     
 // declarations for this module
 input wire clk;
@@ -30,6 +31,7 @@ output wire [7:0] arg_hi_out;
 // global declarations
 reg [15:0] TMP;
 reg [15:0] IP;
+reg [1:0] xy_sel;
 
 assign arg_lo_out = TMP[7:0];
 assign arg_hi_out = TMP[15:8];
@@ -89,6 +91,14 @@ decode_cb_rom decode_cb_rom (
   .uc_addr(decode_cb_out)
   );  
 
+// module decode_xy (DD+FD prefix)
+wire [UCODE_ADDR_LENGTH-1:0] decode_xy_out;
+
+decode_xy_rom decode_xy_rom (
+  .opcode(ram_dout),
+  .uc_addr(decode_xy_out)
+  );  
+
 // module registers  
 reg [7:0] reg_din8;
 wire [7:0] reg_dout8;
@@ -121,7 +131,8 @@ registers registers(
   .din8we(reg_din8we),
   .din16we(reg_din16we),
   .flags_we(reg_flags_we),
-  .aout8(reg_aout8)
+  .aout8(reg_aout8),
+  .xy_sel(xy_sel)
   );  
   
 // module alu8
@@ -170,7 +181,7 @@ sys_io sys_io(
   .io_din(io_din),
   .io_we(io_we)
 );
-  
+
 assign ucode_out = ucode;
 assign ucode_addr_out = ucode_addr;
 
@@ -204,6 +215,8 @@ begin
       ucode_addr = decode1_out;
     VAL_DECODE_CB: 
       ucode_addr = decode_cb_out;
+    VAL_DECODE_XY: 
+      ucode_addr = decode_xy_out;
     VAL_GOTO_NOW: 
       ucode_addr = ucode[UCODE_ADDR_LENGTH-1:0];
     VAL_GOTO_NCC:
@@ -539,6 +552,18 @@ begin
       io_addr = TMP[7:0];
     default:
       io_addr = 8'bX;
+  endcase
+end
+
+always @(*)
+begin
+  case (uc_xy_sel)
+    VAL_XY_SEL_CLEAR:
+      xy_sel = XY_SELECT_HL;
+    VAL_XY_SEL_IX:
+      xy_sel = XY_SELECT_IX;
+    VAL_XY_SEL_IY:
+      xy_sel = XY_SELECT_IY;
   endcase
 end
 

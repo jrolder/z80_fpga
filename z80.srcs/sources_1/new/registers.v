@@ -16,8 +16,11 @@ module registers(
     input wire din8we,
     input wire din16we,
     input wire flags_we,
-    output reg [7:0] aout8
+    output reg [7:0] aout8,
+    input wire [1:0] xy_sel
     );
+
+`include "z80_consts.vh"
 
 reg [15:0] BC;
 reg [15:0] DE;
@@ -58,8 +61,18 @@ begin
           1: BC[7:0] <= din8;
           2: DE[15:8] <= din8;
           3: DE[7:0] <= din8;
-          4: HL[15:8] <= din8;
-          5: HL[7:0] <= din8;
+          4: 
+            case (xy_sel)
+              XY_SELECT_HL: HL[15:8] <= din8;
+              XY_SELECT_IX: IX[15:8] <= din8;
+              XY_SELECT_IY: IY[15:8] <= din8;
+            endcase
+          5: 
+            case (xy_sel)
+              XY_SELECT_HL: HL[7:0] <= din8;
+              XY_SELECT_IX: IX[7:0] <= din8;
+              XY_SELECT_IY: IY[7:0] <= din8;
+            endcase
           7: AF[15:8] <= din8;
           8: IX[15:8] <= din8;
           9: IX[7:0] <= din8;
@@ -72,11 +85,21 @@ begin
             case (din16sel)
               0: BC <= din16;
               1: DE <= din16;
-              2: HL <= din16;
+              2: 
+                case (xy_sel)
+                  XY_SELECT_HL: HL <= din16;
+                  XY_SELECT_IX: IX <= din16;
+                  XY_SELECT_IY: IY <= din16;
+                endcase
               3: AF <= din16;
               4: BC <= din16;
               5: DE <= din16;
-              6: HL <= din16;
+              6:
+                case (xy_sel)
+                  XY_SELECT_HL: HL <= din16;
+                  XY_SELECT_IX: IX <= din16;
+                  XY_SELECT_IY: IY <= din16;
+                endcase
               7: SP <= din16;          
               8: IX <= din16;
               9: IY <= din16;
@@ -94,8 +117,18 @@ begin
     1: dout8 = BC[7:0];
     2: dout8 = DE[15:8];
     3: dout8 = DE[7:0];
-    4: dout8 = HL[15:8];
-    5: dout8 = HL[7:0];    
+    4: 
+      case (xy_sel)
+        XY_SELECT_HL: dout8 = HL[15:8];
+        XY_SELECT_IX: dout8 = IX[15:8];
+        XY_SELECT_IY: dout8 = IY[15:8];
+      endcase
+    5: 
+      case (xy_sel)
+        XY_SELECT_HL: dout8 = HL[7:0];    
+        XY_SELECT_IX: dout8 = IX[7:0];
+        XY_SELECT_IY: dout8 = IY[7:0];
+      endcase
     7: dout8 = AF[15:8];
     8: dout8 = IX[15:8];    
     9: dout8 = IX[7:0];
@@ -110,11 +143,21 @@ begin
   case (dout16sel)
     0: dout16 = BC;
     1: dout16 = DE;
-    2: dout16 = HL;
+    2: 
+      case (xy_sel)
+        XY_SELECT_HL: dout16 = HL;   
+        XY_SELECT_IX: dout16 = IX;
+        XY_SELECT_IY: dout16 = IY;
+      endcase
     3: dout16 = AF;
     4: dout16 = BC;
     5: dout16 = DE;
-    6: dout16 = HL;
+    6: 
+      case (xy_sel)
+        XY_SELECT_HL: dout16 = HL;   
+        XY_SELECT_IX: dout16 = IX;
+        XY_SELECT_IY: dout16 = IY;
+      endcase
     7: dout16 = SP;
     8: dout16 = IX;
     9: dout16 = IY;
