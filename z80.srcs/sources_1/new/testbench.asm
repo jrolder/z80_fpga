@@ -7,6 +7,121 @@
 	;jp hello2
 
 ;
+;test inc ixyhl, dec ixyhl, ld ixyhl,nn
+;
+	ld sp,stack
+	ld ixh,5
+	inc ixh
+	inc ixh
+	dec ixh
+	ld ixl,9
+	dec ixl
+	dec ixl
+    inc ixl
+	push ix
+	pop bc
+	ld a,b
+	cp a,0x06
+	jp nz,error
+	ld a,c
+	cp a,0x08
+	jp nz,error
+    
+	ld iyh,3
+	inc iyh
+	inc iyh
+	dec iyh
+	ld iyl,7
+	dec iyl
+	dec iyl
+    inc iyl
+	push iy
+	pop bc
+	ld a,b
+	cp a,0x04
+	jp nz,error
+	ld a,c
+	cp a,0x06
+	jp nz,error
+	
+;
+;test inc ixy, dec ixy
+;
+	ld sp,stack
+	ld ix,0xffff
+	inc ix
+	push ix
+	pop bc
+	ld a,b
+	cp a,0x00
+	jp nz,error
+	ld a,c
+	cp a,0x00
+	jp nz,error
+	
+	ld iy,0x0001
+	inc iy
+	push iy
+	pop bc
+	ld a,b
+	cp a,0x00
+	jp nz,error
+	ld a,c
+	cp a,0x02
+	jp nz,error
+	
+	ld ix,0xffff
+	dec ix
+	push ix
+	pop bc
+	ld a,b
+	cp a,0xff
+	jp nz,error
+	ld a,c
+	cp a,0xfe
+	jp nz,error
+	
+	ld iy,0x0001
+	dec iy
+	push iy
+	pop bc
+	ld a,b
+	cp a,0x00
+	jp nz,error
+	ld a,c
+	cp a,0x00
+	jp nz,error
+	
+		
+;
+;test ld (nnnn),ixy, ld ixy,(nnnn)
+;
+	ld sp,stack
+	ld ix,0x1122
+	ld (scratch),ix
+	ld iy,0x3344
+	ld (scratch+2),iy
+	ld ix,(scratch+2)
+	ld iy,(scratch)
+	push ix
+	pop bc
+	ld a,b
+	cp a,0x33
+	jp nz,error
+	ld a,c
+	cp a,0x44
+	jp nz,error
+
+	push iy
+	pop bc
+	ld a,b
+	cp a,0x11
+	jp nz,error
+	ld a,c
+	cp a,0x22
+	jp nz,error
+	
+;
 ;test add ixy,qq
 ;
 	ld ix,0x0201
@@ -17,6 +132,7 @@
 	add ix,bc
 	add ix,de
 	add ix,sp
+	ld sp,stack
 	push ix
 	pop bc
 	ld a,b
