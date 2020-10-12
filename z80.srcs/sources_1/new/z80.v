@@ -32,6 +32,7 @@ output wire [7:0] arg_hi_out;
 reg [15:0] TMP;
 reg [15:0] IP;
 reg [1:0] xy_sel;
+reg [7:0] xy_off;
 
 assign arg_lo_out = TMP[7:0];
 assign arg_hi_out = TMP[15:8];
@@ -439,7 +440,12 @@ always @(*)
 begin
   case (uc_ram_addr_sel)
     VAL_ADDR_SEL_IP: ram_addr = IP;
-    VAL_ADDR_SEL_DOUT16: ram_addr = reg_dout16;
+    VAL_ADDR_SEL_DOUT16: 
+      if (xy_sel == XY_SELECT_HL || uc_dout16_sel != VAL_DOUT16_SEL_HL)
+        ram_addr = reg_dout16;
+      else
+        // special handling for (ix+d) and (iy+d)
+        ram_addr = $signed(reg_dout16) + $signed(xy_off);
     VAL_ADDR_SEL_ALU16: ram_addr = alu16_out;
     VAL_ADDR_SEL_TMP: ram_addr = TMP;
     VAL_ADDR_SEL_TMP_P1: ram_addr = TMP + 1;
@@ -469,7 +475,8 @@ begin
     VAL_RD_TMP_LO: TMP[7:0] = ram_dout;
     VAL_RD_TMP_HI: TMP[15:8] = ram_dout;
     VAL_RD_DOUT16: TMP = reg_dout16;
-    endcase
+    VAL_RD_XY_OFF: xy_off = ram_dout;
+  endcase
 end
 
 /*

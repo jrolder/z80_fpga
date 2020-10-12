@@ -49,6 +49,7 @@ __opcode_xy 0010r100 inc ixyh
   dout8_sel_ir543 alu8_src_dout8 alu8_op_inc flags_source_alu8 din8_src_alu8 din8_dst_ir543 goto start
 
 __opcode 00110100 inc (hl)
+inchl:
   dout16_sel_hl addr_sel_dout16 rd rd_tmp_lo
   alu8_op_inc dout16_sel_hl addr_sel_dout16 ram_wr_alu8 alu8_src_tmp_lo flags_source_alu8 goto start
 
@@ -84,6 +85,7 @@ __opcode_xy 0010r101 dec ixyh
   dout8_sel_ir543 alu8_src_dout8 alu8_op_dec flags_source_alu8 din8_src_alu8 din8_dst_ir543 goto start
 
 __opcode 00110101 dec (hl)
+dechl:
   dout16_sel_hl addr_sel_dout16 rd rd_tmp_lo
   alu8_op_dec dout16_sel_hl addr_sel_dout16 ram_wr_alu8 alu8_src_tmp_lo flags_source_alu8 goto start
 
@@ -272,4 +274,15 @@ __opcode_cb 11bbbrrr set b,r
 __opcode_cb 11bbb110 set b,(hl)
   dout16_sel_hl addr_sel_dout16 rd rd_tmp_lo
   alu8_op_set dout16_sel_hl addr_sel_dout16 ram_wr_alu8 alu8_src_tmp_lo flags_source_alu8 goto start
+  
+  
+;
+; DD and DF prefix cases not handled in standard panel
+;
+
+__opcode_xy 00110100 inc (ixy+n)
+  addr_sel_ip rd inc_ip rd_xy_off goto inchl
+  
+__opcode_xy 00110101 inc (ixy+n)
+  addr_sel_ip rd inc_ip rd_xy_off goto dechl
   
