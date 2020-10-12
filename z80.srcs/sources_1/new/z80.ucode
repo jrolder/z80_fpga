@@ -125,10 +125,12 @@ halt_label:
 ; Quadrant 2
 ;
 
-__opcode 10ooorrr aluop r
+__opcode    10ooorrr aluop r
+__opcode_xy 10ooorrr aluop ixyhl
   alu8_op_ip543 dout8_sel_ir210 alu8_src_dout8 flags_source_alu8 din8_src_alu8 din8_dst_a goto start
 
 __opcode 10ooo110 aluop (hl)
+aluophl:
   alu8_op_ip543 dout16_sel_hl addr_sel_dout16 rd alu8_src_ram flags_source_alu8 din8_src_alu8 din8_dst_a goto start
 
 ;
@@ -298,4 +300,7 @@ __opcode_xy 01rrr110 ld r,(ixy+d)
 
 __opcode_xy 01110sss ld (ixy+d), r
     addr_sel_ip rd inc_ip rd_xy_off goto ldhlr
+
+__opcode_xy 10ooo110 aluop (ixy+d)
+    addr_sel_ip rd inc_ip rd_xy_off goto aluophl
   

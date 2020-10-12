@@ -7,6 +7,38 @@
 	;jp hello2
 
 ;
+;test aloup ixyhl
+;
+	ld ix,0x0305
+	ld iy,0x0407
+	xor a
+	add a,ixh
+	sub a,iyh
+	sub a,ixl
+	add a,iyl
+	cp a,1
+	jp nz,error
+	
+;
+;test aloup (ixy+d)
+;
+	ld ix,scratch+10
+	ld iy,scratch-10
+	ld hl,scratch
+	ld (hl),5
+	inc hl
+	ld (hl),7
+	inc hl
+	ld (hl),9
+	xor a
+	add a, (ix-10)
+	sub a, (iy+11)
+	add a, (ix-8)
+	cp a, 7
+	jp nz, error
+	
+
+;
 ;test ld r,ixhl
 ;
 	ld ix,0x5566
