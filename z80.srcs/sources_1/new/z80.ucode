@@ -94,6 +94,7 @@ __opcode_xy 0010r110 ld r,ixylh
   addr_sel_ip rd inc_ip din8_src_ram din8_dst_ir543 goto start
 
 __opcode 00110110 ld (hl),n
+ldhlimmed:
   addr_sel_ip rd inc_ip rd_tmp_lo
   dout16_sel_hl addr_sel_dout16 ram_wr_tmp_lo goto start
   
@@ -280,9 +281,12 @@ __opcode_cb 11bbb110 set b,(hl)
 ; DD and DF prefix cases not handled in standard panel
 ;
 
-__opcode_xy 00110100 inc (ixy+n)
+__opcode_xy 00110100 inc (ixy+d)
   addr_sel_ip rd inc_ip rd_xy_off goto inchl
   
-__opcode_xy 00110101 inc (ixy+n)
+__opcode_xy 00110101 inc (ixy+d)
   addr_sel_ip rd inc_ip rd_xy_off goto dechl
+
+__opcode_xy 00110110 ld (ixy+d),n
+  addr_sel_ip rd inc_ip rd_xy_off goto ldhlimmed
   

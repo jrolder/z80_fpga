@@ -7,6 +7,22 @@
 	;jp hello2
 
 ;
+;test ld (ixy+d),n
+;
+	ld ix,scratch+10
+	ld iy,scratch-10
+	ld hl,scratch
+	ld (hl),0
+	ld (ix-10),5
+	ld a,(hl)
+	cp a,5
+	jp nz,error
+	ld (iy+10),9
+	ld a,(hl)
+	cp a,9
+	jp nz,error
+
+;
 ;test inc (ixy+d) and dec (ixy+d)
 ;
 	ld ix,scratch
