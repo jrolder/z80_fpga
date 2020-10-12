@@ -154,11 +154,13 @@ __opcode 11001001 ret
   dout16_sel_sp addr_sel_dout16 alu16_op_inc rd_tmp_hi din16_src_alu16 din16_sel_sp 
   ip_from_tmp goto start
 
-__opcode 11101001 jp (hl)
+__opcode    11101001 jp (hl)
+__opcode_xy 11101001 jp (ixy)
   rd_dout16 dout16_sel_hl
   ip_from_tmp goto start
 
-__opcode 11111001 ls sp,hl
+__opcode    11111001 ls sp,hl
+__opcode_xy 11111001 ls sp,ixy
   dout16_sel_hl din16_src_dout16 din16_sel_sp goto start
    
 __opcode 11ccc010 jp cc,nnnn
@@ -182,7 +184,8 @@ __opcode 11011011 in a, (c)
   addr_sel_ip rd inc_ip rd_tmp_lo
   io_addr_sel_tmp_lo din8_src_io din8_dst_a goto start
 
-__opcode 11100011 ex (sp),hl
+__opcode 11100011    ex (sp),hl
+__opcode_xy 11100011 ex (sp),ixy
   dout16_sel_sp addr_sel_dout16             rd_tmp_lo
   dout16_sel_sp alu16_op_inc addr_sel_alu16 rd_tmp_hi
   dout16_sel_sp addr_sel_dout16             ram_wr_dout8 dout8_sel_reg_l

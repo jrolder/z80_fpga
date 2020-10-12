@@ -7,6 +7,44 @@
 	;jp hello2
 
 ;
+;test ex (sp),ixy
+;
+	ld sp,scratch
+	ld ix,0x1243
+	ex (sp),ix
+	ex (sp),iy
+	push iy
+	pop bc
+	ld a,b
+	cp a,0x12
+	jp nz,error
+	ld a,c
+	cp a,0x43
+	jp nz,error
+
+;
+;test jp (ix)
+;
+	ld ix,jpix
+	jp (ix)
+	jp error
+jpix:
+
+;
+;test ld sp,ixy
+;
+	ld iy,0xaffe
+	ld sp,iy
+	ld ix,0
+	add ix,sp
+	ld a,ixh
+	cp a,0xaf
+	jp nz,error
+	ld a,ixl
+	cp a,0xfe
+	jp nz,error
+
+;
 ;test aloup ixyhl
 ;
 	ld ix,0x0305
