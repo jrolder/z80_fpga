@@ -7,7 +7,7 @@ bits = ("rd", )
 
 enums = (
     ("command", ("halt", "bdos",)),
-    ("ucode_goto", ("decode1", "decode_cb", "decode_xy", "goto_now", "goto_ncc", "goto_nccr", "goto_z")),
+    ("ucode_goto", ("decode1", "decode_cb", "decode_xy", "decode_xybits", "decode_ed", "goto_now", "goto_ncc", "goto_nccr", "goto_z")),
     ("ram_addr_sel", ("addr_sel_ip", "addr_sel_dout16", "addr_sel_alu16", "addr_sel_tmp", "addr_sel_tmp_p1", "io_addr_sel_dout8", "io_addr_sel_tmp_lo")),
     ("read_target", ("rd_ir", "rd_tmp_lo", "rd_tmp_hi", "rd_dout16", "rd_xy_off")),
     ("ram_wr_sel", ("ram_wr_dout8", "ram_wr_tmp_lo", "ram_wr_tmp_hi", "ram_wr_ip_hi", "ram_wr_ip_lo", "io_wr_dout8", "io_wr_tmp_lo", "ram_wr_alu8")),
@@ -72,7 +72,7 @@ def make_codes(decode_map, opcode, chosen, uc_addr):
     
     
 
-def parse(uc_file, f, commands, ucodes, decode1, decode_cb, decode_xy):
+def parse(uc_file, f, commands, ucodes, decode1, decode_cb, decode_xy, decode_xybits, decode_ed):
   labels = {}
   current = 0;
   for line in f:
@@ -97,6 +97,16 @@ def parse(uc_file, f, commands, ucodes, decode1, decode_cb, decode_xy):
       opcode = parts[1]
       comment = parts[2]
       make_codes(decode_xy, opcode, "", current)
+    elif line.startswith("__opcode_xybits "):
+      parts = line.split(maxsplit=2)
+      opcode = parts[1]
+      comment = parts[2]
+      make_codes(decode_xybits, opcode, "", current)
+    elif line.startswith("__opcode_ed "):
+      parts = line.split(maxsplit=2)
+      opcode = parts[1]
+      comment = parts[2]
+      make_codes(decode_ed, opcode, "", current)
     elif line[0].isspace():
       # microcode line
       next_uc_addr = current + 1
@@ -154,18 +164,24 @@ UCODE_FILE = "ucode.vh"
 DECODE1_FILE = "decode1.vh"
 DECODE_CB_FILE = "decode_cb.vh"
 DECODE_XY_FILE = "decode_xy.vh"
+DECODE_XYBITS_FILE = "decode_xybits.vh"
+DECODE_ED_FILE = "decode_ed.vh"
 
 ucodes = [] # list of tuples with ucode and comment
 decode1 = {} # map of byte to ucode addr
 decode_cb = {} # map of byte to ucode addr
 decode_xy = {} # map of byte to ucode addr
+decode_xybits = {} # map of byte to ucode addr
+decode_ed = {} # map of byte to ucode addr
 
 commands = generate_ucode_headers()
 
 with open(UCODE_SRC_FILE) as f:
   with open(UCODE_FILE, "w") as uc:
-    parse(uc, f, commands, ucodes, decode1, decode_cb, decode_xy)
+    parse(uc, f, commands, ucodes, decode1, decode_cb, decode_xy, decode_xybits, decode_ed)
 
 write_decode_rom(DECODE1_FILE, decode1)
 write_decode_rom(DECODE_CB_FILE, decode_cb)
 write_decode_rom(DECODE_XY_FILE, decode_xy)
+write_decode_rom(DECODE_XYBITS_FILE, decode_xybits)
+write_decode_rom(DECODE_ED_FILE, decode_ed)

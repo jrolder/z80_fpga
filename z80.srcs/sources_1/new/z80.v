@@ -100,6 +100,22 @@ decode_xy_rom decode_xy_rom (
   .uc_addr(decode_xy_out)
   );  
 
+// module decode_xy bits (DDCB+FDCB prefix)
+wire [UCODE_ADDR_LENGTH-1:0] decode_xybits_out;
+
+decode_xybits_rom decode_xybits_rom (
+  .opcode(ram_dout),
+  .uc_addr(decode_xybits_out)
+  );  
+
+// module decode_ed_rom (extended (ED) prefix)
+wire [UCODE_ADDR_LENGTH-1:0] decode_ed_out;
+
+decode_ed_rom decode_ed_rom (
+  .opcode(ram_dout),
+  .uc_addr(decode_ed_out)
+  );  
+  
 // module registers  
 reg [7:0] reg_din8;
 wire [7:0] reg_dout8;
@@ -218,6 +234,10 @@ begin
       ucode_addr = decode_cb_out;
     VAL_DECODE_XY: 
       ucode_addr = decode_xy_out;
+    VAL_DECODE_XYBITS: 
+      ucode_addr = decode_xybits_out;
+    VAL_DECODE_ED: 
+      ucode_addr = decode_ed_out;
     VAL_GOTO_NOW: 
       ucode_addr = ucode[UCODE_ADDR_LENGTH-1:0];
     VAL_GOTO_NCC:

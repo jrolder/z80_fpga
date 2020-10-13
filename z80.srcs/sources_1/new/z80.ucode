@@ -248,7 +248,8 @@ __opcode 11111111 rst 7
 __opcode_cb 00ooorrr shift and rot r
   alu8_op_ip543_cbrot dout8_sel_ir210 alu8_src_dout8 flags_source_alu8 din8_src_alu8 din8_dst_ir210 goto start
   
-__opcode_cb 00ooo110 shift and rot (hl)
+__opcode_cb     00ooo110 shift and rot (hl)
+__opcode_xybits 00ooo110 shift and rot (ixy+d)
   dout16_sel_hl addr_sel_dout16 rd rd_tmp_lo
   alu8_op_ip543_cbrot dout16_sel_hl addr_sel_dout16 ram_wr_alu8 alu8_src_tmp_lo flags_source_alu8 goto start
   
@@ -259,7 +260,9 @@ __opcode_cb 00ooo110 shift and rot (hl)
 __opcode_cb 01bbbrrr bit b,r
   alu8_src_dout8 dout8_sel_ir210 alu8_op_bit flags_source_alu8 din8_src_alu8 goto start
   
-__opcode_cb 01bbb110 bit b,(hl)
+__opcode_cb     01bbb110 bit b,(hl)
+__opcode_xybits 01bbbrrr bit b,(ixy+d),r
+__opcode_xybits 01bbb110 bit b,(ixy+d)
   dout16_sel_hl addr_sel_dout16 rd alu8_src_ram alu8_op_bit flags_source_alu8 din8_src_alu8 goto start
   
 ;
@@ -269,18 +272,20 @@ __opcode_cb 01bbb110 bit b,(hl)
 __opcode_cb 10bbbrrr res b,r
   alu8_src_dout8 dout8_sel_ir210 alu8_op_res flags_source_alu8 din8_src_alu8 din8_dst_ir210 goto start
   
-__opcode_cb 10bbb110 res b,(hl)
+__opcode_cb     10bbb110 res b,(hl)
+__opcode_xybits 10bbb110 res b,(ixy+d)
   dout16_sel_hl addr_sel_dout16 rd rd_tmp_lo
   alu8_op_res dout16_sel_hl addr_sel_dout16 ram_wr_alu8 alu8_src_tmp_lo flags_source_alu8 goto start
   
 ;
-; CB Quadrant 2
+; CB Quadrant 3
 ;
 
 __opcode_cb 11bbbrrr set b,r
   alu8_src_dout8 dout8_sel_ir210 alu8_op_set flags_source_alu8 din8_src_alu8 din8_dst_ir210 goto start
   
-__opcode_cb 11bbb110 set b,(hl)
+__opcode_cb     11bbb110 set b,(hl)
+__opcode_xybits 11bbb110 set b,(ixy+d)
   dout16_sel_hl addr_sel_dout16 rd rd_tmp_lo
   alu8_op_set dout16_sel_hl addr_sel_dout16 ram_wr_alu8 alu8_src_tmp_lo flags_source_alu8 goto start
   
@@ -306,4 +311,43 @@ __opcode_xy 01110sss ld (ixy+d), r
 
 __opcode_xy 10ooo110 aluop (ixy+d)
     addr_sel_ip rd inc_ip rd_xy_off goto aluophl
+  
+__opcode_xy 11001011 ddcb and fdcb
+  addr_sel_ip rd inc_ip rd_xy_off
+  addr_sel_ip rd inc_ip rd_ir decode_xybits
+
+
+;
+;DDCB and FDCB prefix (ix and iy bit ops)
+;
+
+;
+; DDCB/DDCB Quadrant 0
+;
+
+__opcode_xybits 00ooorrr shift and rot (ixy+d),r
+  dout16_sel_hl addr_sel_dout16 rd rd_tmp_lo
+  alu8_op_ip543_cbrot dout16_sel_hl addr_sel_dout16 ram_wr_alu8 alu8_src_tmp_lo flags_source_alu8 din8_src_alu8 din8_dst_ir210 goto start
+  
+;
+; DDCB/DDCB Quadrant 1
+;
+  
+  ;handled in CB section
+  
+;
+; DDCB/DDCB Quadrant 2
+;
+
+__opcode_xybits 10bbbrrr res b,(ixy+d),r
+  dout16_sel_hl addr_sel_dout16 rd rd_tmp_lo
+  alu8_op_res dout16_sel_hl addr_sel_dout16 ram_wr_alu8 alu8_src_tmp_lo flags_source_alu8 din8_src_alu8 din8_dst_ir210 goto start
+  
+;
+; DDCB/DDCB Quadrant 3
+;
+
+__opcode_xybits 11bbbrrr set b,(ixy+d),r
+  dout16_sel_hl addr_sel_dout16 rd rd_tmp_lo
+  alu8_op_set dout16_sel_hl addr_sel_dout16 ram_wr_alu8 alu8_src_tmp_lo flags_source_alu8 din8_src_alu8 din8_dst_ir210 goto start
   

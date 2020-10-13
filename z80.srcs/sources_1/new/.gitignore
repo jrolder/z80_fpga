@@ -7,3 +7,5 @@ ucode.vh
 decode1.vh
 decode_cb.vh
 decode_xy.vh
+decode_xybits.vh
+decode_ed.vh
