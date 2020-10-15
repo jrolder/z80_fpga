@@ -173,14 +173,14 @@ __opcode 11000011 jp nnnn
   addr_sel_ip rd        rd_tmp_hi 
   ip_from_tmp goto start
 
-__opcode 11010011 out (c), a
+__opcode 11010011 out (nn), a
   addr_sel_ip rd inc_ip rd_tmp_lo
   dout8_sel_rega io_wr_dout8 io_addr_sel_tmp_lo goto start
 
 __opcode 11001011 CB prefix
   addr_sel_ip rd inc_ip rd_ir decode_cb
   
-__opcode 11011011 in a, (c)
+__opcode 11011011 in a, (nn)
   addr_sel_ip rd inc_ip rd_tmp_lo
   io_addr_sel_tmp_lo din8_src_io din8_dst_a goto start
 
@@ -355,6 +355,20 @@ __opcode_xybits 11bbbrrr set b,(ixy+d),r
 ;
 ; ED extended opcodes
 ;
+
+__opcode_ed 01rrr000 in r,(c)
+  dout8_sel_regc io_addr_sel_dout8 din8_src_io din8_dst_ir543 alu8_op_in alu8_src_io flags_source_alu8 goto start
+
+__opcode_ed 01110000 in (c)
+  dout8_sel_regc io_addr_sel_dout8 alu8_op_in alu8_src_io flags_source_alu8 goto start
+
+__opcode_ed 01rrr001 out (c),r
+  dout16_sel_bc rd_tmp_from_dout16
+  io_addr_sel_tmp_lo  dout8_sel_ir543 io_wr_dout8 goto start
+
+__opcode_ed 01110001 out (c),0
+  dout16_sel_bc rd_tmp_from_dout16
+  io_addr_sel_tmp_lo io_wr_0 goto start
 
 __opcode_ed 01qq0011 ld (**),qq
   addr_sel_ip rd inc_ip rd_tmp_lo

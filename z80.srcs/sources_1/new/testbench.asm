@@ -7,6 +7,33 @@
 	;jp hello2
 
 ;
+;test extended io
+;
+	ld c,0x55
+	ld e,0x12
+	out (c),e
+	in a,(c)
+	jp z,error
+	cp a,0x12
+	jp nz,error
+	
+	out (c),0
+	in a,(c)
+	jp nz,error
+	cp a,0
+	jp nz,error
+	
+	ld a,1
+	out (c),a
+	in (c)
+	jp z,error
+	xor a
+	out (c),a
+	in (c)
+	jp nz,error
+	
+
+;
 ;test ld (**),qq and ld qq,(**)
 ;
 	ld bc,0xaffe

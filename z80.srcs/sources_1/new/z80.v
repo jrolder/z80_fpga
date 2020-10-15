@@ -383,6 +383,7 @@ begin
     VAL_DOUT8_SEL_IR210: reg_dout8sel = IR1[2:0];
     VAL_DOUT8_SEL_REGA: reg_dout8sel = 7;
     VAL_DOUT8_SEL_REGB: reg_dout8sel = 0;
+    VAL_DOUT8_SEL_REGC: reg_dout8sel = 1;
     VAL_DOUT8_SEL_REG_H: reg_dout8sel = 4;
     VAL_DOUT8_SEL_REG_L: reg_dout8sel = 5;
     default:
@@ -442,6 +443,7 @@ end
 always @(*)
 begin
   case (uc_dout16_sel)
+    VAL_DOUT16_SEL_BC: reg_dout16sel = 0;
     VAL_DOUT16_SEL_DE: reg_dout16sel = 1;
     VAL_DOUT16_SEL_HL: reg_dout16sel = 2;
     VAL_DOUT16_SEL_SP: reg_dout16sel = 7;
@@ -544,6 +546,7 @@ begin
     VAL_ALU8_SRC_RAM: alu8_arg = ram_dout;
     VAL_ALU8_SRC_DOUT8: alu8_arg = reg_dout8;
     VAL_ALU8_SRC_TMP_LO: alu8_arg = TMP[7:0];
+    VAL_ALU8_SRC_IO: alu8_arg = io_din;
     default:
       alu8_arg = 8'bX;
   endcase
@@ -560,6 +563,7 @@ begin
     VAL_ALU8_OP_BIT: alu8_op = 26;
     VAL_ALU8_OP_RES: alu8_op = 27;
     VAL_ALU8_OP_SET: alu8_op = 28;
+    VAL_ALU8_OP_IN: alu8_op = 29;
     default:
       alu8_op = 5'bX;
   endcase
@@ -579,6 +583,11 @@ begin
     VAL_IO_WR_TMP_LO:
       begin
         io_din = TMP[7:0];
+        io_we = 1;
+      end
+    VAL_IO_WR_0:
+      begin
+        io_din = 0;
         io_we = 1;
       end
     default:

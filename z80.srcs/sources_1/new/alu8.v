@@ -304,6 +304,10 @@ begin
       alu8_out = alu8_arg | (1 << alu8_bit_sel);
       alu8_flags_out = alu8_flags_in; 
     end
+  29: // evaluate in value
+    begin
+      alu8_flags_out = {alu8_arg[7], alu8_arg == 0, alu8_arg[5], 1'b0, alu8_arg[3],!(^alu8_arg), 1'b0, flag_c};
+    end
   default:
     begin
       alu8_out = 8'bX;
