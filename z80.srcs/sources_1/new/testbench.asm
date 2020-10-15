@@ -7,6 +7,29 @@
 	;jp hello2
 
 ;
+;test ld (**),qq and ld qq,(**)
+;
+	ld bc,0xaffe
+	ld (scratch),bc
+	ld de,(scratch)
+	ld a,d
+	cp a,0xaf
+	jp nz,error
+	ld a,e
+	cp a,0xfe
+	jp nz,error
+	
+	ld sp,0x1267
+	ld (scratch),sp
+	ld hl,(scratch)
+	ld a,h
+	cp a,0x12
+	jp nz,error
+	ld a,l
+	cp a,0x67
+	jp nz,error
+
+;
 ;test bit instructions for (ixy+d)
 ;
 	ld ix,scratch+10

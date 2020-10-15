@@ -41,7 +41,7 @@ __opcode 00110010 ld (nnnn),a
 
 __opcode 00qq1001 add hl,bc/de/hl/sp
 __opcode_xy 00qq1001 add ixy,bc/de/hl/sp
-  rd_dout16 dout16_sel_ir54rp2
+  rd_tmp_from_dout16 dout16_sel_ir54rp2
   dout16_sel_hl alu16_op_add din16_src_alu16 din16_sel_hl flags_source_alu16 goto start
 
 __opcode    00rrr100 inc r
@@ -156,7 +156,7 @@ __opcode 11001001 ret
 
 __opcode    11101001 jp (hl)
 __opcode_xy 11101001 jp (ixy)
-  rd_dout16 dout16_sel_hl
+  rd_tmp_from_dout16 dout16_sel_hl
   ip_from_tmp goto start
 
 __opcode    11111001 ls sp,hl
@@ -193,7 +193,7 @@ __opcode_xy 11100011 ex (sp),ixy
   din16_src_tmp din16_sel_hl goto start
 
 __opcode 11101011 ex de,hl
-  dout16_sel_hl rd_dout16
+  dout16_sel_hl rd_tmp_from_dout16
   dout16_sel_de din16_src_dout16 din16_sel_hl
   din16_src_tmp din16_sel_de goto start
   
@@ -211,7 +211,7 @@ __opcode 11ccc100 call cc,nnnn
   
 __opcode    11qq0101 push qq
 __opcode_xy 11100101 push ixy
-  dout16_sel_ir54rp rd_dout16
+  dout16_sel_ir54rp rd_tmp_from_dout16
   dout16_sel_sp addr_sel_alu16 alu16_op_dec ram_wr_tmp_hi din16_src_alu16 din16_sel_sp
   dout16_sel_sp addr_sel_alu16 alu16_op_dec ram_wr_tmp_lo din16_src_alu16 din16_sel_sp goto start
     
@@ -225,7 +225,7 @@ __opcode 11011101 DD prefix
   xy_sel_ix addr_sel_ip rd inc_ip rd_ir decode_xy
 
 __opcode 11101101 ED prefix
-  goto start
+  addr_sel_ip rd inc_ip rd_ir decode_ed
 
 __opcode 11111101 FD prefix
   xy_sel_iy addr_sel_ip rd inc_ip rd_ir decode_xy
@@ -350,4 +350,23 @@ __opcode_xybits 10bbbrrr res b,(ixy+d),r
 __opcode_xybits 11bbbrrr set b,(ixy+d),r
   dout16_sel_hl addr_sel_dout16 rd rd_tmp_lo
   alu8_op_set dout16_sel_hl addr_sel_dout16 ram_wr_alu8 alu8_src_tmp_lo flags_source_alu8 din8_src_alu8 din8_dst_ir210 goto start
+  
+  
+;
+; ED extended opcodes
+;
+
+__opcode_ed 01qq0011 ld (**),qq
+  addr_sel_ip rd inc_ip rd_tmp_lo
+  addr_sel_ip rd inc_ip rd_tmp_hi
+  dout16_sel_ir54rp2 rd_tmp2_from_dout16
+  addr_sel_tmp    ram_wr_tmp2_lo
+  addr_sel_tmp_p1 ram_wr_tmp2_hi goto start
+
+__opcode_ed 01qq1011 ld qq,(**)
+  addr_sel_ip rd inc_ip rd_tmp_lo
+  addr_sel_ip rd inc_ip rd_tmp_hi
+  addr_sel_tmp    rd_tmp2_lo
+  addr_sel_tmp_p1 rd_tmp2_hi
+  din16_src_tmp2 din16_sel_ir54rp2 goto start
   

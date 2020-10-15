@@ -30,6 +30,7 @@ output wire [7:0] arg_hi_out;
 
 // global declarations
 reg [15:0] TMP;
+reg [15:0] TMP2;
 reg [15:0] IP;
 reg [1:0] xy_sel;
 reg [7:0] xy_off;
@@ -286,6 +287,16 @@ begin
         ram_din = TMP[15:8];
         ram_we = 1;
       end
+    VAL_RAM_WR_TMP2_LO:
+      begin
+        ram_din = TMP2[7:0];
+        ram_we = 1;
+      end
+    VAL_RAM_WR_TMP2_HI:
+      begin
+        ram_din = TMP2[15:8];
+        ram_we = 1;
+      end
     VAL_RAM_WR_IP_HI:
       begin
         ram_din = IP[15:8];
@@ -385,6 +396,11 @@ begin
     VAL_DIN16_SRC_TMP: 
       begin
         reg_din16 = TMP;
+        reg_din16we = 1;
+      end
+    VAL_DIN16_SRC_TMP2:  
+      begin
+        reg_din16 = TMP2;
         reg_din16we = 1;
       end
     VAL_DIN16_SRC_DOUT16:
@@ -494,7 +510,10 @@ begin
     VAL_RD_IR: IR1 <= ram_dout;
     VAL_RD_TMP_LO: TMP[7:0] = ram_dout;
     VAL_RD_TMP_HI: TMP[15:8] = ram_dout;
-    VAL_RD_DOUT16: TMP = reg_dout16;
+    VAL_RD_TMP2_LO: TMP2[7:0] = ram_dout;
+    VAL_RD_TMP2_HI: TMP2[15:8] = ram_dout;
+    VAL_RD_TMP_FROM_DOUT16: TMP = reg_dout16; 
+    VAL_RD_TMP2_FROM_DOUT16: TMP2 = reg_dout16; 
     VAL_RD_XY_OFF: xy_off = ram_dout;
   endcase
 end
