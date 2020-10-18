@@ -262,6 +262,13 @@ begin
         else
           ucode_addr = last_ucode_addr + 1;
       end
+    VAL_GOTO_PO: 
+      begin
+        if (alu16_flags_out[2])
+          ucode_addr = ucode[UCODE_ADDR_LENGTH-1:0];
+        else
+          ucode_addr = last_ucode_addr + 1;
+      end
     default:
       ucode_addr = last_ucode_addr + 1;
   endcase

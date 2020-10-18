@@ -393,5 +393,11 @@ __opcode_ed 10100000 ldi
   addr_sel_dout16 dout16_sel_de ram_wr_tmp_lo alu16_op_inc din16_src_alu16 din16_sel_de
   dout16_sel_bc alu16_op_dec_ld din16_src_alu16 din16_sel_bc flags_source_alu16 goto start
   
+__opcode_ed 10110000 ldir
+ldir_rep:
+  addr_sel_dout16 dout16_sel_hl rd_tmp_lo alu16_op_inc din16_src_alu16 din16_sel_hl
+  addr_sel_dout16 dout16_sel_de ram_wr_tmp_lo alu16_op_inc din16_src_alu16 din16_sel_de
+  dout16_sel_bc alu16_op_dec_ld din16_src_alu16 din16_sel_bc flags_source_alu16 gotopo ldir_rep
+  goto start
   
   
