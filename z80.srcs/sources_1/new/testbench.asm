@@ -31,8 +31,6 @@
 	cp a,0
 	jp nz,error
 	
-	halt
-	
 ;
 ;test ldi
 ;
