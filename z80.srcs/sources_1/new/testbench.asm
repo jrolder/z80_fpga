@@ -7,6 +7,53 @@
 	;jp hello2
 
 ;
+;test lddr
+;
+	ld ix,scratch
+	ld (ix),0x12
+	ld (ix+1),0x54
+	ld (ix+2),0x99
+	ld (ix+5),0
+	ld (ix+6),0
+	ld (ix+7),0
+	ld hl,scratch+1
+	ld de,scratch+6
+	ld bc,2
+	lddr
+	jp pe,error
+	ld a,(ix+5)
+	cp a,0x12
+	jp nz,error
+	ld a,(ix+6)
+	cp a,0x54
+	jp nz,error
+	ld a,(ix+7)
+	cp a,0
+	jp nz,error
+	
+;
+;test ldd
+;
+	ld ix,scratch
+	ld (ix),0x12
+	ld (ix+1),0x54
+	ld (ix+5),0
+	ld (ix+6),0
+	ld hl,scratch+1
+	ld de,scratch+6
+	ld bc,2
+	ldd
+	jp po,error
+	ldd
+	jp pe,error
+	ld a,(ix+5)
+	cp a,0x12
+	jp nz,error
+	ld a,(ix+6)
+	cp a,0x54
+	jp nz,error
+	
+;
 ;test ldir
 ;
 	ld ix,scratch

@@ -400,4 +400,16 @@ ldir_rep:
   dout16_sel_bc alu16_op_dec_ld din16_src_alu16 din16_sel_bc flags_source_alu16 gotopo ldir_rep
   goto start
   
+__opcode_ed 10101000 ldd
+  addr_sel_dout16 dout16_sel_hl rd_tmp_lo alu16_op_dec din16_src_alu16 din16_sel_hl
+  addr_sel_dout16 dout16_sel_de ram_wr_tmp_lo alu16_op_dec din16_src_alu16 din16_sel_de
+  dout16_sel_bc alu16_op_dec_ld din16_src_alu16 din16_sel_bc flags_source_alu16 goto start
   
+__opcode_ed 10111000 lddr
+lddr_rep:
+  addr_sel_dout16 dout16_sel_hl rd_tmp_lo alu16_op_dec din16_src_alu16 din16_sel_hl
+  addr_sel_dout16 dout16_sel_de ram_wr_tmp_lo alu16_op_dec din16_src_alu16 din16_sel_de
+  dout16_sel_bc alu16_op_dec_ld din16_src_alu16 din16_sel_bc flags_source_alu16 gotopo lddr_rep
+  goto start
+  
+    
