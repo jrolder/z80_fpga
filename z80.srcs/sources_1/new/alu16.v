@@ -55,6 +55,11 @@ begin
         alu16_out = tmp17[15:0];
         alu16_flags_out = {flag_s, flag_z, flag_f5, tmp13[12], flag_f3, flag_pv, 1'b0, tmp17[16]};
       end
+    VAL_ALU16_OP_DEC_LD: // dec as part of ldir etc
+      begin
+        alu16_out = alu16_arg1 - 1;
+        alu16_flags_out = {flag_s, flag_z, flag_f5, 1'b0, flag_f3, alu16_out != 0, 1'b0, flag_c};
+      end    
     default:
       begin
         alu16_out = 16'bX;

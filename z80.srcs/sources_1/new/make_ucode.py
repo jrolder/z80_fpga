@@ -15,13 +15,13 @@ enums = (
     ("din8_source", ("din8_src_dout8", "din8_src_ram", "din8_src_alu8", "din8_src_io")),
     ("dout8_sel", ("dout8_sel_ir543", "dout8_sel_ir210", "dout8_sel_rega", "dout8_sel_regb", "dout8_sel_regc", "dout8_sel_reg_h", "dout8_sel_reg_l")),
     ("din16_source", ("din16_src_tmp", "din16_src_tmp2", "din16_src_dout16", "din16_src_alu16")),
-    ("din16_sel", ("din16_sel_ir54rp1", "din16_sel_ir54rp2", "din16_sel_sp","din16_sel_hl","din16_sel_de")),
+    ("din16_sel", ("din16_sel_ir54rp1", "din16_sel_ir54rp2", "din16_sel_sp","din16_sel_hl","din16_sel_de", "din16_sel_bc")),
     ("dout16_sel", ("dout16_sel_bc", "dout16_sel_hl", "dout16_sel_sp", "dout16_sel_de", "dout16_sel_ir54rp","dout16_sel_ir54rp2",)),
     ("flags_source", ("flags_source_alu8", "flags_source_alu16")),
     ("alu8_source", ("alu8_src_ram", "alu8_src_dout8","alu8_src_tmp_lo", "alu8_src_io")),
     ("alu8_op", ("alu8_op_ip543", "alu8_op_ip543b", "alu8_op_ip543_cbrot", "alu8_op_inc", "alu8_op_dec", "alu8_op_bit", "alu8_op_res", "alu8_op_set", "alu8_op_in")),
     ("ip_op", ("inc_ip", "ip_from_tmp", "ip_from_rel_tmp", "ip_from_rst")),
-    ("alu16_op", ("alu16_op_inc", "alu16_op_dec", "alu16_op_add",)),
+    ("alu16_op", ("alu16_op_inc", "alu16_op_dec", "alu16_op_dec_ld", "alu16_op_add",)),
     ("xy_sel", ("xy_sel_clear", "xy_sel_ix", "xy_sel_iy")),
     )
 

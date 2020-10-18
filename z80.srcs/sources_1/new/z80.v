@@ -435,6 +435,8 @@ begin
       reg_din16sel = 2;
     VAL_DIN16_SEL_DE:
       reg_din16sel = 1;
+    VAL_DIN16_SEL_BC:
+      reg_din16sel = 0;
     default:
       reg_din16sel = 4'bX;
   endcase

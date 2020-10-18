@@ -7,6 +7,28 @@
 	;jp hello2
 
 ;
+;test ldi
+;
+	ld ix,scratch
+	ld (ix),0x12
+	ld (ix+1),0x54
+	ld (ix+5),0
+	ld (ix+6),0
+	ld hl,scratch
+	ld de,scratch+5
+	ld bc,2
+	ldi
+	jp po,error
+	ldi
+	jp pe,error
+	ld a,(ix+5)
+	cp a,0x12
+	jp nz,error
+	ld a,(ix+6)
+	cp a,0x54
+	jp nz,error
+	
+;
 ;test extended io
 ;
 	ld c,0x55
