@@ -149,7 +149,8 @@ __opcode_xy 11100001 pop ixy
   dout16_sel_sp addr_sel_dout16 alu16_op_inc rd_tmp_hi din16_src_alu16 din16_sel_sp
   din16_sel_ir54rp1 din16_src_tmp goto start
   
-__opcode 11001001 ret
+__opcode    11001001 ret
+__opcode_ed 01qqq101 retn/reti 
   dout16_sel_sp addr_sel_dout16 alu16_op_inc rd_tmp_lo din16_src_alu16 din16_sel_sp
   dout16_sel_sp addr_sel_dout16 alu16_op_inc rd_tmp_hi din16_src_alu16 din16_sel_sp 
   ip_from_tmp goto start

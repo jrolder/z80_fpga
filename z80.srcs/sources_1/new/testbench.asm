@@ -1,10 +1,20 @@
 	org	0
 
-	;ld b, deh
-	;ld c,b
-	;ld c, 45h
-	;ld b,c
-	;jp hello2
+;
+; test call/retn
+;
+
+	ld sp,stack
+	ld a, 45
+	call retn_test
+	cp a, 57
+	jp nz, error
+	jp retn_test2
+retn_test:
+	ld a, 57
+	retn
+	halt
+retn_test2:
 
 ;
 ;test sbc and adc hl,qq
