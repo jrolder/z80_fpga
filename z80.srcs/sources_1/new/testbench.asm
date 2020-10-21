@@ -7,6 +7,14 @@
 	;jp hello2
 
 ;
+;test neg
+;
+	ld a,0x02
+	neg
+	cp a,0xfe
+	jp nz,error
+
+;
 ;test lddr
 ;
 	ld ix,scratch

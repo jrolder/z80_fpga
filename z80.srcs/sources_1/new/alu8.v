@@ -308,6 +308,14 @@ begin
     begin
       alu8_flags_out = {alu8_arg[7], alu8_arg == 0, alu8_arg[5], 1'b0, alu8_arg[3],!(^alu8_arg), 1'b0, flag_c};
     end
+  30: // neg
+    begin
+      tmp9 = 0 - alu8_ain;
+      tmp8 = 0 - alu8_ain[6:0];
+      tmp5 = 0 - alu8_ain[3:0];
+      alu8_out = tmp9[7:0];
+      alu8_flags_out = {alu8_out[7], alu8_out == 0, alu8_out[5], tmp5[4], alu8_out[3], tmp9[8] ^ tmp8[7], 1'b1, tmp9[8]};
+    end
   default:
     begin
       alu8_out = 8'bX;

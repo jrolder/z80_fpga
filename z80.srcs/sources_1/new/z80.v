@@ -573,6 +573,7 @@ begin
     VAL_ALU8_OP_RES: alu8_op = 27;
     VAL_ALU8_OP_SET: alu8_op = 28;
     VAL_ALU8_OP_IN: alu8_op = 29;
+    VAL_ALU8_OP_NEG: alu8_op = 30;
     default:
       alu8_op = 5'bX;
   endcase
