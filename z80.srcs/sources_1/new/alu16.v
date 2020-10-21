@@ -60,6 +60,24 @@ begin
         alu16_out = alu16_arg1 - 1;
         alu16_flags_out = {flag_s, flag_z, flag_f5, 1'b0, flag_f3, alu16_out != 0, 1'b0, flag_c};
       end    
+    VAL_ALU16_OP_SBC: // sbc
+      begin 
+        tmp17 = alu16_arg1 - alu16_arg2 - flag_c;
+        tmp13 = alu16_arg1[11:0] - alu16_arg2[11:0] - flag_c;
+        alu16_out = tmp17[15:0];
+        alu16_flags_out = {
+          alu16_out[15], alu16_out == 0, alu16_out[13], tmp13[12], 
+          alu16_out[11], tmp17[16] ^ tmp17[15], 1'b1, tmp17[16]};
+      end
+    VAL_ALU16_OP_ADC: // abc
+      begin 
+        tmp17 = alu16_arg1 + alu16_arg2 + flag_c;
+        tmp13 = alu16_arg1[11:0] + alu16_arg2[11:0] + flag_c;
+        alu16_out = tmp17[15:0]; 
+        alu16_flags_out = {
+          alu16_out[15], alu16_out == 0, alu16_out[13], tmp13[12], 
+          alu16_out[11], tmp17[16] ^ tmp17[15], 1'b0, tmp17[16]};
+      end
     default:
       begin
         alu16_out = 16'bX;

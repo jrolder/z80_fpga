@@ -7,6 +7,32 @@
 	;jp hello2
 
 ;
+;test sbc and adc hl,qq
+;
+	ld hl,0x205
+	ld sp,0x103
+	scf
+	sbc hl,sp
+	ld a,h
+	cp a,1
+	jp nz,error
+	ld a,l
+	cp a,1
+	jp nz,error
+	
+	ld hl,0x205
+	ld sp,0x103
+	scf
+	adc hl,sp
+	ld a,h
+	cp a,3
+	jp nz,error
+	ld a,l
+	cp a,9
+	jp nz,error
+
+
+;
 ;test neg
 ;
 	ld a,0x02

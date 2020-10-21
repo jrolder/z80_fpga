@@ -30,6 +30,7 @@ reg [15:0] AF;
 reg [15:0] SP;
 reg [15:0] IX;
 reg [15:0] IY;
+reg [15:0] IR; // interrupt and refresh
     
 always @(*)
 begin 
@@ -78,6 +79,8 @@ begin
           9: IX[7:0] <= din8;
           10: IY[15:8] <= din8;
           11: IY[7:0] <= din8;
+          12: IR[15:8] <= din8;
+          13: IR[7:0] <= din8;
         endcase
       end
       else if (din16we)
@@ -134,6 +137,8 @@ begin
     9: dout8 = IX[7:0];
     10: dout8 = IY[15:8];    
     11: dout8 = IY[7:0];   
+    12: dout8 = IR[15:8];    
+    13: dout8 = IR[7:0];   
     default: dout8 = 8'bX;
   endcase
 end

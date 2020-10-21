@@ -372,6 +372,14 @@ __opcode_ed 01110001 out (c),0
   dout16_sel_bc rd_tmp_from_dout16
   io_addr_sel_tmp_lo io_wr_0 goto start
 
+__opcode_ed 01qq0010 sbc hl,qq
+  rd_tmp_from_dout16 dout16_sel_ir54rp2
+  dout16_sel_hl alu16_op_sbc din16_src_alu16 din16_sel_hl flags_source_alu16 goto start
+
+__opcode_ed 01qq1010 adc hl,qq
+  rd_tmp_from_dout16 dout16_sel_ir54rp2
+  dout16_sel_hl alu16_op_adc din16_src_alu16 din16_sel_hl flags_source_alu16 goto start
+
 __opcode_ed 01qq0011 ld (**),qq
   addr_sel_ip rd inc_ip rd_tmp_lo
   addr_sel_ip rd inc_ip rd_tmp_hi
