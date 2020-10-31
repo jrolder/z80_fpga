@@ -1,4 +1,4 @@
-Verilog FPGA implementation of the Z80 microprocessor
+Verilog FPGA implementation of the Z80 microprocessor instruction set
 
 At the time of this writing, the project is neither complete nor has it been properly tested with zexdoc or zexall. It is mainly a bucket list item for the author.
 
