@@ -397,6 +397,9 @@ __opcode_ed 01qq1011 ld qq,(**)
   addr_sel_tmp    rd_tmp2_lo
   addr_sel_tmp_p1 rd_tmp2_hi
   din16_src_tmp2 din16_sel_ir54rp2 goto start
+
+__opcode_ed 01xxx110 im 0/1/2
+  goto start ;interrupts not implemented
   
 ;ED quadrant 2
 
