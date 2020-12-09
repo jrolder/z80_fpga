@@ -378,6 +378,10 @@ begin
       reg_din8sel = 4;
     VAL_DIN8_DST_L:
       reg_din8sel = 5;
+    VAL_DIN8_DST_I:
+      reg_din8sel = 12;
+    VAL_DIN8_DST_R:
+      reg_din8sel = 13;
     default:
       reg_din8sel = 4'bX;
   endcase
@@ -393,6 +397,8 @@ begin
     VAL_DOUT8_SEL_REGC: reg_dout8sel = 1;
     VAL_DOUT8_SEL_REG_H: reg_dout8sel = 4;
     VAL_DOUT8_SEL_REG_L: reg_dout8sel = 5;
+    VAL_DOUT8_SEL_REG_I: reg_dout8sel = 12;
+    VAL_DOUT8_SEL_REG_R: reg_dout8sel = 13;
     default:
       reg_dout8sel = 4'bX;
   endcase

@@ -1,6 +1,21 @@
 	org	0
 
 ;
+; test ld air,air
+;
+	ld a,33
+	ld i,a
+	ld a,45
+	ld r,a
+	ld a,0
+	ld a,i
+	cp a,33
+	jp nz,error
+	ld a,r
+	cp a,45
+	jp nz,error
+	
+;
 ; test call/retn
 ;
 

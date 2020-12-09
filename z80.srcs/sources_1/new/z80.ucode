@@ -400,6 +400,18 @@ __opcode_ed 01qq1011 ld qq,(**)
 
 __opcode_ed 01xxx110 im 0/1/2
   goto start ;interrupts not implemented
+
+__opcode_ed 01000111 ld i,a
+  dout8_sel_rega din8_src_dout8 din8_dst_i goto start 
+
+__opcode_ed 01001111 ld r,a
+  dout8_sel_rega din8_src_dout8 din8_dst_r goto start 
+
+__opcode_ed 01010111 ld a,i
+  dout8_sel_reg_i din8_src_dout8 din8_dst_a goto start 
+
+__opcode_ed 01011111 ld a,r
+  dout8_sel_reg_r din8_src_dout8 din8_dst_a goto start 
   
 ;ED quadrant 2
 
