@@ -21,7 +21,7 @@ enums = (
     ("flags_source", ("flags_source_alu8", "flags_source_alu16")),
     ("alu8_source", ("alu8_src_ram", "alu8_src_dout8","alu8_src_tmp_lo", "alu8_src_io")),
     ("alu8_op", ("alu8_op_ip543", "alu8_op_ip543b", "alu8_op_ip543_cbrot", "alu8_op_inc", "alu8_op_dec", "alu8_op_bit", 
-                 "alu8_op_res", "alu8_op_set", "alu8_op_in", "alu8_op_neg")),
+                 "alu8_op_res", "alu8_op_set", "alu8_op_in", "alu8_op_neg", "alu8_op_rrd_1", "alu8_op_rrd_2", "alu8_op_rld_1", "alu8_op_rld_2", )),
     ("ip_op", ("inc_ip", "ip_from_tmp", "ip_from_rel_tmp", "ip_from_rst")),
     ("alu16_op", ("alu16_op_inc", "alu16_op_dec", "alu16_op_dec_ld", "alu16_op_add","alu16_op_sbc","alu16_op_adc")),
     ("xy_sel", ("xy_sel_clear", "xy_sel_ix", "xy_sel_iy")),

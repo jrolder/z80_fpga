@@ -3,7 +3,7 @@
 module alu8(
     input wire [7:0] alu8_ain,
     output reg [7:0] alu8_out,
-    input wire [4:0] alu8_op,
+    input wire [5:0] alu8_op,
     input wire [7:0] alu8_arg,
     input wire [7:0] alu8_flags_in,
     output reg [7:0] alu8_flags_out,
@@ -315,6 +315,26 @@ begin
       tmp5 = 0 - alu8_ain[3:0];
       alu8_out = tmp9[7:0];
       alu8_flags_out = {alu8_out[7], alu8_out == 0, alu8_out[5], tmp5[4], alu8_out[3], tmp9[8] ^ tmp8[7], 1'b1, tmp9[8]};
+    end
+  31: // rrd part 1: (hl) result 
+    begin
+      alu8_out = {alu8_ain[3:0], alu8_arg[7:4]};
+      alu8_flags_out = alu8_flags_in;
+    end
+  32: // rrd part 2: A result 
+    begin
+      alu8_out = {alu8_ain[7:4], alu8_arg[3:0]};
+      alu8_flags_out = {alu8_out[7], alu8_out == 0, alu8_out[5], 1'b0, alu8_out[3], !(^alu8_out), 1'b0, flag_c};
+    end
+  33: // rld part 1: (hl) result 
+    begin
+      alu8_out = {alu8_arg[3:0], alu8_ain[3:0]};
+      alu8_flags_out = alu8_flags_in;
+    end
+  34: // rld part 2: A result 
+    begin
+      alu8_out = {alu8_ain[7:4], alu8_arg[7:4]};
+      alu8_flags_out = {alu8_out[7], alu8_out == 0, alu8_out[5], 1'b0, alu8_out[3], !(^alu8_out), 1'b0, flag_c};
     end
   default:
     begin

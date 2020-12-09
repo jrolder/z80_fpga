@@ -156,7 +156,7 @@ registers registers(
 // module alu8
 wire [7:0] alu8_ain;
 wire [7:0] alu8_out;
-reg [4:0] alu8_op;
+reg [5:0] alu8_op;
 reg [7:0] alu8_arg;
 wire [7:0] alu8_flags_in;
 wire [7:0] alu8_flags_out;
@@ -580,6 +580,10 @@ begin
     VAL_ALU8_OP_SET: alu8_op = 28;
     VAL_ALU8_OP_IN: alu8_op = 29;
     VAL_ALU8_OP_NEG: alu8_op = 30;
+    VAL_ALU8_OP_RRD_1: alu8_op = 31;
+    VAL_ALU8_OP_RRD_2: alu8_op = 32;
+    VAL_ALU8_OP_RLD_1: alu8_op = 33;
+    VAL_ALU8_OP_RLD_2: alu8_op = 34;
     default:
       alu8_op = 5'bX;
   endcase

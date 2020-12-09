@@ -412,6 +412,16 @@ __opcode_ed 01010111 ld a,i
 
 __opcode_ed 01011111 ld a,r
   dout8_sel_reg_r din8_src_dout8 din8_dst_a goto start 
+
+__opcode_ed 01100111 rrd
+  dout16_sel_hl addr_sel_dout16 rd_tmp_lo  ;read (hl) to tmp_lo
+  alu8_src_tmp_lo alu8_op_rrd_1 dout16_sel_hl addr_sel_dout16 ram_wr_alu8 ;write (hl)
+  alu8_src_tmp_lo alu8_op_rrd_2 din8_src_alu8 din8_dst_a flags_source_alu8 goto start ;write A
+
+__opcode_ed 01101111 rld
+  dout16_sel_hl addr_sel_dout16 rd_tmp_lo  ;read (hl) to tmp_lo
+  alu8_src_tmp_lo alu8_op_rld_1 dout16_sel_hl addr_sel_dout16 ram_wr_alu8 ;write (hl)
+  alu8_src_tmp_lo alu8_op_rld_2 din8_src_alu8 din8_dst_a flags_source_alu8 goto start ;write A
   
 ;ED quadrant 2
 

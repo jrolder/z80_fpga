@@ -1,6 +1,32 @@
 	org	0
 
 ;
+; test rld
+;
+	ld hl,scratch
+	ld (hl),0x67
+	ld a,0x89
+	rld
+	cp a,0x86
+	jp nz,error
+	ld a,(hl)
+	cp a,0x79
+	jp nz, error
+
+;
+; test rrd
+;
+	ld hl,scratch
+	ld (hl),0x67
+	ld a,0x89
+	rrd
+	cp a,0x87
+	jp nz,error
+	ld a,(hl)
+	cp a,0x96
+	jp nz, error
+
+;
 ; test ld air,air
 ;
 	ld a,33
