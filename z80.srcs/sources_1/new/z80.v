@@ -200,6 +200,21 @@ sys_io sys_io(
   .io_we(io_we)
 );
 
+wire [7:0] alu_blk_flags_out;
+
+// module alu_blk
+alu_blk alu_blk(
+  .clk(clk),
+  .reset(reset),
+  .reg16(reg_dout16),
+  .reg8(reg_dout8),
+  .mem8(ram_dout),
+  .op(uc_blk_op),
+  .latch_op(uc_blk_latch),
+  .flags_in(reg_flags_out),
+  .flags_out(alu_blk_flags_out)
+  );
+
 assign ucode_out = ucode;
 assign ucode_addr_out = ucode_addr;
 
@@ -264,7 +279,7 @@ begin
       end
     VAL_GOTO_PO: 
       begin
-        if (alu16_flags_out[2])
+        if (alu_blk_flags_out[2])
           ucode_addr = ucode[UCODE_ADDR_LENGTH-1:0];
         else
           ucode_addr = last_ucode_addr + 1;
@@ -479,6 +494,11 @@ begin
     VAL_FLAGS_SOURCE_ALU16:
       begin
         reg_flags_in = alu16_flags_out;
+        reg_flags_we = 1;      
+      end
+    VAL_FLAGS_SOURCE_ALU_BLK:
+      begin
+        reg_flags_in = alu_blk_flags_out;
         reg_flags_we = 1;      
       end
     default:
