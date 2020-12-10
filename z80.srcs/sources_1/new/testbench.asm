@@ -20,8 +20,6 @@
 	cp a,0x12
 	jp nz,error
 	
-	halt
-	
 ;
 ;test cpd
 ;
