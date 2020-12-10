@@ -1,6 +1,28 @@
 	org	0
 
 ;
+;test outi
+;
+	ld ix,scratch
+	ld (ix),0x34
+	ld (ix+1),0x12
+	ld hl,scratch
+	ld b,2
+	ld c,10
+	outi
+	jp z,error
+	in a,(c)
+	cp a,0x34
+	jp nz,error
+	outi
+	jp nz,error
+	in a,(c)
+	cp a,0x12
+	jp nz,error
+	
+	halt
+	
+;
 ;test cpd
 ;
 	ld ix,scratch

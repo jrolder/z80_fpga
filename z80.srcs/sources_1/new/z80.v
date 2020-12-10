@@ -583,7 +583,7 @@ begin
     VAL_ALU8_SRC_RAM: alu8_arg = ram_dout;
     VAL_ALU8_SRC_DOUT8: alu8_arg = reg_dout8;
     VAL_ALU8_SRC_TMP_LO: alu8_arg = TMP[7:0];
-    VAL_ALU8_SRC_IO: alu8_arg = io_din;
+    VAL_ALU8_SRC_IO: alu8_arg = io_dout;
     default:
       alu8_arg = 8'bX;
   endcase

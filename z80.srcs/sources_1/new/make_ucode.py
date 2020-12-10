@@ -26,7 +26,7 @@ enums = (
     ("alu16_op", ("alu16_op_inc", "alu16_op_dec", "alu16_op_dec_ld", "alu16_op_add","alu16_op_sbc","alu16_op_adc")),
     ("xy_sel", ("xy_sel_clear", "xy_sel_ix", "xy_sel_iy")),
     ("blk_latch", ("blk_latch_data",)),
-    ("blk_op", ("blk_op_ld", "blk_op_cp", )),
+    ("blk_op", ("blk_op_ld", "blk_op_cp", "blk_op_out", "blk_op_ini", "blk_op_ind")),
     )
 
 def generate_ucode_headers():

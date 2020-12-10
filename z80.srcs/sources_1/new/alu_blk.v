@@ -10,7 +10,7 @@ module alu_blk(
     input wire [15:0] reg16,
     input wire [7:0] reg8,
     input wire [7:0] mem8,
-    input wire [1:0] op,
+    input wire [2:0] op,
     input wire [0:0] latch_op,
     input wire [7:0] flags_in,
     output reg [7:0] flags_out,
@@ -60,6 +60,8 @@ begin
 end
     
 reg [7:0] n;    
+reg [8:0] k;
+reg p;    
     
 always @(*)
 begin
@@ -82,6 +84,36 @@ begin
       // flag_s, flag_z, flag_f5, flag_h, flag_f3, flag_pv, flag_n, flag_c
       flags_out = {tmp9[7], tmp9[7:0] == 0, n[1], HF, n[3], reg16 != 0, 1'b1, flag_c};
       do_loop = flags_out[FLAG_PV] && !flags_out[FLAG_Z];
+    end
+  VAL_BLK_OP_OUT: 
+    begin
+      // inputs: latched data, live reg16 containing BC, live reg8 containing L
+      // tricky: flags from dec B already in flags
+      k = data + reg8;
+      p = !(^((k[7:0] & 8'b111) ^ reg16[15:8]));
+      // flag_s, flag_z, flag_f5, flag_h, flag_f3, flag_pv, flag_n, flag_c
+      flags_out = {flag_s, flag_z, flag_f5, k[8], flag_f3, p, data[7], k[8]};
+      do_loop = flags_out[FLAG_Z];
+    end
+  VAL_BLK_OP_INI: 
+    begin
+      // inputs: latched data, live reg16 containing BC, live reg8 containing L
+      // tricky: flags from dec B already in flags
+      k = data + ((reg16[7:0] + 1) & 8'b11111111);
+      p = !(^((k[7:0] & 8'b111) ^ reg16[15:8]));
+      // flag_s, flag_z, flag_f5, flag_h, flag_f3, flag_pv, flag_n, flag_c
+      flags_out = {flag_s, flag_z, flag_f5, k[8], flag_f3, p, data[7], k[8]};
+      do_loop = flags_out[FLAG_Z];
+    end
+  VAL_BLK_OP_IND: 
+    begin
+      // inputs: latched data, live reg16 containing BC, live reg8 containing L
+      // tricky: flags from dec B already in flags
+      k = data + ((reg16[7:0] - 1) & 8'b11111111);
+      p = !(^((k[7:0] & 8'b111) ^ reg16[15:8]));
+      // flag_s, flag_z, flag_f5, flag_h, flag_f3, flag_pv, flag_n, flag_c
+      flags_out = {flag_s, flag_z, flag_f5, k[8], flag_f3, p, data[7], k[8]};
+      do_loop = flags_out[FLAG_Z];
     end
   default:
     begin
