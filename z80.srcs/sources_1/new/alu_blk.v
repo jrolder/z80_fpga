@@ -93,7 +93,7 @@ begin
       p = !(^((k[7:0] & 8'b111) ^ reg16[15:8]));
       // flag_s, flag_z, flag_f5, flag_h, flag_f3, flag_pv, flag_n, flag_c
       flags_out = {flag_s, flag_z, flag_f5, k[8], flag_f3, p, data[7], k[8]};
-      do_loop = flags_out[FLAG_Z];
+      do_loop = !flags_out[FLAG_Z];
     end
   VAL_BLK_OP_INI: 
     begin
@@ -103,7 +103,7 @@ begin
       p = !(^((k[7:0] & 8'b111) ^ reg16[15:8]));
       // flag_s, flag_z, flag_f5, flag_h, flag_f3, flag_pv, flag_n, flag_c
       flags_out = {flag_s, flag_z, flag_f5, k[8], flag_f3, p, data[7], k[8]};
-      do_loop = flags_out[FLAG_Z];
+      do_loop = !flags_out[FLAG_Z];
     end
   VAL_BLK_OP_IND: 
     begin
@@ -113,7 +113,7 @@ begin
       p = !(^((k[7:0] & 8'b111) ^ reg16[15:8]));
       // flag_s, flag_z, flag_f5, flag_h, flag_f3, flag_pv, flag_n, flag_c
       flags_out = {flag_s, flag_z, flag_f5, k[8], flag_f3, p, data[7], k[8]};
-      do_loop = flags_out[FLAG_Z];
+      do_loop = !flags_out[FLAG_Z];
     end
   default:
     begin

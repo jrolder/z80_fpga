@@ -21,6 +21,21 @@
 	jp nz,error
 	
 ;
+;test otir
+;
+	ld ix,scratch
+	ld (ix),0x34
+	ld (ix+1),0x12
+	ld hl,scratch
+	ld b,2
+	ld c,10
+	otir
+	jp nz,error
+	in a,(c)
+	cp a,0x12
+	jp nz,error
+	
+;
 ;test cpd
 ;
 	ld ix,scratch
