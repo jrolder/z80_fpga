@@ -10,10 +10,11 @@ module alu_blk(
     input wire [15:0] reg16,
     input wire [7:0] reg8,
     input wire [7:0] mem8,
-    input wire [0:0] op,
+    input wire [1:0] op,
     input wire [0:0] latch_op,
     input wire [7:0] flags_in,
-    output reg [7:0] flags_out
+    output reg [7:0] flags_out,
+    output reg do_loop
     );
 
 parameter FLAG_S = 7; // sign flag
@@ -36,6 +37,10 @@ assign flag_n = flags_in[FLAG_N];
 assign flag_c = flags_in[FLAG_C];
 
 reg [7:0] data; 
+reg [4:0] tmp5;
+reg [7:0] tmp8;
+reg [8:0] tmp9;
+reg HF;
 
 `include "ucode_consts.vh"
   
@@ -64,6 +69,19 @@ begin
       // inputs: latched data, live reg16 containing BC, live reg8 containing A
       n = data + reg8;
       flags_out = {flag_s, flag_z, n[1], 1'b0, n[3], reg16 != 0, 1'b0, flag_c};
+      do_loop = flags_out[FLAG_PV];
+    end
+  VAL_BLK_OP_CP: 
+    begin
+      // inputs: latched data, live reg16 containing BC, live reg8 containing A
+      tmp9 = reg8 - data;
+      tmp8 = reg8[6:0] - data[6:0];
+      tmp5 = reg8[3:0] - data[3:0];
+      HF = tmp5[4];
+      n = reg8 - data - HF;
+      // flag_s, flag_z, flag_f5, flag_h, flag_f3, flag_pv, flag_n, flag_c
+      flags_out = {tmp9[7], tmp9[7:0] == 0, n[1], HF, n[3], reg16 != 0, 1'b1, flag_c};
+      do_loop = flags_out[FLAG_PV] && !flags_out[FLAG_Z];
     end
   default:
     begin

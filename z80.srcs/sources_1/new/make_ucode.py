@@ -7,7 +7,7 @@ bits = ("rd", )
 
 enums = (
     ("command", ("halt", "bdos",)),
-    ("ucode_goto", ("decode1", "decode_cb", "decode_xy", "decode_xybits", "decode_ed", "goto_now", "goto_ncc", "goto_nccr", "goto_z", "goto_po")),
+    ("ucode_goto", ("decode1", "decode_cb", "decode_xy", "decode_xybits", "decode_ed", "goto_now", "goto_ncc", "goto_nccr", "goto_z", "goto_loop")),
     ("ram_addr_sel", ("addr_sel_ip", "addr_sel_dout16", "addr_sel_alu16", "addr_sel_tmp", "addr_sel_tmp_p1", "io_addr_sel_dout8", "io_addr_sel_tmp_lo")),
     ("read_target", ("rd_ir", "rd_tmp_lo", "rd_tmp_hi", "rd_tmp2_lo", "rd_tmp2_hi", "rd_tmp_from_dout16", "rd_tmp2_from_dout16", "rd_xy_off")),
     ("ram_wr_sel", ("ram_wr_dout8", "ram_wr_tmp_lo", "ram_wr_tmp_hi", "ram_wr_tmp2_lo", "ram_wr_tmp2_hi", "ram_wr_ip_hi", "ram_wr_ip_lo", "io_wr_dout8", "io_wr_tmp_lo", "io_wr_0", "ram_wr_alu8")),
@@ -26,7 +26,7 @@ enums = (
     ("alu16_op", ("alu16_op_inc", "alu16_op_dec", "alu16_op_dec_ld", "alu16_op_add","alu16_op_sbc","alu16_op_adc")),
     ("xy_sel", ("xy_sel_clear", "xy_sel_ix", "xy_sel_iy")),
     ("blk_latch", ("blk_latch_data",)),
-    ("blk_op", ("blk_op_ld", )),
+    ("blk_op", ("blk_op_ld", "blk_op_cp", )),
     )
 
 def generate_ucode_headers():
@@ -140,10 +140,10 @@ def parse(uc_file, f, commands, ucodes, decode1, decode_cb, decode_xy, decode_xy
           i += 2
           parts.append("goto_z") 
           continue        
-        if parts[i] == "gotopo":
+        if parts[i] == "gotoloop":
           next_uc_addr = labels[parts[i+1]]
           i += 2
-          parts.append("goto_po") 
+          parts.append("goto_loop") 
           continue        
         uc.append(commands[parts[i]])
         i += 1

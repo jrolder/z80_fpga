@@ -1,6 +1,122 @@
 	org	0
 
 ;
+;test cpd
+;
+	ld ix,scratch
+	ld (ix),0x34
+	ld (ix+1),0x12
+	ld (ix+2),0x34
+	ld (ix+3),0x12
+	ld hl,scratch+3
+	ld bc,4
+	ld a,0x12
+	cpd
+	jp nz,error
+	jp po,error
+	cpd
+	jp z,error
+	jp po,error
+	
+	ld bc,1
+	cpd
+	jp nz,error
+	jp pe,error
+	
+	ld bc,1
+	cpd
+	jp z,error
+	jp pe,error
+	
+;
+;test cpdr
+;
+	ld ix,scratch
+	ld (ix),0x34
+	ld (ix+1),0x12
+	ld hl,scratch+1
+	ld bc,2
+	ld a,0x12
+	cpdr
+	ld a,c
+	cp a,1
+	jp nz,error
+
+	ld hl,scratch+1
+	ld bc,2
+	ld a,0x34
+	cpdr
+	ld a,c
+	cp a,0
+	jp nz,error
+	
+	ld hl,scratch+1
+	ld bc,2
+	ld a,0
+	cpdr
+	ld a,c
+	cp a,0
+	jp nz,error
+	
+;
+;test cpi
+;
+	ld ix,scratch
+	ld (ix),0x12
+	ld (ix+1),0x34
+	ld (ix+2),0x12
+	ld (ix+3),0x34
+	ld hl,scratch
+	ld bc,4
+	ld a,0x12
+	cpi
+	jp nz,error
+	jp po,error
+	cpi
+	jp z,error
+	jp po,error
+	
+	ld bc,1
+	cpi
+	jp nz,error
+	jp pe,error
+	
+	ld bc,1
+	cpi
+	jp z,error
+	jp pe,error
+	
+;
+;test cpir
+;
+	ld ix,scratch
+	ld (ix),0x12
+	ld (ix+1),0x34
+	ld hl,scratch
+	ld bc,2
+	ld a,0x12
+	cpir
+	ld a,c
+	cp a,1
+	jp nz,error
+
+	ld hl,scratch
+	ld bc,2
+	ld a,0x34
+	cpir
+	ld a,c
+	cp a,0
+	jp nz,error
+	
+	ld hl,scratch
+	ld bc,2
+	ld a,0
+	cpir
+	ld a,c
+	cp a,0
+	jp nz,error
+	
+;
 ; test rld
 ;
 	ld hl,scratch

@@ -201,6 +201,7 @@ sys_io sys_io(
 );
 
 wire [7:0] alu_blk_flags_out;
+wire blk_do_loop;
 
 // module alu_blk
 alu_blk alu_blk(
@@ -212,7 +213,8 @@ alu_blk alu_blk(
   .op(uc_blk_op),
   .latch_op(uc_blk_latch),
   .flags_in(reg_flags_out),
-  .flags_out(alu_blk_flags_out)
+  .flags_out(alu_blk_flags_out),
+  .do_loop(blk_do_loop)
   );
 
 assign ucode_out = ucode;
@@ -277,9 +279,9 @@ begin
         else
           ucode_addr = last_ucode_addr + 1;
       end
-    VAL_GOTO_PO: 
+    VAL_GOTO_LOOP: 
       begin
-        if (alu_blk_flags_out[2])
+        if (blk_do_loop)
           ucode_addr = ucode[UCODE_ADDR_LENGTH-1:0];
         else
           ucode_addr = last_ucode_addr + 1;
