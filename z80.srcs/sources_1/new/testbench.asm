@@ -1,6 +1,52 @@
 	org	0
 
 ;
+;test ind
+;
+	ld c,10
+	ld a,0x78
+	out (c),a
+	
+	ld ix,scratch
+	ld (ix),0
+	ld (ix+1),0
+	ld hl,scratch+1
+	ld b,2
+	ld c,10
+	ind
+	jp z,error
+	ld a,(ix+1)
+	cp a,0x78
+	jp nz,error
+	ind
+	jp nz,error
+	ld a,(ix)
+	cp a,0x78
+	jp nz,error
+	
+;
+;test indr
+;
+	ld c,10
+	ld a,0x78
+	out (c),a
+	
+	ld ix,scratch
+	ld (ix),0
+	ld (ix+1),0
+	ld hl,scratch+1
+	ld b,2
+	ld c,10
+	indr
+	jp nz,error
+	ld a,(ix)
+	cp a,0x78
+	jp nz,error
+	ld a,(ix+1)
+	cp a,0x78
+	jp nz,error
+	
+;
 ;test ini
 ;
 	ld c,10

@@ -519,5 +519,18 @@ inir_rep:
   dout16_sel_bc dout8_sel_reg_l blk_op_ini flags_source_alu_blk gotoloop inir_rep					; update flags           
   goto start
   
-  
+__opcode_ed 10101010 ind
+  dout8_sel_regc io_addr_sel_dout8 rd_tmp_lo_from_io blk_latch_io									; read data from port (c), latch data
+  addr_sel_dout16 dout16_sel_hl ram_wr_tmp_lo alu16_op_dec din16_src_alu16 din16_sel_hl  			; write tmp to (hl), inc hl
+  dout8_sel_regb alu8_src_dout8 alu8_op_dec flags_source_alu8 din8_src_alu8 din8_dst_b				; dec b and update flags
+  dout16_sel_bc dout8_sel_reg_l blk_op_ini flags_source_alu_blk goto start							; update flags  
+           
+__opcode_ed 10111010 indr
+indr_rep:
+  dout8_sel_regc io_addr_sel_dout8 rd_tmp_lo_from_io blk_latch_io									; read data from port (c), latch data
+  addr_sel_dout16 dout16_sel_hl ram_wr_tmp_lo alu16_op_dec din16_src_alu16 din16_sel_hl  			; write tmp to (hl), inc hl
+  dout8_sel_regb alu8_src_dout8 alu8_op_dec flags_source_alu8 din8_src_alu8 din8_dst_b				; dec b and update flags
+  dout16_sel_bc dout8_sel_reg_l blk_op_ini flags_source_alu_blk gotoloop indr_rep					; update flags           
+  goto start
+    
   
