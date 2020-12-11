@@ -210,6 +210,7 @@ alu_blk alu_blk(
   .reg16(reg_dout16),
   .reg8(reg_dout8),
   .mem8(ram_dout),
+  .io8(io_dout),
   .op(uc_blk_op),
   .latch_op(uc_blk_latch),
   .flags_in(reg_flags_out),
@@ -554,6 +555,7 @@ begin
     VAL_RD_TMP_FROM_DOUT16: TMP = reg_dout16; 
     VAL_RD_TMP2_FROM_DOUT16: TMP2 = reg_dout16; 
     VAL_RD_XY_OFF: xy_off = ram_dout;
+    VAL_RD_TMP_LO_FROM_IO: TMP[7:0] = io_dout;
   endcase
 end
 

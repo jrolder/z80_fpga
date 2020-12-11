@@ -10,8 +10,9 @@ module alu_blk(
     input wire [15:0] reg16,
     input wire [7:0] reg8,
     input wire [7:0] mem8,
+    input wire [7:0] io8,
     input wire [2:0] op,
-    input wire [0:0] latch_op,
+    input wire [1:0] latch_op,
     input wire [7:0] flags_in,
     output reg [7:0] flags_out,
     output reg do_loop
@@ -55,6 +56,8 @@ begin
       case (latch_op)
       VAL_BLK_LATCH_DATA:
         data <= mem8;
+      VAL_BLK_LATCH_IO:
+        data <= io8;
       endcase
     end
 end

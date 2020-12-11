@@ -9,7 +9,7 @@ enums = (
     ("command", ("halt", "bdos",)),
     ("ucode_goto", ("decode1", "decode_cb", "decode_xy", "decode_xybits", "decode_ed", "goto_now", "goto_ncc", "goto_nccr", "goto_z", "goto_loop")),
     ("ram_addr_sel", ("addr_sel_ip", "addr_sel_dout16", "addr_sel_alu16", "addr_sel_tmp", "addr_sel_tmp_p1", "io_addr_sel_dout8", "io_addr_sel_tmp_lo")),
-    ("read_target", ("rd_ir", "rd_tmp_lo", "rd_tmp_hi", "rd_tmp2_lo", "rd_tmp2_hi", "rd_tmp_from_dout16", "rd_tmp2_from_dout16", "rd_xy_off")),
+    ("read_target", ("rd_ir", "rd_tmp_lo", "rd_tmp_hi", "rd_tmp2_lo", "rd_tmp2_hi", "rd_tmp_from_dout16", "rd_tmp2_from_dout16", "rd_xy_off", "rd_tmp_lo_from_io")),
     ("ram_wr_sel", ("ram_wr_dout8", "ram_wr_tmp_lo", "ram_wr_tmp_hi", "ram_wr_tmp2_lo", "ram_wr_tmp2_hi", "ram_wr_ip_hi", "ram_wr_ip_lo", "io_wr_dout8", "io_wr_tmp_lo", "io_wr_0", "ram_wr_alu8")),
     ("din8_target", ("din8_dst_ir210", "din8_dst_ir543", "din8_dst_a", "din8_dst_b", "din8_dst_h", "din8_dst_l","din8_dst_r", "din8_dst_i" )),
     ("din8_source", ("din8_src_dout8", "din8_src_ram", "din8_src_alu8", "din8_src_io")),
@@ -25,7 +25,7 @@ enums = (
     ("ip_op", ("inc_ip", "ip_from_tmp", "ip_from_rel_tmp", "ip_from_rst")),
     ("alu16_op", ("alu16_op_inc", "alu16_op_dec", "alu16_op_dec_ld", "alu16_op_add","alu16_op_sbc","alu16_op_adc")),
     ("xy_sel", ("xy_sel_clear", "xy_sel_ix", "xy_sel_iy")),
-    ("blk_latch", ("blk_latch_data",)),
+    ("blk_latch", ("blk_latch_data","blk_latch_io",)),
     ("blk_op", ("blk_op_ld", "blk_op_cp", "blk_op_out", "blk_op_ini", "blk_op_ind")),
     )
 

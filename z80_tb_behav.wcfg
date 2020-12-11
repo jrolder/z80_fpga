@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="145048176fs"></ZoomStartTime>
-      <ZoomEndTime time="145601177fs"></ZoomEndTime>
-      <Cursor1Time time="145600000fs"></Cursor1Time>
+      <ZoomStartTime time="179263333fs"></ZoomStartTime>
+      <ZoomEndTime time="180627334fs"></ZoomEndTime>
+      <Cursor1Time time="180400000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="226"></NameColumnWidth>
+      <NameColumnWidth column_width="222"></NameColumnWidth>
       <ValueColumnWidth column_width="66"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="34" />
+   <WVObjectSize size="27" />
    <wvobject type="logic" fp_name="/z80_tb/clk">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -59,26 +59,6 @@
    <wvobject type="array" fp_name="/z80_tb/dut/ucode_rom/last_ucode_addr">
       <obj_property name="ElementShortName">last_ucode_addr[11:0]</obj_property>
       <obj_property name="ObjectShortName">last_ucode_addr[11:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/z80_tb/dut/alu16/alu16_out">
-      <obj_property name="ElementShortName">alu16_out[15:0]</obj_property>
-      <obj_property name="ObjectShortName">alu16_out[15:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/z80_tb/arg_lo_out">
-      <obj_property name="ElementShortName">arg_lo_out[7:0]</obj_property>
-      <obj_property name="ObjectShortName">arg_lo_out[7:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/z80_tb/arg_hi_out">
-      <obj_property name="ElementShortName">arg_hi_out[7:0]</obj_property>
-      <obj_property name="ObjectShortName">arg_hi_out[7:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/z80_tb/dut/registers/dout16">
-      <obj_property name="ElementShortName">dout16[15:0]</obj_property>
-      <obj_property name="ObjectShortName">dout16[15:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/z80_tb/dut/xy_off">
-      <obj_property name="ElementShortName">xy_off[7:0]</obj_property>
-      <obj_property name="ObjectShortName">xy_off[7:0]</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/z80_tb/dut/registers/BC">
       <obj_property name="ElementShortName">BC[15:0]</obj_property>
@@ -132,28 +112,20 @@
       <obj_property name="ElementShortName">alu8_out[7:0]</obj_property>
       <obj_property name="ObjectShortName">alu8_out[7:0]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/z80_tb/dut/reg_dout8">
-      <obj_property name="ElementShortName">reg_dout8[7:0]</obj_property>
-      <obj_property name="ObjectShortName">reg_dout8[7:0]</obj_property>
+   <wvobject type="array" fp_name="/z80_tb/dut/alu_blk/reg16">
+      <obj_property name="ElementShortName">reg16[15:0]</obj_property>
+      <obj_property name="ObjectShortName">reg16[15:0]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/z80_tb/dut/reg_din8">
-      <obj_property name="ElementShortName">reg_din8[7:0]</obj_property>
-      <obj_property name="ObjectShortName">reg_din8[7:0]</obj_property>
+   <wvobject type="array" fp_name="/z80_tb/dut/alu_blk/reg8">
+      <obj_property name="ElementShortName">reg8[7:0]</obj_property>
+      <obj_property name="ObjectShortName">reg8[7:0]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/z80_tb/dut/sys_io/io_addr">
-      <obj_property name="ElementShortName">io_addr[7:0]</obj_property>
-      <obj_property name="ObjectShortName">io_addr[7:0]</obj_property>
+   <wvobject type="array" fp_name="/z80_tb/dut/alu_blk/op">
+      <obj_property name="ElementShortName">op[2:0]</obj_property>
+      <obj_property name="ObjectShortName">op[2:0]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/z80_tb/dut/sys_io/io_dout">
-      <obj_property name="ElementShortName">io_dout[7:0]</obj_property>
-      <obj_property name="ObjectShortName">io_dout[7:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/z80_tb/dut/sys_io/io_din">
-      <obj_property name="ElementShortName">io_din[7:0]</obj_property>
-      <obj_property name="ObjectShortName">io_din[7:0]</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/z80_tb/dut/sys_io/io_we">
-      <obj_property name="ElementShortName">io_we</obj_property>
-      <obj_property name="ObjectShortName">io_we</obj_property>
+   <wvobject type="array" fp_name="/z80_tb/dut/alu_blk/latch_op">
+      <obj_property name="ElementShortName">latch_op[1:0]</obj_property>
+      <obj_property name="ObjectShortName">latch_op[1:0]</obj_property>
    </wvobject>
 </wave_config>
