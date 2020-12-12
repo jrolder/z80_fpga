@@ -23,8 +23,8 @@
 	jp	start
 
 ; machine state before test (needs to be at predictably constant address)
-msbt:	ds	14
-spbt:	ds	2
+msbt:	ds	14,0
+spbt:	ds	2,0
 
 ; For the purposes of this test program, the machine state consists of:
 ;	a 2 byte memory operand, followed by
@@ -168,26 +168,26 @@ tests:
 	dw	0
 
 tstr:	macro	insn,memop,iy,ix,hl,de,bc,flags,acc,sp
-	local	lab
-&lab:	db	insn
-	ds	&lab+4-$,0
+lab:	defl	$
+	db	&insn
+	ds	lab+4-$,0
 	dw	&memop,&iy,&ix,&hl,&de,&bc
 	db	&flags
 	db	&acc
 	dw	&sp
-	if	$-&lab ne 20
+	if	$-lab ne 20
 	error	'missing parameter'
 	endif
 	endm
 
 tmsg:	macro	m
-	local	lab
-&lab:	db	m
-	if	$ ge &lab+30
-	error	'message too long'
-	else
-	ds	&lab+30-$,'.'
-	endif
+lab:	defl	$
+	db	&m
+;	if	$ ge lab+30
+;	error	'message too long'
+;	else
+	ds	lab+30-$,'.'
+;	endif
 	db	'$'
 	endm
 
@@ -449,7 +449,7 @@ incyl:	db	0ffh		; flag mask
 
 ; ld <bc,de>,(nnnn) (32 cycles)
 ld161:	db	0ffh		; flag mask
-	tstr	<0edh,04bh,low msbt,high msbt>,0f9a8h,0f559h,093a4h,0f5edh,06f96h,0d968h,086h,0e6h,04bd8h
+	tstr	<0edh,04bh,lo(msbt),hi(msbt)>,0f9a8h,0f559h,093a4h,0f5edh,06f96h,0d968h,086h,0e6h,04bd8h
 	tstr	<0,010h>,0,0,0,0,0,0,0,0,0		; (2 cycles)
 	tstr	0,-1,0,0,0,0,0,0,0,0			; (16 cycles)
 	db	04dh,045h,0a9h,0ach			; expected crc
@@ -457,7 +457,7 @@ ld161:	db	0ffh		; flag mask
 
 ; ld hl,(nnnn) (16 cycles)
 ld162:	db	0ffh		; flag mask
-	tstr	<02ah,low msbt,high msbt>,09863h,07830h,02077h,0b1feh,0b9fah,0abb8h,004h,006h,06015h
+	tstr	<02ah,lo(msbt),hi(msbt)>,09863h,07830h,02077h,0b1feh,0b9fah,0abb8h,004h,006h,06015h
 	tstr	0,0,0,0,0,0,0,0,0,0			; (1 cycle)
 	tstr	0,-1,0,0,0,0,0,0,0,0			; (16 cycles)
 	db	05fh,097h,024h,087h			; expected crc
@@ -465,7 +465,7 @@ ld162:	db	0ffh		; flag mask
 	
 ; ld sp,(nnnn) (16 cycles)
 ld163:	db	0ffh		; flag mask
-	tstr	<0edh,07bh,low msbt,high msbt>,08dfch,057d7h,02161h,0ca18h,0c185h,027dah,083h,01eh,0f460h
+	tstr	<0edh,07bh,lo(msbt),hi(msbt)>,08dfch,057d7h,02161h,0ca18h,0c185h,027dah,083h,01eh,0f460h
 	tstr	0,0,0,0,0,0,0,0,0,0			; (1 cycles)
 	tstr	0,-1,0,0,0,0,0,0,0,0			; (16 cycles)
 	db	07ah,0ceh,0a1h,01bh			; expected crc
@@ -473,7 +473,7 @@ ld163:	db	0ffh		; flag mask
 
 ; ld <ix,iy>,(nnnn) (32 cycles)
 ld164:	db	0ffh		; flag mask
-	tstr	<0ddh,02ah,low msbt,high msbt>,0ded7h,0a6fah,0f780h,0244ch,087deh,0bcc2h,016h,063h,04c96h
+	tstr	<0ddh,02ah,lo(msbt),hi(msbt)>,0ded7h,0a6fah,0f780h,0244ch,087deh,0bcc2h,016h,063h,04c96h
 	tstr	020h,0,0,0,0,0,0,0,0,0			; (2 cycles)
 	tstr	0,-1,0,0,0,0,0,0,0,0			; (16 cycles)
 	db	085h,08bh,0f1h,06dh			; expected crc
@@ -481,7 +481,7 @@ ld164:	db	0ffh		; flag mask
 	
 ; ld (nnnn),<bc,de> (64 cycles)
 ld165:	db	0ffh		; flag mask
-	tstr	<0edh,043h,low msbt,high msbt>,01f98h,0844dh,0e8ach,0c9edh,0c95dh,08f61h,080h,03fh,0c7bfh
+	tstr	<0edh,043h,lo(msbt),hi(msbt)>,01f98h,0844dh,0e8ach,0c9edh,0c95dh,08f61h,080h,03fh,0c7bfh
 	tstr	<0,010h>,0,0,0,0,0,0,0,0,0		; (2 cycles)
 	tstr	0,0,0,0,0,-1,-1,0,0,0			; (32 cycles)
 	db	064h,01eh,087h,015h			; expected crc
@@ -489,7 +489,7 @@ ld165:	db	0ffh		; flag mask
 
 ; ld (nnnn),hl (16 cycles)
 ld166:	db	0ffh		; flag mask
-	tstr	<022h,low msbt,high msbt>,0d003h,07772h,07f53h,03f72h,064eah,0e180h,010h,02dh,035e9h
+	tstr	<022h,lo(msbt),hi(msbt)>,0d003h,07772h,07f53h,03f72h,064eah,0e180h,010h,02dh,035e9h
 	tstr	0,0,0,0,0,0,0,0,0,0			; (1 cycle)
 	tstr	0,0,0,0,-1,0,0,0,0,0			; (16 cycles)
 	db	0a3h,060h,08bh,047h			; expected crc
@@ -497,7 +497,7 @@ ld166:	db	0ffh		; flag mask
 
 ; ld (nnnn),sp (16 cycles)
 ld167:	db	0ffh		; flag mask
-	tstr	<0edh,073h,low msbt,high msbt>,0c0dch,0d1d6h,0ed5ah,0f356h,0afdah,06ca7h,044h,09fh,03f0ah
+	tstr	<0edh,073h,lo(msbt),hi(msbt)>,0c0dch,0d1d6h,0ed5ah,0f356h,0afdah,06ca7h,044h,09fh,03f0ah
 	tstr	0,0,0,0,0,0,0,0,0,0			; (1 cycle)
 	tstr	0,0,0,0,0,0,0,0,0,-1			; (16 cycles)
 	db	016h,058h,05fh,0d7h			; expected crc
@@ -505,7 +505,7 @@ ld167:	db	0ffh		; flag mask
 
 ; ld (nnnn),<ix,iy> (64 cycles)
 ld168:	db	0ffh		; flag mask
-	tstr	<0ddh,022h,low msbt,high msbt>,06cc3h,00d91h,06900h,08ef8h,0e3d6h,0c3f7h,0c6h,0d9h,0c2dfh
+	tstr	<0ddh,022h,lo(msbt),hi(msbt)>,06cc3h,00d91h,06900h,08ef8h,0e3d6h,0c3f7h,0c6h,0d9h,0c2dfh
 	tstr	020h,0,0,0,0,0,0,0,0,0			; (2 cycles)
 	tstr	0,0,-1,-1,0,0,0,0,0,0			; (32 cycles)
 	db	0bah,010h,02ah,06bh			; expected crc
@@ -601,7 +601,7 @@ ld8rrx:	db	0ffh		; flag mask
 
 ; ld a,(nnnn) / ld (nnnn),a (44 cycles)
 lda:	db	0ffh		; flag mask
-	tstr	<032h,low msbt,high msbt>,0fd68h,0f4ech,044a0h,0b543h,00653h,0cdbah,0d2h,04fh,01fd8h
+	tstr	<032h,lo(msbt),hi(msbt)>,0fd68h,0f4ech,044a0h,0b543h,00653h,0cdbah,0d2h,04fh,01fd8h
 	tstr	008h,0,0,0,0,0,0,0,0,0			; (2 cycle)
 	tstr	0,0ffh,0,0,0,0,0,0d7h,-1,0		; (22 cycles)
 	db	0c9h,026h,02dh,0e5h			; expected crc
@@ -874,8 +874,8 @@ substr:	pop	hl
 	ret
 
 ; get next counter bit in low bit of a
-cntbit:	ds	1
-cntbyt:	ds	2
+cntbit:	ds	1,0
+cntbyt:	ds	2,0
 
 nxtcbit: push	bc
 	push	hl
@@ -900,8 +900,8 @@ ncb1:	ld	a,b
 	ret
 	
 ; get next shifter bit in low bit of a
-shfbit:	ds	1
-shfbyt:	ds	2
+shfbit:	ds	1,0
+shfbyt:	ds	2,0
 
 nxtsbit: push	bc
 	push	hl
@@ -1052,8 +1052,8 @@ shflp1:	inc	hl
 	inc	de
 	jp	shflp
 
-counter: ds	2*20
-shifter: ds	2*20
+counter: ds	2*20,0
+shifter: ds	2*20,0
 
 ; test harness
 test:	push	af
@@ -1084,7 +1084,7 @@ test:	push	af
 	pop	bc
 	pop	af
 	ld	sp,(spbt)
-iut:	ds	4		; max 4 byte instruction under test
+iut:	ds	4,0		; max 4 byte instruction under test
 	ld	(spat),sp	; save stack pointer
 	ld	sp,spat
 	push	af		; save other registers
@@ -1132,11 +1132,11 @@ tcrc:	ld	a,(de)
 	ret
 
 ; machine state after test
-msat:	ds	14	; memop,iy,ix,hl,de,bc,af
-spat:	ds	2	; stack pointer after test
+msat:	ds	14,0	; memop,iy,ix,hl,de,bc,af
+spat:	ds	2,0	; stack pointer after test
 flgsat:	equ	spat-2	; flags
 
-spsav:	ds	2	; saved stack pointer
+spsav:	ds	2,0	; saved stack pointer
 
 ; display hex string (pointer in hl, byte count in b)
 hexstr:	ld	a,(hl)
@@ -1285,7 +1285,7 @@ icrclp:	ld	(hl),a
 	pop	af
 	ret
 
-crcval	ds	4
+crcval	ds	4,0
 
 crctab:	db	000h,000h,000h,000h
 	db	077h,007h,030h,096h
