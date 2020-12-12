@@ -9,3 +9,4 @@ od -A x -t x1z zexall.rom > zexall.rom.hex
 od -A x -t x1z zexall.com > zexall.com.hex
 
 ~/zasm/zasm -buw zexwrap.z80
+od -t x1 -A n -v zexwrap.rom > zexwrap.mem
