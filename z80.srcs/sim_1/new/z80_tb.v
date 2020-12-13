@@ -20,6 +20,7 @@ z80 dut(
   .clk(clk),
   .reset_external(reset_external),
   .halt(halt),
+  .bdos_trap(bdos_trap),
   .ucode_addr_out(ucode_addr),
   .ucode_out(ucode),
   .ir1_out(IR),
@@ -45,7 +46,7 @@ begin
   begin
     $finish;
   end
-  if (clk && dut.uc_command == VAL_BDOS)
+  if (bdos_trap)
   begin
     //$display("bdos called DE: %H", dut.registers.DE);
     //$display("bdos called C: %H", dut.registers.BC[7:0]);

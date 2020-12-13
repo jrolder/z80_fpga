@@ -6,6 +6,7 @@ module z80(
     clk,
     reset_external,
     halt,
+    bdos_trap,
     ucode_addr_out,
     ucode_out,
     ir1_out,
@@ -21,6 +22,7 @@ module z80(
 input wire clk;
 input wire reset_external;
 output reg halt;
+output wire bdos_trap;
 output wire [UCODE_ADDR_LENGTH-1:0] ucode_addr_out;
 output wire [UCODE_LENGTH-1:0] ucode_out;
 output wire [7:0] ir1_out;
@@ -37,7 +39,9 @@ reg [7:0] xy_off;
 
 assign arg_lo_out = TMP[7:0];
 assign arg_hi_out = TMP[15:8];
-  
+ 
+ 
+assign bdos_trap = clk && uc_command == VAL_BDOS;
     
 // module sync_reset  
 wire reset;
