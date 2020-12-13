@@ -45,18 +45,17 @@ begin
   begin
     $finish;
   end
-`ifdef DONT_COMPILE
   if (clk && dut.uc_command == VAL_BDOS)
   begin
-    $display("bdos called DE: %H", dut.registers.DE);
-    $display("bdos called C: %H", dut.registers.BC[7:0]);
+    //$display("bdos called DE: %H", dut.registers.DE);
+    //$display("bdos called C: %H", dut.registers.BC[7:0]);
     case (dut.registers.BC[7:0])
         9:
           begin
             // $display("bdos! %H %H", dut.registers.DE, dut.regiters.BC[7:0]);
     
             i = dut.registers.DE;
-            while (dut.sys_ram.mem[i])
+            while (dut.sys_ram.mem[i] != "$")
             begin
               char = dut.sys_ram.mem[i];
               $write("%c", char);
@@ -65,13 +64,12 @@ begin
           end
     endcase
   end
-`endif
 end
 
 initial
 begin 
-  #1000000;
-  $finish;
+//  #3600000000000;
+//  $finish;
 end
 
 endmodule

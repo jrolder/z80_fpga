@@ -161,7 +161,7 @@ def write_decode_rom(filename, decode_map):
   with open(filename, "w") as f:
     for value in sorted(decode_map.keys()):
       uc_addr = decode_map[value]
-      f.write(f"      {value}: uc_addr <= {uc_addr};\n")    
+      f.write(f"      {value}: uc_addr = {uc_addr};\n")    
       
       
     

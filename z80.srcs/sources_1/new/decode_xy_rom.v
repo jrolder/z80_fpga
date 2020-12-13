@@ -14,7 +14,7 @@ always @(*)
 begin
     case (opcode)
       `include "decode_xy.vh"
-      default: uc_addr <= 0;
+      default: uc_addr = 0;
     endcase
 end
 
