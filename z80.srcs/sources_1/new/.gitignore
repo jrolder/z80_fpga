@@ -9,3 +9,4 @@ decode_cb.vh
 decode_xy.vh
 decode_xybits.vh
 decode_ed.vh
+obj_dir
