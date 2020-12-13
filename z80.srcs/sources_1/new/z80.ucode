@@ -257,7 +257,7 @@ __opcode_xybits 00ooo110 shift and rot (ixy+d)
 ;
   
 __opcode_cb 01bbbrrr bit b,r
-  alu8_src_dout8 dout8_sel_ir210 alu8_op_bit flags_source_alu8 din8_src_alu8 goto start
+  alu8_src_dout8 dout8_sel_ir210 alu8_op_bit flags_source_alu8 goto start
   
 __opcode_cb     01bbb110 bit b,(hl)
 __opcode_xybits 01bbbrrr bit b,(ixy+d),r
