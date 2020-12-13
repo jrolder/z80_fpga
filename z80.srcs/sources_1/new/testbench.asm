@@ -1,6 +1,97 @@
 	org	0
 
 ;
+;deep test of bit instructions for (ixy+d)
+;
+	ld sp,stack
+	ld ix,scratch
+	ld iy,scratch
+	ld hl,scratch+1
+	ld (hl),0x01
+	scf
+	bit 0,(ix+1)
+	push af
+	pop	bc
+	ld a,c
+	cp a, 0x11 ;00010001
+	jp nz,error
+
+	ld (hl),0x01
+	scf
+	ccf
+	bit 0,(ix+1)
+	push af
+	pop	bc
+	ld a,c
+	cp a, 0x10 ;00010000
+	jp nz,error
+
+	ld (hl),0x00
+	scf
+	bit 0,(ix+1)
+	push af
+	pop	bc
+	ld a,c
+	cp a, 0x55 ;01010101
+	jp nz,error
+
+	ld (hl),0x00
+	scf
+	ccf
+	bit 0,(ix+1)
+	push af
+	pop	bc
+	ld a,c
+	cp a, 0x54 ;01010100
+	jp nz,error
+	
+	halt
+
+;
+;test bit instructions for (ixy+d)
+;
+	ld ix,scratch+10
+	ld iy,scratch-10
+	ld hl,scratch
+	ld (hl),0x80
+	rlc (ix-10),b
+	jp nc,error
+	ld a,(hl)
+	cp a,0x01
+	jp nz,error
+	ld a,b
+	cp a,0x01
+	jp nz,error
+	
+	ld (hl),0x01
+	rrc (iy+10)
+	jp nc,error
+	ld a,(hl)
+	cp a,0x80
+	jp nz,error
+	
+	ld (hl),0x3c
+	bit 7,(ix-10)
+	jp nz,error
+	bit 5,(iy+10)
+	jp z,error
+
+	ld (hl),0x3c
+	bit 7,(ix-10),e
+	jp nz,error
+	bit 5,(iy+10),c
+	jp z,error
+	
+	ld (hl),0x0f
+	res 0,(ix-10)
+	res 3,(iy+10)
+	set 7,(iy+10)
+	set 4,(ix-10)
+	ld a,(hl)
+	cp a,0x96
+	jp nz,error
+	
+;
 ;test ld (ixy+d),r and ld r,(ixy+d)
 ;
 
@@ -535,49 +626,7 @@ retn_test2:
 	cp a,0x67
 	jp nz,error
 
-;
-;test bit instructions for (ixy+d)
-;
-	ld ix,scratch+10
-	ld iy,scratch-10
-	ld hl,scratch
-	ld (hl),0x80
-	rlc (ix-10),b
-	jp nc,error
-	ld a,(hl)
-	cp a,0x01
-	jp nz,error
-	ld a,b
-	cp a,0x01
-	jp nz,error
-	
-	ld (hl),0x01
-	rrc (iy+10)
-	jp nc,error
-	ld a,(hl)
-	cp a,0x80
-	jp nz,error
-	
-	ld (hl),0x3c
-	bit 7,(ix-10)
-	jp nz,error
-	bit 5,(iy+10)
-	jp z,error
 
-	ld (hl),0x3c
-	bit 7,(ix-10),e
-	jp nz,error
-	bit 5,(iy+10),c
-	jp z,error
-	
-	ld (hl),0x0f
-	res 0,(ix-10)
-	res 3,(iy+10)
-	set 7,(iy+10)
-	set 4,(ix-10)
-	ld a,(hl)
-	cp a,0x96
-	jp nz,error
 	
 ;
 ;test ex (sp),ixy

@@ -262,7 +262,7 @@ __opcode_cb 01bbbrrr bit b,r
 __opcode_cb     01bbb110 bit b,(hl)
 __opcode_xybits 01bbbrrr bit b,(ixy+d),r
 __opcode_xybits 01bbb110 bit b,(ixy+d)
-  dout16_sel_hl addr_sel_dout16 rd alu8_src_ram alu8_op_bit flags_source_alu8 din8_src_alu8 goto start
+  dout16_sel_hl addr_sel_dout16 rd alu8_src_ram alu8_op_bit flags_source_alu8 goto start
   
 ;
 ; CB Quadrant 2
