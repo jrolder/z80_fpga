@@ -67,7 +67,7 @@ begin
         alu16_out = tmp17[15:0];
         alu16_flags_out = {
           alu16_out[15], alu16_out == 0, alu16_out[13], tmp13[12], 
-          alu16_out[11], tmp17[16] ^ tmp17[15], 1'b1, tmp17[16]};
+          alu16_out[11], (alu16_arg1[15] != alu16_arg2[15]) && (alu16_arg1[15] != alu16_out[15]) , 1'b1, tmp17[16]};
       end
     VAL_ALU16_OP_ADC: // abc
       begin 
@@ -76,7 +76,7 @@ begin
         alu16_out = tmp17[15:0]; 
         alu16_flags_out = {
           alu16_out[15], alu16_out == 0, alu16_out[13], tmp13[12], 
-          alu16_out[11], tmp17[16] ^ tmp17[15], 1'b0, tmp17[16]};
+          alu16_out[11], (alu16_arg1[15] == alu16_arg2[15]) && (alu16_arg1[15] != alu16_out[15]), 1'b0, tmp17[16]};
       end
     default:
       begin
