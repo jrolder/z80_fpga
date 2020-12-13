@@ -1,6 +1,28 @@
 	org	0
 
 ;
+;test ld (ixy+d),r and ld r,(ixy+d)
+;
+
+	ld ix,scratch+10
+	ld iy,scratch-10
+	ld d,0x12
+	ld (ix-10),d
+	ld a,(iy+10)
+	cp a,0x12
+	jp nz,error
+
+	ld ix,scratch+10
+	ld iy,scratch-10
+	ld h,0x13
+	ld (ix-10),h
+	ld l,(iy+10)
+	ld a,l
+	cp a,0x13
+	jp nz,error
+
+	halt
+;
 ;test ind
 ;
 	ld c,10
@@ -655,19 +677,6 @@ jpix:
 	ld a,iyl
 	cp a,0x33
 	jp nz,error
-
-;
-;test ld (ixy+d),r and ld r,(ixy+d)
-;
-
-	ld ix,scratch+10
-	ld iy,scratch-10
-	ld d,0x12
-	ld (ix-10),d
-	ld a,(iy+10)
-	cp a,0x12
-	jp nz,error
-	
 
 ;
 ;test ld (ixy+d),n

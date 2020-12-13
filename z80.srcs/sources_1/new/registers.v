@@ -75,8 +75,15 @@ begin
               XY_SELECT_IY: IY[7:0] <= din8;
             endcase
           7: AF[15:8] <= din8;
-          12: IR[15:8] <= din8;
-          13: IR[7:0] <= din8;
+          8: BC[15:8] <= din8;
+          9: BC[7:0] <= din8;
+          10: DE[15:8] <= din8;
+          11: DE[7:0] <= din8;
+          12: HL[15:8] <= din8;
+          13: HL[7:0] <= din8;
+          15: AF[15:8] <= din8;
+          16: IR[15:8] <= din8;
+          17: IR[7:0] <= din8;
         endcase
       end
       else if (din16we)
@@ -129,8 +136,15 @@ begin
         XY_SELECT_IY: dout8 = IY[7:0];
       endcase
     7: dout8 = AF[15:8];
-    12: dout8 = IR[15:8];    
-    13: dout8 = IR[7:0];   
+    8: dout8 = BC[15:8];
+    9: dout8 = BC[7:0];
+    10: dout8 = DE[15:8];
+    11: dout8 = DE[7:0];
+    12: dout8 = HL[15:8];
+    13: dout8 = HL[7:0];    
+    15: dout8 = AF[15:8];
+    16: dout8 = IR[15:8];    
+    17: dout8 = IR[7:0];   
     default: dout8 = 8'bX;
   endcase
 end

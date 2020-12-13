@@ -392,6 +392,8 @@ begin
       reg_din8sel = IR1[2:0];
     VAL_DIN8_DST_IR543: 
       reg_din8sel = IR1[5:3];
+    VAL_DIN8_DST_IR543_NO_XY: 
+      reg_din8sel = 8 + IR1[5:3];
     VAL_DIN8_DST_A:
       reg_din8sel = 7;
     VAL_DIN8_DST_B:
@@ -401,9 +403,9 @@ begin
     VAL_DIN8_DST_L:
       reg_din8sel = 5;
     VAL_DIN8_DST_I:
-      reg_din8sel = 12;
+      reg_din8sel = 16;
     VAL_DIN8_DST_R:
-      reg_din8sel = 13;
+      reg_din8sel = 17;
     default:
       reg_din8sel = 4'bX;
   endcase
@@ -414,13 +416,14 @@ begin
   case (uc_dout8_sel)
     VAL_DOUT8_SEL_IR543: reg_dout8sel = IR1[5:3];
     VAL_DOUT8_SEL_IR210: reg_dout8sel = IR1[2:0];
+    VAL_DOUT8_SEL_IR210_NO_XY: reg_dout8sel = 8 + IR1[2:0];
     VAL_DOUT8_SEL_REGA: reg_dout8sel = 7;
     VAL_DOUT8_SEL_REGB: reg_dout8sel = 0;
     VAL_DOUT8_SEL_REGC: reg_dout8sel = 1;
     VAL_DOUT8_SEL_REG_H: reg_dout8sel = 4;
     VAL_DOUT8_SEL_REG_L: reg_dout8sel = 5;
-    VAL_DOUT8_SEL_REG_I: reg_dout8sel = 12;
-    VAL_DOUT8_SEL_REG_R: reg_dout8sel = 13;
+    VAL_DOUT8_SEL_REG_I: reg_dout8sel = 16;
+    VAL_DOUT8_SEL_REG_R: reg_dout8sel = 17;
     default:
       reg_dout8sel = 4'bX;
   endcase

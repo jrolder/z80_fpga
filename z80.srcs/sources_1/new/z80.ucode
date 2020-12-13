@@ -110,11 +110,9 @@ __opcode_xy 01rrrsss ld ixy,r and ld r,ixy
   din8_src_dout8 din8_dst_ir543 dout8_sel_ir210 goto start
 
 __opcode 01rrr110 ld r,(hl)
-ldrhl:
   dout16_sel_hl addr_sel_dout16 rd din8_src_ram din8_dst_ir543 goto start
 
 __opcode 01110sss ld (hl), r
-ldhlr:
   dout16_sel_hl addr_sel_dout16 dout8_sel_ir210 ram_wr_dout8 goto start
 
 __opcode 01110110 halt
@@ -305,10 +303,12 @@ __opcode_xy 00110110 ld (ixy+d),n
   addr_sel_ip rd inc_ip rd_xy_off goto ldhlimmed
   
 __opcode_xy 01rrr110 ld r,(ixy+d)
-  addr_sel_ip rd inc_ip rd_xy_off goto ldrhl
+  addr_sel_ip rd inc_ip rd_xy_off
+  dout16_sel_hl addr_sel_dout16 rd din8_src_ram din8_dst_ir543_no_xy goto start
 
 __opcode_xy 01110sss ld (ixy+d), r
-    addr_sel_ip rd inc_ip rd_xy_off goto ldhlr
+  addr_sel_ip rd inc_ip rd_xy_off
+  dout16_sel_hl addr_sel_dout16 dout8_sel_ir210_no_xy ram_wr_dout8 goto start
 
 __opcode_xy 10ooo110 aluop (ixy+d)
     addr_sel_ip rd inc_ip rd_xy_off goto aluophl
