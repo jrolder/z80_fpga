@@ -16,11 +16,15 @@ int main(int argc, char** argv)
       int de = top->z80__DOT__registers__DOT__DE;
       // printf("  trap %02x %04x\n", cmd, de);
         switch (cmd) {
+	case 2:
+          printf("%c", de & 0xff);
+	  break;
 	case 9:
           while (top->z80__DOT__sys_ram__DOT__mem[de] != '$') {
             printf("%c", top->z80__DOT__sys_ram__DOT__mem[de]);
 	    de++;
           }
+	  break;
         }
     }
     if (main_time >= 25) {
