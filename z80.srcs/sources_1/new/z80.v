@@ -593,6 +593,7 @@ begin
     VAL_ALU8_SRC_DOUT8: alu8_arg = reg_dout8;
     VAL_ALU8_SRC_TMP_LO: alu8_arg = TMP[7:0];
     VAL_ALU8_SRC_IO: alu8_arg = io_dout;
+    VAL_ALU8_SRC_RAM_ADDR: alu8_arg = ram_addr[7:0];
     default:
       alu8_arg = 8'bX;
   endcase
@@ -615,6 +616,7 @@ begin
     VAL_ALU8_OP_RRD_2: alu8_op = 32;
     VAL_ALU8_OP_RLD_1: alu8_op = 33;
     VAL_ALU8_OP_RLD_2: alu8_op = 34;
+    VAL_ALU8_OP_BIT_FIXUP: alu8_op = 35;
     default:
       alu8_op = 6'bX;
   endcase

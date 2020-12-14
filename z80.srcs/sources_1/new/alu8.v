@@ -286,9 +286,9 @@ begin
       alu8_flags_out = {
         (alu8_bit_sel == 7) && bit_set,     // SF flag Set if n = 7 and tested bit is set.
         !bit_set,                           // ZF flag Set if the tested bit is reset.
-        (alu8_bit_sel == 5) && bit_set,     // YF flag Set if n = 5 and tested bit is set.
+        alu8_arg[5],                        // YF flag Set if n = 5 and tested bit is set.
         1'b1,                               // HF flag Always set.
-        (alu8_bit_sel == 3) && bit_set,     // XF flag Set if n = 3 and tested bit is set.
+        alu8_arg[3],                        // XF flag Set if n = 3 and tested bit is set.
         !bit_set,                           // PF flag Set just like ZF flag.
         1'b0,                               // NF flag Always reset.
         flag_c                              // CF flag Unchanged
@@ -335,6 +335,11 @@ begin
     begin
       alu8_out = {alu8_ain[7:4], alu8_arg[7:4]};
       alu8_flags_out = {alu8_out[7], alu8_out == 0, alu8_out[5], 1'b0, alu8_out[3], !(^alu8_out), 1'b0, flag_c};
+    end
+  35: // bit flags fixup: XF and YF from ram addr 
+    begin
+      alu8_out = 8'bX;
+      alu8_flags_out = {flag_s, flag_z, alu8_arg[5], flag_h, alu8_arg[3], flag_pv, flag_n, flag_c};
     end
   default:
     begin
