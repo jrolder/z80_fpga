@@ -12,8 +12,8 @@ reg [7:0] mem [13000:0];
 
 initial 
 begin
-  // $readmemh("ram.mem", mem, 0);
-  $readmemh("/home/jan/z80/zextest/zexwrap.mem", mem, 0);
+  //$readmemh("ram.mem", mem, 0);
+  $readmemh("zexwrap.mem", mem, 0);
 end
 
 always @(posedge clk) begin
