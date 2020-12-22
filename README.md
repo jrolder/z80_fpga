@@ -24,4 +24,4 @@ As many folks have noted in their Z80 emulator endeavors, the zexall/zexdoc test
 
 ## Recognition
 
-Heartfelt thanks go to Frank D Cringle for zexdoc/zexall (used to validate the implementation), Megatokio for zasm, Lin Ke-Fong for z80emu (used to understand the sometimes bizarre Z80 flag behavior), Sean Young for the awesume "The Undocumented Z80 Documented" PDF and finally Xilinx for offering the Vivado IDE for free for smaller devices.
+Heartfelt thanks go to Frank D Cringle for zexdoc/zexall (used to validate the implementation), Megatokio for zasm, Lin Ke-Fong for z80emu (used to understand the sometimes bizarre Z80 flag behavior), Sean Young for the awesome "The Undocumented Z80 Documented" PDF without which this would not have been possible without an original part and finally Xilinx for offering the Vivado IDE for free for smaller devices.
