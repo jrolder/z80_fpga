@@ -2,16 +2,21 @@
 
 
 	org	0
-	jp	0x100
+	jp	patch_boot
 
 	org	5
 	jp	fpga_bdos
 
 
-#include "zexdoc.z80"
+#include "zexall.z80"
 
 	ds	1000,0 ; TPA space for stack
 
 fpga_bdos:
 	rst	0x38	; trap to vivado
 	ret
+
+patch_boot:
+	ld	hl,0
+	ld	(hl),0x76
+	jp	0x100
