@@ -1,3 +1,4 @@
 *.hex
 *.rom
 *.lst
+*.mem
